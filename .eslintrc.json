@@ -1,0 +1,40 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["plugin:prettier/recommended", "airbnb"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "linebreak-style": 0,
+    "import/no-dynamic-require": 0,
+    "global-require": 0,
+    "import/no-extraneous-dependencies": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "./frontend/webpack.config.common.js"
+      },
+      "alias": {
+        "map": [
+          ["@layouts", "./frontend/layouts"],
+          ["@components", "./frontend/components"],
+          ["@pages", "./frontend/pages"],
+          ["@utils", "./frontend/utils"],
+          ["@static", "./frontend/static"],
+          ["@services", "./frontend/services"],
+          ["@plugins", "./frontend/plugins"]
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+# <type>: <prefix> : <>
+##### Subject 50 characters ################# -> |
+
+
+# Body Message
+######## Body 72 characters ####################################### -> |
+
+# Issue Tracker Number or URL
+#     close #issue_id
+
+# --- COMMIT END ---
+# Type can be
+#   common  : common
+#   fe      : frontend
+#   be      : backend
+#
+# ------------------
+# Prefix can be
+#   feat    : new feature
+#   fix     : bug fix
+#   refactor: refactoring production code
+#   style   : formatting, missing semi colons, etc; no code change
+#   docs    : changes to documentation
+#   chore   : updating grunt tasks etc
+#             no production code change
+# ------------------
+# for Group 36
+#     제목은 전체 내용을 간결하게 요약할 것.
+#     함수 기반의 커밋을 진행하며, 함수 작성 이유를 담을 것.
+#     함수가 사용된 기능 및 관련 기능을 밝힐 것.
+# Remember me ~
+#     제목줄은 대문자로 시작한다.
+#     제목줄은 명령어로 작성한다.
+#     제목줄은 마침표로 끝내지 않는다.
+#     본문과 제목에는 빈줄을 넣어서 구분한다.
+#     본문에는 "어떻게" 보다는 "왜"와 "무엇을" 설명한다.
+#     본문에 목록을 나타낼때는 "-"로 시작한다.
+# ------------------
