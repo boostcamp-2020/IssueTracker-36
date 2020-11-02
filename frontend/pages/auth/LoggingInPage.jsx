@@ -21,8 +21,8 @@ const LoggingInPage = ({ history, location }) => {
 };
 
 LoggingInPage.propTypes = {
-  history: PropTypes.objectOf(PropTypes.object()).isRequired,
-  location: PropTypes.objectOf(PropTypes.object()).isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default LoggingInPage;

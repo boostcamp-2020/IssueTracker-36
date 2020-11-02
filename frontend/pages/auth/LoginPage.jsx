@@ -36,7 +36,7 @@ const LoginPage = ({ history }) => {
 };
 
 LoginPage.propTypes = {
-  history: PropTypes.objectOf(PropTypes.object()).isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const Wrapper = styled.div`
