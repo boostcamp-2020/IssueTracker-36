@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import qs from 'qs';
-import oauthGithub from '../services/auth/oauthGithub';
+import oauthGithub from '../services/auth/oauth-github';
 
 const LoggingIn = () => {
   const history = useHistory();
