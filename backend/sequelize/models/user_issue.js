@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      isOwner: {
+      is_owner: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },

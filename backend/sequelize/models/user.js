@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
   User.associate = (m) => {
-    User.hasMany(m.issue_label);
+    User.hasMany(m.user_issue);
     User.hasMany(m.comment);
     User.hasMany(m.reaction);
   };
