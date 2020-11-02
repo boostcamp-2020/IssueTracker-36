@@ -8,7 +8,7 @@
     "start": "cross-env NODE_ENV=production node ./bin/www",
     "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
     "seed": "sequelize db:seed:all --config sequelize/config.js --seeders-path ./sequelize/seeders",
-    "seed:undo": "sequelize db:seed:undo:all --config sequelize/config.js",
+    "seed:undo": "sequelize db:seed:undo:all --config sequelize/config.js --seeders-path ./sequelize/seeders",
     "seed:generate": "sequelize seed:generate --config sequelize/config.js --seeders-path ./sequelize/seeders --name "
   },
   "dependencies": {
