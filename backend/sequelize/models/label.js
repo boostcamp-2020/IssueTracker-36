@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'user',
+  const Label = sequelize.define(
+    'label',
     {
       id: {
         field: 'id',
@@ -8,19 +8,15 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      local_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      password: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-      },
-      nickName: {
+      title: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      provider: {
+      description: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      color: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
@@ -31,10 +27,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     },
   );
-  User.associate = (m) => {
-    User.hasMany(m.issue_label);
-    User.hasMany(m.comment);
-    User.hasMany(m.reaction);
+  Label.associate = (m) => {
+    Label.hasMany(m.issue_label);
   };
-  return User;
+  return Label;
 };

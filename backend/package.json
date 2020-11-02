@@ -1,27 +1,28 @@
 {
-	"name": "backend",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "cross-env NODE_ENV=production node ./bin/www",
-		"dev": "cross-env NODE_ENV=development nodemon ./bin/www",
-		"seed": "sequelize db:seed:all --config sequelize/config.js",
-		"seed:undo": "sequelize db:seed:undo:all --config sequelize/config.js"
-	},
-	"dependencies": {
-		"cross-env": "^7.0.2",
-		"debug": "~2.6.9",
-		"dotenv": "^8.2.0",
-		"express": "~4.16.1",
-		"http-errors": "~1.6.3",
-		"morgan": "~1.9.1",
-		"mysql2": "^2.2.5",
-		"sequelize": "^6.3.5",
-		"sequelize-cli": "^6.2.0"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC"
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE_ENV=production node ./bin/www",
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
+    "seed": "sequelize db:seed:all --config sequelize/config.js --seeders-path ./sequelize/seeders",
+    "seed:undo": "sequelize db:seed:undo:all --config sequelize/config.js --seeders-path ./sequelize/seeders",
+    "seed:generate": "sequelize seed:generate --config sequelize/config.js --seeders-path ./sequelize/seeders --name "
+  },
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
