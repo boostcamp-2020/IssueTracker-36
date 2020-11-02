@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import PrivateRoute from '@utils/PrivateRoute';
 import {
   IssueAddPage,
   IssueDetailPage,
@@ -20,14 +21,14 @@ const App = () => (
       <Switch>
         <Route exact path='/' component={LoginPage} />
         <Route path='/signup' component={SignupPage} />
-        <Route exact path='/issues' component={IssueListPage} />
-        <Route exact path='/issues/new' component={IssueAddPage} />
-        <Route path='/issues/:id' component={IssueDetailPage} />
-        <Route path='/labels' component={LabelListPage} />
-        <Route exact path='/milestones' component={MilestoneListPage} />
-        <Route exact path='/milestones/new' component={MilestoneAddPage} />
-        <Route path='/milestones/:id/edit' component={MilestoneEditPage} />
-        <Route path='/milestones/:id' component={MilestoneDetailPage} />
+        <PrivateRoute exact path='/issues' component={IssueListPage} />
+        <PrivateRoute exact path='/issues/new' component={IssueAddPage} />
+        <PrivateRoute path='/issues/:id' component={IssueDetailPage} />
+        <PrivateRoute path='/labels' component={LabelListPage} />
+        <PrivateRoute exact path='/milestones' component={MilestoneListPage} />
+        <PrivateRoute exact path='/milestones/new' component={MilestoneAddPage} />
+        <PrivateRoute path='/milestones/:id/edit' component={MilestoneEditPage} />
+        <PrivateRoute path='/milestones/:id' component={MilestoneDetailPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
