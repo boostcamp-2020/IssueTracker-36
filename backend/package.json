@@ -11,6 +11,7 @@
 		"seed:undo": "sequelize db:seed:undo:all --config sequelize/config.js"
 	},
 	"dependencies": {
+		"axios": "^0.21.0",
 		"cross-env": "^7.0.2",
 		"debug": "~2.6.9",
 		"dotenv": "^8.2.0",
