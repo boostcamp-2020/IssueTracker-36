@@ -18,7 +18,8 @@
     "import/no-dynamic-require": 0,
     "import/no-unresolved": 0,
     "global-require": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "jsx-quotes": 0
   },
   "settings": {
     "import/resolver": {
