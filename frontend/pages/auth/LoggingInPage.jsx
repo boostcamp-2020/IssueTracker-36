@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
 import qs from 'qs';
 import oauthGithub from '@services/auth/oauth-github';
 
-const LoggingIn = () => {
-  const history = useHistory();
-  const location = useLocation();
+const LoggingInPage = ({ history, location }) => {
   const { code } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
@@ -22,4 +19,4 @@ const LoggingIn = () => {
   return <></>;
 };
 
-export default LoggingIn;
+export default LoggingInPage;

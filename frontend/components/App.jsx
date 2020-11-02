@@ -7,6 +7,7 @@ import {
   IssueListPage,
   LabelListPage,
   LoginPage,
+  LoggingInPage,
   MilestoneAddPage,
   MilestoneDetailPage,
   MilestoneEditPage,
@@ -14,15 +15,13 @@ import {
   SignupPage,
   NotFoundPage,
 } from '@pages/index';
-import Login from './Login';
-import LoggingIn from './LoggingIn';
 
 const App = () => (
   <>
     <BrowserRouter>
       <Switch>
         <Route exact path='/' component={LoginPage} />
-        <Route path='/oauth/callback/github' component={LoggingIn} />
+        <Route path='/oauth/callback/github' component={LoggingInPage} />
         <Route path='/signup' component={SignupPage} />
         <PrivateRoute exact path='/issues' component={IssueListPage} />
         <PrivateRoute exact path='/issues/new' component={IssueAddPage} />
