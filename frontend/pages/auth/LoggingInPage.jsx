@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import qs from 'qs';
 import oauthGithub from '@services/auth/oauth-github';
 
@@ -17,6 +18,11 @@ const LoggingInPage = ({ history, location }) => {
   }, []);
 
   return <></>;
+};
+
+LoggingInPage.propTypes = {
+  history: PropTypes.objectOf(PropTypes.object()).isRequired,
+  location: PropTypes.objectOf(PropTypes.object()).isRequired,
 };
 
 export default LoggingInPage;

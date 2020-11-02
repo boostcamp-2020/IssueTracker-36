@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import isAuth from '@services/auth/is-auth';
 import GithubIconImage from '@static/github-icon-48.png';
@@ -32,6 +33,10 @@ const LoginPage = ({ history }) => {
       </LoginWrapper>
     </Wrapper>
   );
+};
+
+LoginPage.propTypes = {
+  history: PropTypes.objectOf(PropTypes.object()).isRequired,
 };
 
 const Wrapper = styled.div`
