@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import isAuth from '@services/auth/is-auth';
 import GithubIconImage from '@static/github-icon-48.png';
 
 const Login = () => {
+  const [showLogin, setShowLogin] = useState(false);
+  const history = useHistory();
   const endpoint = 'https://github.com/login/oauth/authorize';
   const GITHUB_CLIENT_ID = 'f7b2106d984fcad19336';
 
+  useEffect(async () => {
+    try {
+      if (!window.localStorage.getItem('userToken')) setShowLogin(true);
+      else {
+        const response = await isAuth();
+        if (response.data.isAuthorized) history.push('/issues');
+        else setShowLogin(true);
+      }
+    } catch (err) {
+      setShowLogin(true);
+    }
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper showLogin={showLogin}>
       <Title>Issue Tracker</Title>
       <LoginWrapper>
         <GithubLoginButton href={`${endpoint}?client_id=${GITHUB_CLIENT_ID}`}>
@@ -21,7 +38,7 @@ const Login = () => {
 
 const Wrapper = styled.div`
   position: absolute;
-  display: flex;
+  display: ${(props) => (props.showLogin ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   left: 50%;
