@@ -9,8 +9,12 @@ const getUser = async (req, res, next) => {
       client_id: process.env.GITHUB_CLIENT_ID_DEV,
       client_secret: process.env.GITHUB_CLIENT_SECRET_DEV,
     };
-    const getAccessToken = await axios.post('https://github.com/login/oauth/access_token', params);
-    const accessToken = getAccessToken.data.split('&')[0].split('=')[1];
+    const getAccessToken = await axios.post('https://github.com/login/oauth/access_token', params, {
+      headers: {
+        accept: 'application/json',
+      },
+    });
+    const accessToken = getAccessToken.data.access_token;
     const { data } = await axios.get('https://api.github.com/user', {
       headers: {
         Authorization: `token ${accessToken}`,
