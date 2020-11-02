@@ -4,7 +4,8 @@
     "es6": true,
     "node": true
   },
-  "extends": ["plugin:prettier/recommended", "airbnb"],
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -18,7 +19,9 @@
     "import/no-dynamic-require": 0,
     "import/no-unresolved": 0,
     "global-require": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "jsx-quotes": ["error", "prefer-single"],
+    "react/jsx-props-no-spreading": 0
   },
   "settings": {
     "import/resolver": {
