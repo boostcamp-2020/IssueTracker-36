@@ -1,15 +1,12 @@
-const { Router } = require("express");
+const { Router } = require('express');
 
 const router = Router();
-const service = require("../../service").test;
+const service = require('../../services').user;
 
 // get
-router.get("/test", service.getTest);
-
+router.get('/test', service.getTest);
 // post
-
-//put
-
-//delete
+// put
+// delete
 
 module.exports = router;

@@ -7,7 +7,6 @@ const serviceModule = {};
 serviceNames.forEach((serviceName) => {
   serviceModule[serviceName] = require(`./${serviceName}`);
 });
-
 module.exports = serviceModule;
 
 /**
