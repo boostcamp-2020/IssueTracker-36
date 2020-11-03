@@ -14,17 +14,15 @@ module.exports = {
       for (let i = 1; i <= 100; i += 1) {
         const obj = {
           id: i,
-          local_id: `test${i}`,
-          password: `password${i}`,
-          nick_name: `user_${i}`,
-          provider: 'Github',
+          issue_id: Math.floor(Math.random() * 99) + 1,
+          label_id: Math.floor(Math.random() * 4) + 1,
           created_at: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
           updated_at: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         };
         datas.push(obj);
       }
 
-      return queryInterface.bulkInsert('user', datas, {});
+      return queryInterface.bulkInsert('issue_label', datas, {});
     } catch (err) {
       console.log(err);
     }
@@ -32,6 +30,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('user', null, {});
+    await queryInterface.bulkDelete('issue_label', null, {});
   },
 };
