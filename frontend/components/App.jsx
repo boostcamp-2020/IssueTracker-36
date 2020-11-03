@@ -7,6 +7,7 @@ import {
   IssueListPage,
   LabelListPage,
   LoginPage,
+  LoggingInPage,
   MilestoneAddPage,
   MilestoneDetailPage,
   MilestoneEditPage,
@@ -20,6 +21,7 @@ const App = () => (
     <BrowserRouter>
       <Switch>
         <Route exact path='/' component={LoginPage} />
+        <Route path='/oauth/callback/github' component={LoggingInPage} />
         <Route path='/signup' component={SignupPage} />
         <PrivateRoute exact path='/issues' component={IssueListPage} />
         <PrivateRoute exact path='/issues/new' component={IssueAddPage} />
