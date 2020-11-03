@@ -5,7 +5,7 @@ import TabEach from '@components/TabEach';
 import { AiOutlineTag } from 'react-icons/ai';
 import { GoMilestone } from 'react-icons/go';
 
-const LabelMilesoneTab = ({ currentPage, labelsNumber, milestonesNumber }) => {
+const LabelMilestoneTab = ({ currentPage, labelsNumber, milestonesNumber }) => {
   const label = {
     name: 'Labels',
     image: AiOutlineTag,
@@ -32,10 +32,10 @@ const TabWrapper = styled.div`
   flex-direction: row;
 `;
 
-LabelMilesoneTab.propTypes = {
+LabelMilestoneTab.propTypes = {
   currentPage: PropTypes.string.isRequired,
   labelsNumber: PropTypes.number.isRequired,
   milestonesNumber: PropTypes.number.isRequired,
 };
 
-export default LabelMilesoneTab;
+export default LabelMilestoneTab;
