@@ -19,7 +19,7 @@ const Component = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: black;
+  background-color: ${(props) => props.theme.color.headerBgColor};
 `;
 const GithubLogo = styled.img`
   width: 3rem;
@@ -27,25 +27,21 @@ const GithubLogo = styled.img`
   filter: invert(100%);
 `;
 const IssueButton = styled.a`
-  color: white;
-  background-color: transparent;
-  font-size: 30px;
-  border: transparent;
+  color: ${(props) => props.theme.color.whiteColor};
+  font-size: ${(props) => props.theme.fontSize.xl};
+  border: ${(props) => props.theme.color.borderColor};
   border-radius: 4px;
-  text-decoration: none;
-  outline: 0;
 `;
 const LogoutButton = styled(IssueButton)`
-  width: 10%;
-  height: 40%;
-  color: black;
-  background-color: white;
-  text-align: center;
   font-weight: bold;
-  font-size: 15px;
+  display: block;
+  padding: 10px;
+  font-size: ${(props) => props.theme.fontSize.md};
+  color: ${(props) => props.theme.color.blackColor};
+  background-color: ${(props) => props.theme.color.whiteColor};
   &:hover {
-    background-color: white;
-    color: gray;
+    background-color: ${(props) => props.theme.color.hoverBgColor};
+    color: ${(props) => props.theme.color.grayColor};
   }
 `;
 
