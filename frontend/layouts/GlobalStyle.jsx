@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const theme = {
   color: {
     textColor: '#24292e',
-    seceondaryTextColor: '#586069',
+    secondaryTextColor: '#586069',
     headerBgColor: '#24292e',
     shadeBgColor: '#f6f8fa',
     hoverBgColor: '#f3f4f6',
