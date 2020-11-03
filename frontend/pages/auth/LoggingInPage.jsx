@@ -21,7 +21,11 @@ const LoggingInPage = ({ history, location }) => {
     }
   }, []);
 
-  return <AuthPageLayout />;
+  return (
+    <AuthPageLayout>
+      <></>
+    </AuthPageLayout>
+  );
 };
 
 LoggingInPage.propTypes = {
