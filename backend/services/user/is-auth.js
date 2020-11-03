@@ -5,9 +5,10 @@ require('dotenv').config();
 module.exports = async (req, res, next) => {
   try {
     const token = req.get('Authorization');
+    const tokenNotExist = token === 'null';
     const loginUrl = '/api/auth/oauth/github';
-    if (token === 'null' && req.originalUrl === loginUrl) return next();
-    if (!token) return res.sendStatus(401);
+    if (tokenNotExist && req.originalUrl === loginUrl) return next();
+    if (tokenNotExist) return res.sendStatus(401);
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const result = await user.findOne({ where: { local_id: decoded.localId, provider: decoded.provider } });
@@ -15,6 +16,6 @@ module.exports = async (req, res, next) => {
     req.body.uid = result.id;
     return next();
   } catch (e) {
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 };
