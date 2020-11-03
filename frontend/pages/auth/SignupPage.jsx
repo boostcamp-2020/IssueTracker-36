@@ -1,5 +1,6 @@
 import React from 'react';
+import AuthPageLayout from '@layouts/AuthPageLayout';
 
-const SignupPage = () => <div>SignupPage</div>;
+const SignupPage = () => <AuthPageLayout>SignupPage</AuthPageLayout>;
 
 export default SignupPage;

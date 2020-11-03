@@ -20,12 +20,13 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: grey;
+  background-color: ${(props) => props.theme.color.shadeBgColor};
 `;
 
 const Main = styled.main`
   width: 100%;
-  max-width: 600px;
+  max-width: 22rem;
+  margin-bottom: 5rem;
 `;
 
 export default AuthPageLayout;
