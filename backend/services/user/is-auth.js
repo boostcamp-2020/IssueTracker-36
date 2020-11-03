@@ -6,8 +6,9 @@ module.exports = async (req, res, next) => {
   try {
     const token = req.get('Authorization');
     const tokenNotExist = token === 'null';
-    const loginUrl = '/api/auth/oauth/github';
-    if (tokenNotExist && req.originalUrl === loginUrl) return next();
+    const { originalUrl } = req;
+    const isUrlWithoutAuth = originalUrl.startsWith('/api/auth') || originalUrl === '/api/user';
+    if (tokenNotExist && isUrlWithoutAuth) return next();
     if (tokenNotExist) return res.sendStatus(401);
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
