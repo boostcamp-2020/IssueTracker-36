@@ -13,7 +13,8 @@ const LoggingInPage = ({ history, location }) => {
       await oauthGithub(code);
       history.push('/issues');
     } catch (err) {
-      console.log(err);
+      alert('로그인 중 오류가 발생했습니다.');
+      history.push('/');
     }
   }, []);
 
