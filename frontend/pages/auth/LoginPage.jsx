@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import userAuthenticate from '@utils/user-authenticate';
 import GithubIconImage from '@static/github-icon-48.png';
+import AuthPageLayout from '@layouts/AuthPageLayout';
 
 const LoginPage = () => {
   const [isAuthorized, setIsAuthorized] = useState(userAuthenticate.isAuthorized);
@@ -24,7 +24,7 @@ const LoginPage = () => {
       />
     );
   return (
-    <Wrapper>
+    <AuthPageLayout>
       <Title>Issue Tracker</Title>
       <LoginWrapper>
         <GithubLoginButton href={`${endpoint}?client_id=${GITHUB_CLIENT_ID}`}>
@@ -32,24 +32,15 @@ const LoginPage = () => {
           <GithubIcon src={GithubIconImage} alt='github icon' />
         </GithubLoginButton>
       </LoginWrapper>
-    </Wrapper>
+    </AuthPageLayout>
   );
 };
 
-const Wrapper = styled.div`
-  position: absolute;
-  display: 'flex';
-  flex-direction: column;
-  align-items: center;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const Title = styled.div`
-  font-size: 2.5rem;
+const Title = styled.h1`
+  font-size: ${(props) => props.theme.fontSize.xl};
   font-weight: bold;
   margin: 1.5rem;
+  text-align: center;
 `;
 
 const LoginWrapper = styled.div`
@@ -57,8 +48,9 @@ const LoginWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px 20px;
-  border: 1px solid gray;
+  padding: 16px;
+  border: 1px solid ${(props) => props.theme.color.borderColor};
+  background-color: ${(props) => props.theme.color.whiteColor};
   border-radius: 5px;
 `;
 
@@ -68,8 +60,9 @@ const GithubLoginButton = styled.a`
   align-items: center;
   justify-content: center;
   width: 20rem;
-  height: 2.2rem;
-  background-color: rgba(104, 104, 104, 0.8);
+  height: 2.7rem;
+  background-color: ${(props) => props.theme.color.iconColor};
+  border: 1px solid ${(props) => props.theme.color.borderColor};
   border-radius: 5px;
   font-weight: bold;
   text-decoration: none;
@@ -83,7 +76,7 @@ const GithubLoginButton = styled.a`
 
 const GithubIcon = styled.img`
   width: 1.8rem;
-  margin: 0 0.5rem;
+  margin: 0 0 0 0.5rem;
 `;
 
 export default LoginPage;

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import oauthGithub from '@services/auth/oauth-github';
+import AuthPageLayout from '@layouts/AuthPageLayout';
 
 const LoggingInPage = ({ history, location }) => {
   const { code } = qs.parse(location.search, {
@@ -18,7 +19,7 @@ const LoggingInPage = ({ history, location }) => {
     }
   }, []);
 
-  return <></>;
+  return <AuthPageLayout />;
 };
 
 LoggingInPage.propTypes = {

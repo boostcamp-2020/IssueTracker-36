@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PrivateRoute from '@utils/PrivateRoute';
+import { GlobalStyle, theme } from '@layouts/GlobalStyle';
+import { ThemeProvider } from 'styled-components';
 import {
   IssueAddPage,
   IssueDetailPage,
@@ -15,10 +17,9 @@ import {
   SignupPage,
   NotFoundPage,
 } from '@pages/index';
-import GlobalStyle from '@layouts/GlobalStyle';
 
 const App = () => (
-  <>
+  <ThemeProvider theme={theme}>
     <GlobalStyle />
     <BrowserRouter>
       <Switch>
@@ -36,7 +37,7 @@ const App = () => (
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
-  </>
+  </ThemeProvider>
 );
 
 export default App;
