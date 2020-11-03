@@ -20,8 +20,8 @@ const LabelMilesoneTab = ({ currentPage, labelsNumber, milestonesNumber }) => {
 
   return (
     <TabWrapper>
-      {tabs.map((tab, index) => {
-        return <TabEach currentPage={currentPage} info={tab} key={index} />;
+      {tabs.map((tab) => {
+        return <TabEach currentPage={currentPage} info={tab} key={tab.name} />;
       })}
     </TabWrapper>
   );

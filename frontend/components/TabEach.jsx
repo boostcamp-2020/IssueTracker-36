@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const TabEachComponent = ({ currentPage, info }) => {
+  const isSelected = currentPage === info.name;
+
   return (
-    <Wrapper>
-      <info.image />
-      <Title>{info.name}</Title>
-      <NumberWrapper>
-        <EachNumber>{info.number}</EachNumber>
-      </NumberWrapper>
+    <Wrapper isSelected={isSelected}>
+      <info.image style={{ color: isSelected ? 'white' : '' }} />
+      <Title isSelected={isSelected}>{info.name}</Title>
+      {!currentPage && (
+        <NumberWrapper>
+          <EachNumber>{info.number}</EachNumber>
+        </NumberWrapper>
+      )}
     </Wrapper>
   );
 };
@@ -20,16 +24,23 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: fit-content;
-  padding: 5px;
+  padding: 6px 18px;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
-  border-radius: 2px;
+  border-radius: 3px;
+  background-color: ${(props) => (props.isSelected ? props.theme.color.blueColor : '')};
   > div {
     margin-left: 5px;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => (props.isSelected ? '' : props.theme.color.hoverBgColor)};
   }
 `;
 
 const Title = styled.div`
-  color: ${({ theme }) => theme.color.textColor};
+  color: ${(props) => (props.isSelected ? 'white' : props.theme.color.textColor)};
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  font-weight: bold;
 `;
 
 const NumberWrapper = styled.div`
@@ -37,14 +48,16 @@ const NumberWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 20px;
   height: 20px;
+  width: max-content;
+  min-width: 20px;
+  padding: 3px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.color.borderColor};
 `;
 
 const EachNumber = styled.div`
-  font-size: 0.8rem;
+  font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: bold;
   line-height: 0;
 `;
