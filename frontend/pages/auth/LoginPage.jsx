@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import userAuthenticate from '@utils/user-authenticate';
 import GithubIconImage from '@static/github-icon-48.png';
