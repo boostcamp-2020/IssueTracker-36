@@ -5,11 +5,11 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=production node ./bin/www",
-    "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
-    "seed": "sequelize db:seed:all --config sequelize/config.js --seeders-path ./sequelize/seeders",
-    "seed:undo": "sequelize db:seed:undo:all --config sequelize/config.js --seeders-path ./sequelize/seeders",
-    "seed:generate": "sequelize seed:generate --config sequelize/config.js --seeders-path ./sequelize/seeders --name "
+		"start": "cross-env NODE_ENV=production node ./bin/www",
+		"dev": "cross-env NODE_ENV=development nodemon ./bin/www",
+		"seed": "sequelize db:seed:all --config sequelize/config.js --seeders-path ./sequelize/seeders",
+		"seed:undo": "sequelize db:seed:undo:all --config sequelize/config.js --seeders-path ./sequelize/seeders",
+		"seed:generate": "sequelize seed:generate --config sequelize/config.js --seeders-path ./sequelize/seeders --name "
 	},
 	"dependencies": {
 		"axios": "^0.21.0",
@@ -25,5 +25,8 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"devDependencies": {
+		"nodemon": "^2.0.6"
+	}
 }
