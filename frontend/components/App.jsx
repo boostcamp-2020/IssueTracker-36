@@ -15,9 +15,11 @@ import {
   SignupPage,
   NotFoundPage,
 } from '@pages/index';
+import GlobalStyle from '@layouts/GlobalStyle';
 
 const App = () => (
   <>
+    <GlobalStyle />
     <BrowserRouter>
       <Switch>
         <Route exact path='/' component={LoginPage} />
