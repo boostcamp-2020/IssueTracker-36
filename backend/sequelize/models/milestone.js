@@ -1,6 +1,8 @@
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'user',
+  const Milestone = sequelize.define(
+    'milestone',
     {
       id: {
         field: 'id',
@@ -8,20 +10,20 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      local_id: {
-        type: DataTypes.STRING,
+      dueDate: {
+        type: Sequelize.DATE,
         allowNull: true,
       },
-      password: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-      },
-      nickName: {
+      title: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      provider: {
+      description: {
         type: DataTypes.STRING(255),
+        allowNull: true,
+      },
+      isClosed: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
       },
     },
@@ -31,10 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     },
   );
-  User.associate = (m) => {
-    User.hasMany(m.issue_label);
-    User.hasMany(m.comment);
-    User.hasMany(m.reaction);
-  };
-  return User;
+  // Milestone.associate = (m) => {
+  //   Milestone.hasMany(m.issue);
+  // };
+  return Milestone;
 };
