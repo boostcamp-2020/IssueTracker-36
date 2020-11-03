@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import oauthGithub from '@services/auth/oauth-github';
 import userInfo from '@utils/user-info';
+import AuthPageLayout from '@layouts/AuthPageLayout';
 
 const LoggingInPage = ({ history, location }) => {
   const { code } = qs.parse(location.search, {
@@ -20,7 +21,7 @@ const LoggingInPage = ({ history, location }) => {
     }
   }, []);
 
-  return <></>;
+  return <AuthPageLayout />;
 };
 
 LoggingInPage.propTypes = {
