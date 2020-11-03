@@ -1,29 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import userAuthenticate from '@utils/user-authenticate';
+import userInfo from '@utils/user-info';
 import GithubIconImage from '@static/github-icon-48.png';
 
 const LoginPage = () => {
-  const [isAuthorized, setIsAuthorized] = useState(userAuthenticate.isAuthorized);
-  const [isPending, setIsPending] = useState(userAuthenticate.isPending);
   const endpoint = 'https://github.com/login/oauth/authorize';
   const GITHUB_CLIENT_ID = 'f7b2106d984fcad19336';
 
-  useEffect(() => {
-    if (isPending) userAuthenticate.checkUserAuth(setIsAuthorized, setIsPending);
-  }, []);
-  if (isPending) return <></>;
-  if (isAuthorized)
-    return (
-      <Redirect
-        to={{
-          pathname: '/issues',
-        }}
-      />
-    );
-  return (
+  return userInfo.authorized ? (
+    <Route
+      render={({ location }) => (
+        <Redirect
+          to={{
+            pathname: '/issues',
+            state: { from: location },
+          }}
+        />
+      )}
+    />
+  ) : (
     <Wrapper>
       <Title>Issue Tracker</Title>
       <LoginWrapper>
