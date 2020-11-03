@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import isAuth from '@services/auth/is-auth';
+import userAuthenticate from '@utils/user-authenticate';
 import GithubIconImage from '@static/github-icon-48.png';
 
-const LoginPage = ({ history }) => {
-  const [showLogin, setShowLogin] = useState(false);
+const LoginPage = () => {
+  const [isAuthorized, setIsAuthorized] = useState(userAuthenticate.isAuthorized);
+  const [isPending, setIsPending] = useState(userAuthenticate.isPending);
   const endpoint = 'https://github.com/login/oauth/authorize';
   const GITHUB_CLIENT_ID = 'f7b2106d984fcad19336';
 
-  useEffect(async () => {
-    try {
-      if (!window.localStorage.getItem('userToken')) setShowLogin(true);
-      else {
-        const response = await isAuth();
-        if (response.data.isAuthorized) history.push('/issues');
-        else setShowLogin(true);
-      }
-    } catch (err) {
-      setShowLogin(true);
-    }
+  useEffect(() => {
+    if (isPending) userAuthenticate.checkUserAuth(setIsAuthorized, setIsPending);
   }, []);
-
+  if (isPending) return <></>;
+  if (isAuthorized)
+    return (
+      <Redirect
+        to={{
+          pathname: '/issues',
+        }}
+      />
+    );
   return (
-    <Wrapper showLogin={showLogin}>
+    <Wrapper>
       <Title>Issue Tracker</Title>
       <LoginWrapper>
         <GithubLoginButton href={`${endpoint}?client_id=${GITHUB_CLIENT_ID}`}>
@@ -35,13 +36,9 @@ const LoginPage = ({ history }) => {
   );
 };
 
-LoginPage.propTypes = {
-  history: PropTypes.object.isRequired,
-};
-
 const Wrapper = styled.div`
   position: absolute;
-  display: ${(props) => (props.showLogin ? 'flex' : 'none')};
+  display: 'flex';
   flex-direction: column;
   align-items: center;
   left: 50%;
