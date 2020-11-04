@@ -17,7 +17,7 @@ const LabelListPage = () => {
 
   const getData = async () => {
     const res = await service.getLabels();
-    setData(res.data.labels);
+    setData(res.data);
   };
 
   useEffect(() => {
