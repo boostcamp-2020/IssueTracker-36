@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --config ./webpack.config.dev.js"
+    "dev": "webpack serve --config ./webpack.config.dev.js",
+    "storybook": "start-storybook -p 6006 --no-dll",
+    "build-storybook": "build-storybook --no-dll"
   },
   "keywords": [],
   "author": "",
@@ -20,11 +22,12 @@
     "core-js": "^3.6.5",
     "file-loader": "^6.2.0",
     "font-color-contrast": "^1.0.3",
-    "html-webpack-plugin": "^4.5.0",
+    "html-webpack-plugin": "^4.2.0",
     "prop-types": "^15.7.2",
     "qs": "^6.9.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^3.11.0",
     "react-router-dom": "^5.2.0",
     "styled-components": "^5.2.1",
     "webpack": "^5.3.1",
@@ -32,6 +35,11 @@
     "webpack-merge": "^5.2.0"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.0.28",
+    "@storybook/addon-essentials": "^6.0.28",
+    "@storybook/addon-links": "^6.0.28",
+    "@storybook/react": "^6.0.28",
+    "react-is": "^17.0.1",
     "webpack-dev-server": "^3.11.0"
   }
 }

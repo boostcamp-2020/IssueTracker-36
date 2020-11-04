@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const axios = require('axios');
 
 const getUser = async (req, res, next) => {

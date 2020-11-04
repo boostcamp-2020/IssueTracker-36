@@ -1,10 +1,10 @@
-import axios from 'axios';
+import apiRequest from '@utils/api-request';
 
 const oauthGithub = async (code) => {
-  const endpoint = 'http://localhost:3000/api/auth/oauth/github';
+  const endpoint = '/api/auth/oauth/github';
   const {
     data: { token },
-  } = await axios.post(endpoint, { code });
+  } = await apiRequest.post(endpoint, { code });
   window.localStorage.setItem('userToken', token);
 };
 
