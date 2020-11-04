@@ -17,7 +17,7 @@ const LabelList = ({ data, getData }) => {
     <>
       <Mytable
         width='100%'
-        header={() => {
+        renderHeader={() => {
           return (
             <LabelListHeader>
               <TD colSpan='5' align='left'>
@@ -26,7 +26,7 @@ const LabelList = ({ data, getData }) => {
             </LabelListHeader>
           );
         }}
-        body={() => {
+        renderBody={() => {
           return data.map((label) => {
             return (
               <TR key={label.id}>
@@ -55,7 +55,6 @@ LabelList.propTypes = {
 };
 
 const LabelListHeader = styled.tr`
-  background-color: #eee;
   line-height: 60px;
   height: 60px;
   padding-left: 18px;
