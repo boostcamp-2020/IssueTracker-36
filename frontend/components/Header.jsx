@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import GithubIconImage from '@static/github-icon-48.png';
-import logout from '@services/auth/logout';
+import userInfo from '@utils/user-info';
 import { useHistory, Link } from 'react-router-dom';
 
 const Header = () => {
   const history = useHistory();
   const onClickLogout = () => {
-    logout();
+    userInfo.logout();
     history.push('/');
   };
 
