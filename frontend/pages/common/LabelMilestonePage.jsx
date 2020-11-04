@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import LabelMilestoneTab from '@components/LabelMilestoneTab';
-import LabelListPage from '@pages/lables/LabelListPage';
+import LabelListPage from '@pages/labels/LabelListPage';
 import MilestoneListPage from '@pages/milestones/MilestoneListPage';
 import MilestoneEditPage from '@pages/milestones/MilestoneEditPage';
 
