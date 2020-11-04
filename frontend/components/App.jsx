@@ -21,7 +21,7 @@ import {
 const App = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
-    <BrowserRouter>
+    <BrowserRouter forceRefresh>
       <Switch>
         <Route exact path='/' component={LoginPage} />
         <Route path='/oauth/callback/github' component={LoggingInPage} />
