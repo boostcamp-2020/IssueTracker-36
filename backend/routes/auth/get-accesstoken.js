@@ -21,7 +21,7 @@ const getUser = async (req, res, next) => {
     req.data = data;
     next();
   } catch (e) {
-    res.json({ ok: false });
+    res.sendStatus(500);
   }
 };
 module.exports = { getUser };
