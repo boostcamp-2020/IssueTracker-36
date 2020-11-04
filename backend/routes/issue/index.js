@@ -9,6 +9,7 @@ router.get('/issue/:id', service.getIssue);
 
 // post
 // patch
+router.patch('/issues', service.patchIssues);
 router.patch('/issue/:id', service.editIssue);
 
 // delete
