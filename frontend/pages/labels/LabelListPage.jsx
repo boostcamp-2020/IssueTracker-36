@@ -8,16 +8,16 @@ import styled from 'styled-components';
 const LabelListPage = () => {
   const [data, setData] = useState([]);
 
-  const clickEditBtn = async (e) => {
-    console.log(e);
-  };
-  const clickDeleteBtn = async (e) => {
-    console.log(e);
-  };
-
   const getData = async () => {
     const res = await service.getLabels();
     setData(res.data);
+  };
+  const clickEditBtn = async (label) => {
+    console.log(label);
+  };
+  const clickDeleteBtn = async (id) => {
+    await service.deleteLabel(id);
+    await getData();
   };
 
   useEffect(() => {
