@@ -1,7 +1,7 @@
 export { default as IssueAddPage } from '@pages/issues/IssueAddPage';
 export { default as IssueDetailPage } from '@pages/issues/IssueDetailPage';
 export { default as IssueListPage } from '@pages/issues/IssueListPage';
-export { default as LabelListPage } from '@pages/lables/LabelListPage';
+export { default as LabelListPage } from '@pages/labels/LabelListPage';
 export { default as LoginPage } from '@pages/auth/LoginPage';
 export { default as LoggingInPage } from '@pages/auth/LoggingInPage';
 export { default as MilestoneAddPage } from '@pages/milestones/MilestoneAddPage';
