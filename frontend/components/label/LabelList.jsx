@@ -20,9 +20,9 @@ const LabelList = ({ data, getData }) => {
         header={() => {
           return (
             <LabelListHeader>
-              <td colSpan='5'>
-                <HeaderText>{data.length}labels</HeaderText>{' '}
-              </td>
+              <TD colSpan='5' align='left'>
+                <HeaderText>{data.length} labels</HeaderText>{' '}
+              </TD>
             </LabelListHeader>
           );
         }}
@@ -56,11 +56,9 @@ LabelList.propTypes = {
 
 const LabelListHeader = styled.tr`
   background-color: #eee;
-  /* display: flex; */
-  /* justify-content: center; */
+  line-height: 60px;
   height: 60px;
   padding-left: 18px;
-  /* align-items: center; */
 `;
 
 const TR = styled.tr`
@@ -76,6 +74,7 @@ const TD = styled.td`
 const HeaderText = styled.p`
   color: gray;
   padding-left: 20px;
+  margin: auto;
   font-size: 14px;
 `;
 
