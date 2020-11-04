@@ -1,18 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
-const TabButton = ({ currentPage, info }) => (
-  <Wrapper isSelected={info.isSelected}>
-    <info.image style={{ color: info.isSelected ? 'white' : '' }} />
-    <Title isSelected={info.isSelected}>{info.name}</Title>
-    {!currentPage && (
-      <NumberWrapper>
-        <EachNumber>{info.number}</EachNumber>
-      </NumberWrapper>
-    )}
-  </Wrapper>
-);
+const TabButton = ({ currentPage, info }) => {
+  const history = useHistory();
+  const onClick = () => {
+    history.push(info.url);
+  };
+
+  return (
+    <Wrapper onClick={onClick} isSelected={info.isSelected}>
+      <info.image style={{ color: info.isSelected ? 'white' : '' }} />
+      <Title isSelected={info.isSelected}>{info.name}</Title>
+      {!currentPage && (
+        <NumberWrapper>
+          <EachNumber>{info.number}</EachNumber>
+        </NumberWrapper>
+      )}
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -61,9 +69,10 @@ const EachNumber = styled.div`
 TabButton.propTypes = {
   currentPage: PropTypes.string.isRequired,
   info: PropTypes.shape({
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     image: PropTypes.func.isRequired,
     number: PropTypes.number.isRequired,
+    url: PropTypes.string.isRequired,
     isSelected: PropTypes.bool.isRequired,
   }).isRequired,
 };
