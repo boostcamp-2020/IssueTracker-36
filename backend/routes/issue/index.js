@@ -8,7 +8,10 @@ router.get('/issues', service.getIssues);
 router.get('/issue/:id', service.getIssue);
 
 // post
-// put
+// patch
+router.patch('/issues', service.patchIssues);
+router.patch('/issue/:id', service.editIssue);
+
 // delete
 
 module.exports = router;

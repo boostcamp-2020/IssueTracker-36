@@ -7,13 +7,11 @@ import {
   IssueAddPage,
   IssueDetailPage,
   IssueListPage,
-  LabelListPage,
   LoginPage,
   LoggingInPage,
+  LabelMilestonePage,
   MilestoneAddPage,
   MilestoneDetailPage,
-  MilestoneEditPage,
-  MilestoneListPage,
   SignupPage,
   NotFoundPage,
 } from '@pages/index';
@@ -21,7 +19,7 @@ import {
 const App = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
-    <BrowserRouter>
+    <BrowserRouter forceRefresh>
       <Switch>
         <Route exact path='/' component={LoginPage} />
         <Route path='/oauth/callback/github' component={LoggingInPage} />
@@ -29,10 +27,10 @@ const App = () => (
         <PrivateRoute exact path='/issues' component={IssueListPage} />
         <PrivateRoute exact path='/issues/new' component={IssueAddPage} />
         <PrivateRoute path='/issues/:id' component={IssueDetailPage} />
-        <PrivateRoute path='/labels' component={LabelListPage} />
-        <PrivateRoute exact path='/milestones' component={MilestoneListPage} />
+        <PrivateRoute path='/labels' component={LabelMilestonePage} />
+        <PrivateRoute exact path='/milestones' component={LabelMilestonePage} />
+        <PrivateRoute path='/milestones/:id/edit' component={LabelMilestonePage} />
         <PrivateRoute exact path='/milestones/new' component={MilestoneAddPage} />
-        <PrivateRoute path='/milestones/:id/edit' component={MilestoneEditPage} />
         <PrivateRoute path='/milestones/:id' component={MilestoneDetailPage} />
         <Route component={NotFoundPage} />
       </Switch>
