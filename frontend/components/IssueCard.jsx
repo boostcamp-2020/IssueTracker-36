@@ -68,7 +68,8 @@ const IssueClosedIcon = styled.div`
 
 const Title = styled.div`
   margin-right: 5px;
-  font-size: ${({ theme }) => theme.fontSize.lg};
+  font-size: ${({ theme }) => theme.fontSize.md};
+  font-weight: bold;
   &:hover {
     color: ${({ theme }) => theme.color.blueColor};
     cursor: pointer;
@@ -79,8 +80,9 @@ const CardInfo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 5px 0 0 57px;
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  margin: 5px 0 0 55px;
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: gray;
 `;
 
 const CardInfoMilestone = styled.div`
@@ -95,7 +97,6 @@ const CardInfoMilestone = styled.div`
 
 const CardInfoMilestoneName = styled.div`
   margin-left: 7px;
-  color: gray;
 `;
 
 IssueCard.propTypes = {
