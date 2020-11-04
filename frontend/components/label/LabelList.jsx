@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Mytable from '@components/common/table';
 import service from '@services';
 import Label from '@components/common/label';
@@ -15,7 +15,6 @@ const LabelList = ({ data, getData }) => {
 
   return (
     <>
-      {/* {data} */}
       <Mytable
         width='100%'
         header={() => {
