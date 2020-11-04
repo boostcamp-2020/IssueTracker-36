@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const TabButton = ({ currentPage, info }) => {
   const history = useHistory();
-  const location = useLocation();
   const onClick = () => {
-    if (location.pathname !== info.url) history.push(info.url);
+    if (currentPage !== info.url) history.push(info.url);
   };
 
   return (
