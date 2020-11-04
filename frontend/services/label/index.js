@@ -3,10 +3,10 @@ import getters from './getters';
 // import updaters from './updaters'
 // import deleters from './deleters'
 
-const labelService = () => {
+const labelService = (apiRequest) => {
   return {
     // ...adders(),
-    ...getters(),
+    ...getters(apiRequest),
     // ...updaters(axios),
     // ...deleters(axios),
   };

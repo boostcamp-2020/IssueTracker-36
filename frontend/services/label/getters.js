@@ -1,10 +1,8 @@
-import axios from 'axios';
+const getters = (apiRequest) => {
+  const getLabels = () => {
+    return apiRequest.get(`/api/labels`);
+  };
 
-const getLabels = () => {
-  return axios.get(`http://localhost:3000/api/labels`);
-};
-
-const getters = () => {
   return {
     getLabels,
   };
