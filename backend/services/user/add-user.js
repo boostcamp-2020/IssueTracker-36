@@ -12,7 +12,7 @@ module.exports = (req, res) => {
       const token = jwt.sign(data, process.env.JWT_SECRET);
       res.json({ token });
     })
-    .catch((err) => {
-      res.status(500).send(err);
+    .catch(() => {
+      res.sendStatus(500);
     });
 };

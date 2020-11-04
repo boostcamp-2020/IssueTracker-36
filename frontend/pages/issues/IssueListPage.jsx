@@ -1,5 +1,10 @@
 import React from 'react';
+import MainPageLayout from '@layouts/MainPageLayout';
 
-const IssueListPage = () => <div />;
+const IssueListPage = () => (
+  <MainPageLayout>
+    <></>
+  </MainPageLayout>
+);
 
 export default IssueListPage;

@@ -9,6 +9,7 @@ class UserInfo {
   }
 
   logout() {
+    window.localStorage.removeItem('userToken');
     this.authorized = false;
   }
 }
