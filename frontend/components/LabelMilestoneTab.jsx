@@ -13,13 +13,19 @@ const LabelMilestoneTab = ({ currentPage, labelsNumber, milestonesNumber }) => {
     url,
     isSelected,
   });
-  const label = infoGenerator('Labels', AiOutlineTag, labelsNumber, '/labels', currentPage === 'labels');
+  const label = infoGenerator(
+    'Labels',
+    AiOutlineTag,
+    labelsNumber,
+    '/labels',
+    currentPage.startsWith('/labels'),
+  );
   const milestone = infoGenerator(
     'Milestones',
     GoMilestone,
     milestonesNumber,
     '/milestones',
-    currentPage === 'milestones',
+    currentPage.startsWith('/milestones'),
   );
   const tabs = [label, milestone];
 
@@ -38,9 +44,15 @@ const TabWrapper = styled.div`
 `;
 
 LabelMilestoneTab.propTypes = {
-  currentPage: PropTypes.string.isRequired,
-  labelsNumber: PropTypes.number.isRequired,
-  milestonesNumber: PropTypes.number.isRequired,
+  currentPage: PropTypes.string,
+  labelsNumber: PropTypes.number,
+  milestonesNumber: PropTypes.number,
+};
+
+LabelMilestoneTab.defaultProps = {
+  currentPage: '',
+  labelsNumber: 0,
+  milestonesNumber: 0,
 };
 
 export default LabelMilestoneTab;
