@@ -38,12 +38,14 @@ const GithubLogo = styled.img`
   margin: 0 0.5rem;
   filter: invert(100%);
 `;
+
 const IssueButton = styled.button`
   color: ${(props) => props.theme.color.whiteColor};
   font-size: ${(props) => props.theme.fontSize.xl};
   border: ${(props) => props.theme.color.borderColor};
   border-radius: 4px;
 `;
+
 const LogoutButton = styled.button`
   font-weight: 600;
   display: block;
