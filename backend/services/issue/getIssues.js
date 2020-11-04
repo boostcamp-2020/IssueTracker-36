@@ -8,7 +8,7 @@ const getIssues = async (req, res) => {
     const { page, count, closed } = req.query;
     const parsedPage = parseInt(page, 10);
     const parsedCount = parseInt(count, 10);
-    const parsedClosed = closed === 'true' || closed === 'false' ? closed === 'true' : false;
+    const parsedClosed = closed === 'true';
 
     if (Number.isNaN(parsedPage) || parsedPage < 1) {
       return res.sendStatus(400);
