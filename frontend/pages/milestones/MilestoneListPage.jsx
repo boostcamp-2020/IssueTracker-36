@@ -10,7 +10,9 @@ import { GoMilestone, GoCheck, GoCalendar } from 'react-icons/go';
 const MilestoneListPage = () => {
   const [open, setOpenMilestone] = useState([]);
   const [close, setClosedMilestone] = useState([]);
-  const [data, setData] = useState([]);
+  const [milestoneList, setMilestoneList] = useState([]);
+  const yes = 1;
+  const no = 0;
   const clickEditBtn = async () => {
     // 수정버튼
   };
@@ -21,22 +23,24 @@ const MilestoneListPage = () => {
     // dekete 버튼
   };
   const getOpen = async () => {
-    const milestones = await service.getOpenMilestones();
+    const milestones = await service.getMilestones({ isClosed: no });
     setOpenMilestone(milestones.data);
   };
   const getClosed = async () => {
-    const milestones = await service.getClosedMilestones();
+    const milestones = await service.getMilestones({ isClosed: yes });
     setClosedMilestone(milestones.data);
   };
-  const getData = async (status) => {
+  const getMilestones = async (status) => {
     const milestones =
-      status === 'close' ? await service.getClosedMilestones() : await service.getOpenMilestones();
-    setData(milestones.data);
+      status === 'close'
+        ? await service.getMilestones({ isClosed: yes })
+        : await service.getMilestones({ isClosed: no });
+    setMilestoneList(milestones.data);
   };
   useEffect(() => {
     getOpen();
     getClosed();
-    getData();
+    getMilestones('open');
   }, []);
   return (
     <>
@@ -44,32 +48,35 @@ const MilestoneListPage = () => {
         width='100%'
         header={() => {
           return (
-            <LabelListHeader>
+            <MilestoneListHeader>
               <td colSpan='2'>
                 <HeaderText>
-                  <OpenBtn onClick={() => getData('open')}>
+                  <OpenBtn onClick={() => getMilestones('open')}>
                     <GoMilestone />
                     {open.length} Open
                   </OpenBtn>
-                  <CloseBtn onClick={() => getData('close')}>
+                  <CloseBtn onClick={() => getMilestones('close')}>
                     <GoCheck />
                     {close.length} Closed
                   </CloseBtn>
                 </HeaderText>
               </td>
-            </LabelListHeader>
+            </MilestoneListHeader>
           );
         }}
         body={() => {
-          return data.map((milestone) => {
+          return milestoneList.map((milestone) => {
+            const { id, title, description, dueDate } = milestone;
+            const year = dueDate.substring(0, 4);
+            const month = dueDate.substring(5, 7);
+            const day = dueDate.substring(8, 10);
             return (
-              <TR key={milestone.id}>
+              <TR key={id}>
                 <TD align='left' padding='10px'>
-                  <Title>{milestone.title}</Title>
-                  <GoCalendar /> Due by {milestone.dueDate.substring(5, 7)},
-                  {milestone.dueDate.substring(8, 10)},{milestone.dueDate.substring(0, 4)}
+                  <Title>{title}</Title>
+                  <GoCalendar /> Due by {month},{day},{year}
                   <br />
-                  {milestone.description}
+                  {description}
                 </TD>
                 <TD>
                   <div>그래프</div>
@@ -89,26 +96,20 @@ const MilestoneListPage = () => {
   );
 };
 
-const LabelListHeader = styled.tr`
+const MilestoneListHeader = styled.tr`
   background-color: #eee;
-  /* display: flex; */
-  /* justify-content: center; */
   height: 60px;
   padding-left: 18px;
-  /* align-items: center; */
 `;
 
 const TR = styled.tr`
   border-bottom: 1px solid #eee;
 `;
 const OpenBtn = styled.button`
-  color: black;
-  &:visited {
-    color: red;
-  }
+  color: ${(props) => props.theme.color.blackColor};
 `;
 const CloseBtn = styled(OpenBtn)`
-  color: black;
+  color: ${(props) => props.theme.color.blackColor};
 `;
 const TD = styled.td`
   width: ${(props) => props.width || ''};
@@ -117,29 +118,25 @@ const TD = styled.td`
 `;
 const Title = styled.h1`
   font-size: 1.5em;
-  color: black;
+  color: ${(props) => props.theme.color.blackColor};
 `;
 const HeaderText = styled.p`
-  color: gray;
+  color: ${(props) => props.theme.color.grayColor};
+  font-size: ${(props) => props.theme.fontSize.md};
   padding-left: 20px;
-  font-size: 14px;
 `;
 
 const BTN = styled.button`
   width: ${(props) => props.width || ''};
   text-align: ${(props) => props.align || 'center'};
   padding: ${(props) => props.padding || '5px'};
-  border: none;
+  color: ${(props) => props.theme.color.blueColor};
+  font-size: ${(props) => props.theme.fontSize.md};
   cursor: pointer;
-  background: none;
-  color: blue;
   padding: 1px;
-  text-align: center;
-  text-decoration: none;
   display: inline-block;
-  font-size: 16px;
 `;
 const DeleteBTN = styled(BTN)`
-  color: red;
+  color: ${(props) => props.theme.color.redColor};
 `;
 export default MilestoneListPage;

@@ -1,21 +1,13 @@
 const getters = (apiRequest) => {
-  const getClosedMilestones = () => {
+  const getMilestones = ({ isClosed = '0' }) => {
     return apiRequest.get(`/api/milestones`, {
       params: {
-        isClosed: '1',
-      },
-    });
-  };
-  const getOpenMilestones = () => {
-    return apiRequest.get(`/api/milestones`, {
-      params: {
-        isClosed: '0',
+        isClosed,
       },
     });
   };
   return {
-    getOpenMilestones,
-    getClosedMilestones,
+    getMilestones,
   };
 };
 export default getters;
