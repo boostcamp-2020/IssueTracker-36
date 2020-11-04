@@ -4,7 +4,7 @@ const { user } = require('../../sequelize/models');
 module.exports = async (req, res, next) => {
   try {
     const token = req.get('Authorization');
-    const tokenNotExist = token === 'null';
+    const tokenNotExist = !token || token === 'null';
     const { originalUrl } = req;
     const isUrlWithoutAuth = originalUrl.startsWith('/api/auth') || originalUrl === '/api/user';
     if (tokenNotExist && isUrlWithoutAuth) return next();
@@ -16,6 +16,9 @@ module.exports = async (req, res, next) => {
     req.body.uid = result.id;
     return next();
   } catch (e) {
+    if (e instanceof jwt.JsonWebTokenError) {
+      return res.sendStatus(401);
+    }
     return res.sendStatus(500);
   }
 };

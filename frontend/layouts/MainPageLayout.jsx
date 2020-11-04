@@ -22,11 +22,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: grey;
+  background-color: ${({ theme }) => theme.color.whiteColor};
 `;
 const Main = styled.main`
   width: 100%;
-  max-width: 600px;
+  max-width: 1024px;
+  margin-top: 3rem;
 `;
 
 export default MainPageLayout;

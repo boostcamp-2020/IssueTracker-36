@@ -21,6 +21,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "core-js": "^3.6.5",
     "file-loader": "^6.2.0",
+    "font-color-contrast": "^1.0.3",
     "html-webpack-plugin": "^4.2.0",
     "prop-types": "^15.7.2",
     "qs": "^6.9.4",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@storybook/addon-actions": "^6.0.28",
     "@storybook/addon-essentials": "^6.0.28",
+    "@storybook/addon-knobs": "^6.0.28",
     "@storybook/addon-links": "^6.0.28",
     "@storybook/react": "^6.0.28",
     "react-is": "^17.0.1",

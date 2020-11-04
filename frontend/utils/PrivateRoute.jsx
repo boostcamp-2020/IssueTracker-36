@@ -10,7 +10,7 @@ import userInfo from '@utils/user-info';
  */
 const PrivateRoute = ({ component, ...rest }) =>
   userInfo.authorized ? (
-    <Route {...rest} render={() => React.createElement(component)} />
+    <Route {...rest} render={(props) => React.createElement(component, props)} />
   ) : (
     <Route
       {...rest}
