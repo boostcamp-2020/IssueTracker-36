@@ -2,21 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const TabButton = ({ currentPage, info }) => {
-  const isSelected = currentPage === info.name;
-
-  return (
-    <Wrapper isSelected={isSelected}>
-      <info.image style={{ color: isSelected ? 'white' : '' }} />
-      <Title isSelected={isSelected}>{info.name}</Title>
-      {!currentPage && (
-        <NumberWrapper>
-          <EachNumber>{info.number}</EachNumber>
-        </NumberWrapper>
-      )}
-    </Wrapper>
-  );
-};
+const TabButton = ({ currentPage, info }) => (
+  <Wrapper isSelected={info.isSelected}>
+    <info.image style={{ color: info.isSelected ? 'white' : '' }} />
+    <Title isSelected={info.isSelected}>{info.name}</Title>
+    {!currentPage && (
+      <NumberWrapper>
+        <EachNumber>{info.number}</EachNumber>
+      </NumberWrapper>
+    )}
+  </Wrapper>
+);
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,8 +47,8 @@ const NumberWrapper = styled.div`
   height: 20px;
   width: max-content;
   min-width: 20px;
-  padding: 3px;
-  border-radius: 50%;
+  padding: 5px;
+  border-radius: 20px;
   background-color: ${({ theme }) => theme.color.borderColor};
 `;
 
@@ -68,6 +64,7 @@ TabButton.propTypes = {
     name: PropTypes.string,
     image: PropTypes.func.isRequired,
     number: PropTypes.number.isRequired,
+    isSelected: PropTypes.bool.isRequired,
   }).isRequired,
 };
 

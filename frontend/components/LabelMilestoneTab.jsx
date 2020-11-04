@@ -6,16 +6,14 @@ import { AiOutlineTag } from 'react-icons/ai';
 import { GoMilestone } from 'react-icons/go';
 
 const LabelMilestoneTab = ({ currentPage, labelsNumber, milestonesNumber }) => {
-  const label = {
-    name: 'Labels',
-    image: AiOutlineTag,
-    number: labelsNumber,
-  };
-  const milestone = {
-    name: 'Milestones',
-    image: GoMilestone,
-    number: milestonesNumber,
-  };
+  const infoGenerator = (name, image, number, isSelected) => ({
+    name,
+    image,
+    number,
+    isSelected,
+  });
+  const label = infoGenerator('Labels', AiOutlineTag, labelsNumber, currentPage === 'labels');
+  const milestone = infoGenerator('Milestones', GoMilestone, milestonesNumber, currentPage === 'milestones');
   const tabs = [label, milestone];
 
   return (
