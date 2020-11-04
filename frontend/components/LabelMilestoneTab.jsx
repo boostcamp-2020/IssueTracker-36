@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import TabEach from '@components/TabEach';
+import TabButton from '@components/TabButton';
 import { AiOutlineTag } from 'react-icons/ai';
 import { GoMilestone } from 'react-icons/go';
 
@@ -21,7 +21,7 @@ const LabelMilestoneTab = ({ currentPage, labelsNumber, milestonesNumber }) => {
   return (
     <TabWrapper>
       {tabs.map((tab) => {
-        return <TabEach currentPage={currentPage} info={tab} key={tab.name} />;
+        return <TabButton currentPage={currentPage} info={tab} key={tab.name} />;
       })}
     </TabWrapper>
   );

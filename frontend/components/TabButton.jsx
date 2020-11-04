@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const TabEachComponent = ({ currentPage, info }) => {
+const TabButton = ({ currentPage, info }) => {
   const isSelected = currentPage === info.name;
 
   return (
@@ -62,7 +62,7 @@ const EachNumber = styled.div`
   line-height: 0;
 `;
 
-TabEachComponent.propTypes = {
+TabButton.propTypes = {
   currentPage: PropTypes.string.isRequired,
   info: PropTypes.shape({
     name: PropTypes.string,
@@ -71,4 +71,4 @@ TabEachComponent.propTypes = {
   }).isRequired,
 };
 
-export default TabEachComponent;
+export default TabButton;
