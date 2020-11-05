@@ -21,15 +21,21 @@ Label.defaultProps = {
 };
 
 const LabelWrapper = styled.div`
-  display: inline-box;
-  font-weight: bold;
-  padding: 4px 7px;
-  font-size: 12px;
+  display: inline-block;
+
+  vertical-align: baseline;
   margin: 2px;
   text-align: center;
-  border-radius: 4px;
   white-space: nowrap;
   color: ${(props) => props.color || 'white'};
   background-color: ${(props) => props.bg || 'white'};
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 22px !important;
+  border: 1px solid transparent;
+  border-radius: 2em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
 `;
 export default Label;
