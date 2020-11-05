@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "es2015",
+    "paths": {
+      "@components/*": ["./components/*"],
+      "@plugins/*": ["./plugins/*"],
+      "@layouts/*": ["./layouts/*"],
+      "@static/*": ["./static/*"],
+      "@services/*": ["./services/*"],
+      "@utils/*": ["./utils/*"],
+      "@pages/*": ["./pages/*"]
+    }
+  }
+}
