@@ -28,7 +28,7 @@ const getIssues = async (req, res) => {
       },
     });
 
-    return res.json({ issues });
+    return res.json(issues);
   } catch (e) {
     return res.sendStatus(500);
   }
