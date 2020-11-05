@@ -31,9 +31,7 @@ const HeaderSlot = styled.thead`
   background-color: ${({ theme }) => theme.color.shadeBgColor};
   border-bottom: 2px solid ${({ theme }) => theme.color.borderColor};
 `;
-const BodySlot = styled.tbody`
-  /* background-color: #eee; */
-`;
+const BodySlot = styled.tbody``;
 const Table = styled.table`
   border-collapse: collapse;
 
