@@ -3,16 +3,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const MyTable = ({ header, body, width }) => (
+const MyTable = ({ renderHeader, renderBody, width }) => (
   <Table width={width}>
-    <HeaderSlot>{header()}</HeaderSlot>
-    <BodySlot>{body()}</BodySlot>
+    <HeaderSlot>{renderHeader()}</HeaderSlot>
+    <BodySlot>{renderBody()}</BodySlot>
   </Table>
 );
 
 MyTable.propTypes = {
-  header: PropTypes.func.isRequired,
-  body: PropTypes.func.isRequired,
+  renderHeader: PropTypes.func.isRequired,
+  renderBody: PropTypes.func.isRequired,
   width: PropTypes.string,
 };
 MyTable.defaultProps = {
@@ -29,7 +29,7 @@ const Table = styled.table`
   border: 2px solid #eee;
   border-radius: 20px;
   margin: 0px;
-  width: ${(props) => props.width || '100%'};
+  width: ${(props) => props.width};
 `;
 
 export default MyTable;
