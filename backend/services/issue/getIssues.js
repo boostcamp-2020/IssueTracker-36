@@ -1,4 +1,4 @@
-const { issue, milestone, issue_label, label } = require('../../sequelize/models');
+const { issue, milestone, user_issue, user, issue_label, label } = require('../../sequelize/models');
 
 /**
  * @todo 필터 검색 로직 구현
@@ -30,6 +30,14 @@ const getIssues = async (req, res) => {
         {
           model: milestone,
           attributes: ['title'],
+        },
+        {
+          model: user_issue,
+          attributes: ['id'],
+          include: {
+            model: user,
+            attributes: ['nickName'],
+          },
         },
         {
           model: issue_label,
