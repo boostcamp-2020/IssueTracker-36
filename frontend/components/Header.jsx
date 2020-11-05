@@ -27,6 +27,7 @@ const Header = () => {
 const Component = styled.header`
   width: 100%;
   height: 72px;
+  min-height: 72px;
   position: relative;
   display: flex;
   align-items: center;
