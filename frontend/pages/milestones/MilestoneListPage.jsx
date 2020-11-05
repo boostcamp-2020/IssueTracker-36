@@ -46,7 +46,7 @@ const MilestoneListPage = () => {
     <>
       <Mytable
         width='100%'
-        header={() => {
+        renderHeader={() => {
           return (
             <MilestoneListHeader>
               <td colSpan='2'>
@@ -64,7 +64,7 @@ const MilestoneListPage = () => {
             </MilestoneListHeader>
           );
         }}
-        body={() => {
+        renderBody={() => {
           return milestoneList.map((milestone) => {
             const { id, title, description, dueDate } = milestone;
             const year = dueDate.substring(0, 4);
