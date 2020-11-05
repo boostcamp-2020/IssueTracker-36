@@ -15,7 +15,7 @@ const theme = {
     blueColor: '#0366d6',
     lightBlueColor: '#0f6fdd',
     greenColor: '#22863a',
-    lightGreenColor: '#2c974b',
+    lightGreenColor: '#28a745',
     redColor: '#cb2431',
     grayColor: '#c0c1c2',
     blackColor: '#000000',
