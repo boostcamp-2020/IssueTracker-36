@@ -1,4 +1,4 @@
-const { issue } = require('../../sequelize/models');
+const { issue, milestone, issue_label, label } = require('../../sequelize/models');
 
 /**
  * @todo 필터 검색 로직 구현
@@ -26,6 +26,21 @@ const getIssues = async (req, res) => {
       where: {
         isClosed: parsedClosed,
       },
+      include: [
+        {
+          model: milestone,
+          attributes: ['title'],
+        },
+        {
+          model: issue_label,
+          attributes: ['id'],
+          raw: true,
+          include: {
+            model: label,
+            attributes: ['title', 'color'],
+          },
+        },
+      ],
     });
 
     return res.json(issues);
