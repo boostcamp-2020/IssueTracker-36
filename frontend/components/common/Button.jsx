@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+/**
+ * 기본 버튼 컴포넌트입니다.
+ */
 const Button = ({ size, type, role, text, icon, count, disabled }) => {
   const sizeClass = size === 'large' ? 'lg-btn' : 'sm-btn';
-  const typeClass = type === 'primary' ? 'primary-btn' : 'secondary-btn';
+  const typeClass = `${type}-btn`;
 
   return (
     <ButtonWrapper type={role} className={`${sizeClass} ${typeClass}`} disabled={disabled}>
@@ -17,7 +20,7 @@ const Button = ({ size, type, role, text, icon, count, disabled }) => {
 
 Button.propTypes = {
   size: PropTypes.oneOf(['large', 'small']),
-  type: PropTypes.oneOf(['primary', 'secondary']),
+  type: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
   role: PropTypes.oneOf(['button', 'submit']),
   text: PropTypes.string,
   icon: PropTypes.element,
@@ -48,15 +51,34 @@ const ButtonWrapper = styled.button`
   &.primary-btn {
     background-color: ${({ theme }) => theme.color.greenColor};
     color: ${({ theme }) => theme.color.whiteColor};
-    &:hover {
-      background-color: ${({ theme }) => theme.color.darkGreenColor};
+    &:not(:disabled):hover {
+      background-color: ${({ theme }) => theme.color.lightGreenColor};
+    }
+    &:disabled {
+      cursor: not-allowed;
+      filter: saturate(0.8) brightness(1.3);
     }
   }
   &.secondary-btn {
     background-color: ${({ theme }) => theme.color.shadeBgColor};
     color: ${({ theme }) => theme.color.textColor};
-    &:hover {
+    &:not(:disabled):hover {
       background-color: ${({ theme }) => theme.color.hoverBgColor};
+    }
+    &:disabled {
+      cursor: not-allowed;
+      filter: saturate(1) brightness(0.9);
+    }
+  }
+  &.tertiary-btn {
+    background-color: ${({ theme }) => theme.color.blueColor};
+    color: ${({ theme }) => theme.color.whiteColor};
+    &:not(:disabled):hover {
+      background-color: ${({ theme }) => theme.color.lightBlueColor};
+    }
+    &:disabled {
+      cursor: not-allowed;
+      filter: saturate(0.8) brightness(1.3);
     }
   }
   &.sm-btn {
