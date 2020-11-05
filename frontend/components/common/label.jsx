@@ -2,9 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import fontColorContrast from 'font-color-contrast';
 
 const Label = ({ text, color, bg }) => (
-  <LabelWrapper color={color} bg={bg}>
+  <LabelWrapper color={color || fontColorContrast(bg)} bg={bg || 'red'}>
     {text}
   </LabelWrapper>
 );
@@ -15,8 +16,8 @@ Label.propTypes = {
   bg: PropTypes.string,
 };
 Label.defaultProps = {
-  color: 'white',
-  bg: 'red',
+  bg: undefined,
+  color: undefined,
 };
 
 const LabelWrapper = styled.div`
