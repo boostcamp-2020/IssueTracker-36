@@ -102,7 +102,7 @@ IssueCard.propTypes = {
   title: PropTypes.string.isRequired,
   labelList: PropTypes.array,
   issueId: PropTypes.number.isRequired,
-  created: PropTypes.object.isRequired,
+  created: PropTypes.string.isRequired,
   userNickname: PropTypes.string.isRequired,
   milestoneName: PropTypes.string,
   isClosed: PropTypes.bool.isRequired,
