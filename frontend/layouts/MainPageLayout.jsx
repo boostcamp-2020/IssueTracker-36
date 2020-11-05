@@ -27,7 +27,7 @@ const Container = styled.div`
 const Main = styled.main`
   width: 100%;
   max-width: 1024px;
-  margin-top: 3rem;
+  margin: 3rem 0;
 `;
 
 export default MainPageLayout;
