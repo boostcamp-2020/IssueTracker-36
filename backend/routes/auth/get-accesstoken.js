@@ -4,8 +4,8 @@ const getUser = async (req, res, next) => {
   try {
     const params = {
       code: req.body.code,
-      client_id: process.env.GITHUB_CLIENT_ID_DEV,
-      client_secret: process.env.GITHUB_CLIENT_SECRET_DEV,
+      client_id: process.env.GITHUB_CLIENT_ID,
+      client_secret: process.env.GITHUB_CLIENT_SECRET,
     };
     const getAccessToken = await axios.post('https://github.com/login/oauth/access_token', params, {
       headers: {

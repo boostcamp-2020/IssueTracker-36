@@ -7,7 +7,8 @@ import AuthPageLayout from '@layouts/AuthPageLayout';
 
 const LoginPage = () => {
   const endpoint = 'https://github.com/login/oauth/authorize';
-  const GITHUB_CLIENT_ID = 'f7b2106d984fcad19336';
+  const GITHUB_CLIENT_ID =
+    process.env.NODE_ENV === 'development' ? 'f7b2106d984fcad19336' : 'eaced475daf07d8d24e7';
 
   return userInfo.authorized ? (
     <Route
