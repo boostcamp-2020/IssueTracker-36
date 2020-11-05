@@ -35,7 +35,7 @@ const IssueCard = ({ title, labelList, issueId, created, userNickname, milestone
   );
 };
 
-const Wrapper = styled.article`
+const Wrapper = styled.tr`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -46,7 +46,7 @@ const Wrapper = styled.article`
   }
 `;
 
-const CardMain = styled.div`
+const CardMain = styled.td`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -75,7 +75,7 @@ const Title = styled.h2`
   }
 `;
 
-const CardInfo = styled.div`
+const CardInfo = styled.td`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -102,7 +102,7 @@ IssueCard.propTypes = {
   title: PropTypes.string.isRequired,
   labelList: PropTypes.array,
   issueId: PropTypes.number.isRequired,
-  created: PropTypes.object.isRequired,
+  created: PropTypes.string.isRequired,
   userNickname: PropTypes.string.isRequired,
   milestoneName: PropTypes.string,
   isClosed: PropTypes.bool.isRequired,
