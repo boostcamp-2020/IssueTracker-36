@@ -13,6 +13,7 @@ const theme = {
     iconColor: '#959da5',
     whiteColor: '#fff',
     blueColor: '#0366d6',
+    lightBlueColor: '#0f6fdd',
     greenColor: '#22863a',
     lightGreenColor: '#28a745',
     redColor: '#cb2431',
