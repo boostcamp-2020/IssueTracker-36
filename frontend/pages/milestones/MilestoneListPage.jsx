@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import Mytable from '@components/common/table';
-// 마일스톤 리스트 테이블
 import service from '@services';
-// 마일스톤 데이터
 import styled from 'styled-components';
-// import MainPageLayout from '@layouts/MainPageLayout';
 import { GoMilestone, GoCheck, GoCalendar } from 'react-icons/go';
 
 const MilestoneListPage = () => {
   const [open, setOpenMilestone] = useState([]);
   const [close, setClosedMilestone] = useState([]);
   const [milestoneList, setMilestoneList] = useState([]);
-  const yes = 1;
-  const no = 0;
-  const clickEditBtn = async () => {
-    // 수정버튼
+  const TRUE = 1;
+  const FALSE = 0;
+  const clickEditBtn = async (id) => {
+    // TODO:수정
+    console.log(id);
   };
-  const clickCloseBtn = async () => {
-    // close버튼
+  const clickCloseBtn = async (id) => {
+    // TODO: close
+    console.log(id);
   };
-  const clickDeleteBtn = async () => {
-    // dekete 버튼
+  const clickDeleteBtn = async (id) => {
+    // TODO:삭제
+    console.log(id);
   };
   const getOpen = async () => {
-    const milestones = await service.getMilestones({ isClosed: no });
+    const milestones = await service.getMilestones({ isClosed: FALSE });
     setOpenMilestone(milestones.data);
   };
   const getClosed = async () => {
-    const milestones = await service.getMilestones({ isClosed: yes });
+    const milestones = await service.getMilestones({ isClosed: TRUE });
     setClosedMilestone(milestones.data);
   };
   const getMilestones = async (status) => {
     const milestones =
       status === 'close'
-        ? await service.getMilestones({ isClosed: yes })
-        : await service.getMilestones({ isClosed: no });
+        ? await service.getMilestones({ isClosed: TRUE })
+        : await service.getMilestones({ isClosed: FALSE });
     setMilestoneList(milestones.data);
   };
   useEffect(() => {
@@ -83,9 +83,9 @@ const MilestoneListPage = () => {
                   <br />
                   <div>그래프설명</div>
                   <br />
-                  <BTN onClick={() => clickEditBtn()}>edit</BTN>
-                  <BTN onClick={() => clickCloseBtn()}>close</BTN>
-                  <DeleteBTN onClick={() => clickDeleteBtn()}>delete</DeleteBTN>
+                  <BTN onClick={() => clickEditBtn(id)}>edit</BTN>
+                  <BTN onClick={() => clickCloseBtn(id)}>close</BTN>
+                  <DeleteBTN onClick={() => clickDeleteBtn(id)}>delete</DeleteBTN>
                 </TD>
               </TR>
             );
@@ -101,7 +101,6 @@ const MilestoneListHeader = styled.tr`
   height: 60px;
   padding-left: 18px;
 `;
-
 const TR = styled.tr`
   border-bottom: 1px solid #eee;
 `;
@@ -125,7 +124,6 @@ const HeaderText = styled.p`
   font-size: ${(props) => props.theme.fontSize.md};
   padding-left: 20px;
 `;
-
 const BTN = styled.button`
   width: ${(props) => props.width || ''};
   text-align: ${(props) => props.align || 'center'};
