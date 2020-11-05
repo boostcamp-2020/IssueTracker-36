@@ -35,11 +35,11 @@ const IssueCard = ({ title, labelList, issueId, created, userNickname, milestone
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 8px 16px;
+  padding: 10px 16px;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   &:hover {
     background-color: ${({ theme }) => theme.color.hoverBgColor};
@@ -66,10 +66,9 @@ const IssueClosedIcon = styled.div`
   }
 `;
 
-const Title = styled.div`
+const Title = styled.h2`
   margin-right: 5px;
   font-size: ${({ theme }) => theme.fontSize.md};
-  font-weight: bold;
   &:hover {
     color: ${({ theme }) => theme.color.blueColor};
     cursor: pointer;
@@ -80,7 +79,7 @@ const CardInfo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 5px 0 0 55px;
+  margin: 2px 0 0 55px;
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: gray;
 `;
