@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const LabelList = ({ data, getData }) => {
-  const clickEditBtn = async (label) => {};
+  const clickEditBtn = async () => {};
   const clickDeleteBtn = async (id) => {
     await service.deleteLabel(id);
     await getData();

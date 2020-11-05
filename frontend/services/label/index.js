@@ -1,11 +1,11 @@
-// import adders from './adders';
+import adders from './adders';
 import deleters from './deleters';
 import getters from './getters';
 // import updaters from './updaters'
 
 const labelService = (apiRequest) => {
   return {
-    // ...adders(),
+    ...adders(apiRequest),
     ...getters(apiRequest),
     // ...updaters(axios),
     ...deleters(apiRequest),

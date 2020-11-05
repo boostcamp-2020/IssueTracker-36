@@ -19,6 +19,7 @@ const theme = {
     redColor: '#cb2431',
     grayColor: '#c0c1c2',
     blackColor: '#000000',
+    inputContrast: '#fafbfc',
   },
   fontSize: {
     xl: '32px',
