@@ -4,6 +4,8 @@ const { issue } = require('../../sequelize/models');
 module.exports = async (req, res) => {
   try {
     const { issuesId, isClose } = req.body;
+    if (!Array.isArray(issuesId) || typeof isClose !== 'boolean') throw new TypeError();
+
     await issue.update(
       { isClosed: isClose },
       {
@@ -16,6 +18,7 @@ module.exports = async (req, res) => {
     );
     res.json();
   } catch (err) {
-    res.sendStatus(500);
+    if (err instanceof TypeError) res.sendStatus(400);
+    else res.sendStatus(500);
   }
 };
