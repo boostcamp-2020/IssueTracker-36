@@ -20,7 +20,7 @@ const LabelListPage = () => {
       <div>
         <h1>리스트 페이지 입니다</h1>
       </div>
-      <LabelAdder />
+      <LabelAdder getData={getData} />
       <LabelList data={data} getData={getData} />
     </>
   );
