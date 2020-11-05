@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Mytable from '@components/common/table';
 import IssueCard from '@components/IssueCard';
 import Label from '@components/common/label';
+import IssueListHeader from './IssueListHeader';
 
 const labelGenerator = (issueLabels) => {
   return issueLabels.reduce((acc, issueLabel) => {
@@ -16,7 +17,9 @@ const IssueList = ({ issues }) => {
     <>
       <Mytable
         width='100%'
-        renderHeader={() => {}}
+        renderHeader={() => {
+          return <IssueListHeader />;
+        }}
         renderBody={() => {
           return issues.map((issue) => {
             return (
