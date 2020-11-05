@@ -18,10 +18,9 @@ const editIssue = async (req, res) => {
       return res.sendStatus(400);
     }
 
-    await issue.update({ title, isClosed: closed });
-    const updatedIssue = await await Issue.findByPk(id);
+    const updatedIssue = await issue.update({ title, isClosed: closed }, { returning: true });
 
-    return res.json({ updatedIssue });
+    return res.json(updatedIssue);
   } catch (e) {
     return res.sendStatus(500);
   }
