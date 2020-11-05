@@ -4,6 +4,13 @@ import Mytable from '@components/common/table';
 import IssueCard from '@components/IssueCard';
 import Label from '@components/common/label';
 
+const labelGenerator = (issueLabels) => {
+  return issueLabels.reduce((acc, issueLabel) => {
+    acc.push(<Label text={issueLabel.label.title} bg={issueLabel.label.color} key={issueLabel.id} />);
+    return acc;
+  }, []);
+};
+
 const IssueList = ({ issues }) => {
   return (
     <>
@@ -15,16 +22,7 @@ const IssueList = ({ issues }) => {
             return (
               <IssueCard
                 title={issue.title}
-                labelList={issue.issue_labels.reduce((acc, issueLabels) => {
-                  acc.push(
-                    <Label
-                      text={issueLabels.label.title}
-                      bg={issueLabels.label.color}
-                      key={issueLabels.id}
-                    />,
-                  );
-                  return acc;
-                }, [])}
+                labelList={labelGenerator(issue.issue_labels)}
                 issueId={issue.id}
                 created={issue.createdAt}
                 userNickname=''
