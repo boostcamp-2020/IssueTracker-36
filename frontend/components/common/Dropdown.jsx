@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { RiCloseLine } from 'react-icons/ri';
 
 const Dropdown = ({ title, isInputExist, dataInDiv, toggleDropdown }) => {
@@ -27,12 +27,19 @@ const Dropdown = ({ title, isInputExist, dataInDiv, toggleDropdown }) => {
           <Search />
         </SearchWrapper>
       )}
-      {dataInDiv.map(({ id, div }) => (
-        <Option key={id}>{div}</Option>
-      ))}
+      <OptionsWrapper>
+        {dataInDiv.map(({ id, div }) => (
+          <Option key={id}>{div}</Option>
+        ))}
+      </OptionsWrapper>
     </DropdownWrapper>
   );
 };
+
+const boxFade = keyframes`
+  0% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+`;
 
 const DropdownWrapper = styled.div`
   position: absolute;
@@ -41,6 +48,7 @@ const DropdownWrapper = styled.div`
   background-color: white;
   border-radius: 3px;
   box-shadow: 0 0 3px gray;
+  animation: ${boxFade} 0.2s;
 `;
 
 const Header = styled.div`
@@ -79,6 +87,11 @@ const Search = styled.input`
   &:focus {
     box-shadow: 0 0 2px ${({ theme }) => theme.color.blueColor};
   }
+`;
+
+const OptionsWrapper = styled.div`
+  max-height: 350px;
+  overflow-y: auto;
 `;
 
 const Option = styled.div`
