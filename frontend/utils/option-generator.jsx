@@ -28,7 +28,11 @@ const labels = ({ data }) => {
 
 const milestones = ({ data }) => {
   return data.reduce((acc, milestone) => {
-    // TODO: milestone data에 따른 div 생성
+    acc.push({
+      id: milestone.id,
+      div: <div>{milestone.title}</div>,
+    });
+
     return acc;
   }, []);
 };

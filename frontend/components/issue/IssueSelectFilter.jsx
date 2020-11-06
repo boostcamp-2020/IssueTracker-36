@@ -26,7 +26,7 @@ const IssueSelectFilter = ({ filterName, dropdownTitle }) => {
         // setOptionData(optionGenerator.users(await service.getUsers()));
         break;
       case 'Milestones':
-        setOptionData(optionGenerator.milestones(await service.getMilestones()));
+        setOptionData(optionGenerator.milestones(await service.getMilestones({})));
         break;
       default:
         setOptionData([]);
