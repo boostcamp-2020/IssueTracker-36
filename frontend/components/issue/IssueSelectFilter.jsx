@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Dropdown from '@components/common/Dropdown';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
-const IssueSelectFilter = ({ filterName }) => {
+const IssueSelectFilter = ({ filterName, dropdownTitle }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
@@ -17,7 +17,7 @@ const IssueSelectFilter = ({ filterName }) => {
         <FilterName>{filterName}</FilterName>
         <RiArrowDownSFill />
       </FilterButton>
-      {showDropdown && <Dropdown title='제목' isInputExist toggleDropdown={toggleDropdown} />}
+      {showDropdown && <Dropdown title={dropdownTitle} isInputExist toggleDropdown={toggleDropdown} />}
     </SelectFilter>
   );
 };
@@ -48,6 +48,7 @@ const FilterName = styled.div`
 
 IssueSelectFilter.propTypes = {
   filterName: PropTypes.string.isRequired,
+  dropdownTitle: PropTypes.string.isRequired,
 };
 
 export default IssueSelectFilter;

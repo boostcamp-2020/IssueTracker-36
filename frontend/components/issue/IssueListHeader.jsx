@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import IssueSelectFilter from './IssueSelectFilter';
 
 const IssueListHeader = () => {
+  const filters = [
+    { filterName: 'Author', dropdownTitle: 'Filter by author' },
+    { filterName: 'Label', dropdownTitle: 'Filter by label' },
+    { filterName: 'Milestones', dropdownTitle: 'Filter by milestone' },
+    { filterName: 'Assignee', dropdownTitle: "Filter by who's assigned" },
+  ];
+
   return (
     <Wrapper>
       <TD>
@@ -10,10 +17,11 @@ const IssueListHeader = () => {
       </TD>
       <TD>
         <Filters>
-          <IssueSelectFilter filterName='Author' />
-          <IssueSelectFilter filterName='Label' />
-          <IssueSelectFilter filterName='Milestones' />
-          <IssueSelectFilter filterName='Assignee' />
+          {filters.map(({ filterName, dropdownTitle }) => {
+            return (
+              <IssueSelectFilter filterName={filterName} dropdownTitle={dropdownTitle} key={filterName} />
+            );
+          })}
         </Filters>
       </TD>
     </Wrapper>

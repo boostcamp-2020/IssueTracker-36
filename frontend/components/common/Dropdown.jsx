@@ -36,7 +36,7 @@ const Dropdown = ({ title, isInputExist, dataInDiv, toggleDropdown }) => {
 
 const DropdownWrapper = styled.div`
   position: absolute;
-  width: 300px;
+  width: 280px;
   margin-top: 25px;
   background-color: white;
   border-radius: 3px;
@@ -60,7 +60,7 @@ const Header = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: bold;
 `;
 
