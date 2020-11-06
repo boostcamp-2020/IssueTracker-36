@@ -27,8 +27,8 @@ const Dropdown = ({ title, isInputExist, dataInDiv, toggleDropdown }) => {
           <Search />
         </SearchWrapper>
       )}
-      {dataInDiv.map((data) => (
-        <Option>{data}</Option>
+      {dataInDiv.map(({ id, div }) => (
+        <Option key={id}>{div}</Option>
       ))}
     </DropdownWrapper>
   );

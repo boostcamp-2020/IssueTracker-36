@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Dropdown from '@components/common/Dropdown';
+import service from '@services';
+import optionGenerator from '@utils/option-generator';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
 const IssueSelectFilter = ({ filterName, dropdownTitle }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [optionData, setOptionData] = useState([]);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+
+  useEffect(async () => {
+    if (!showDropdown) return;
+    switch (filterName) {
+      case 'Label':
+        setOptionData(optionGenerator.labels(await service.getLabels()));
+        break;
+      case 'Author':
+      case 'Assignee':
+        // TODO: getUsers 구현
+        // setOptionData(optionGenerator.users(await service.getUsers()));
+        break;
+      case 'Milestones':
+        setOptionData(optionGenerator.milestones(await service.getMilestones()));
+        break;
+      default:
+        setOptionData([]);
+    }
+  }, [showDropdown]);
 
   return (
     <SelectFilter>
@@ -17,7 +39,9 @@ const IssueSelectFilter = ({ filterName, dropdownTitle }) => {
         <FilterName>{filterName}</FilterName>
         <RiArrowDownSFill />
       </FilterButton>
-      {showDropdown && <Dropdown title={dropdownTitle} isInputExist toggleDropdown={toggleDropdown} />}
+      {showDropdown && (
+        <Dropdown title={dropdownTitle} isInputExist dataInDiv={optionData} toggleDropdown={toggleDropdown} />
+      )}
     </SelectFilter>
   );
 };
