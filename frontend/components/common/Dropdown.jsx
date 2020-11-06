@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { RiCloseLine } from 'react-icons/ri';
 
 const Dropdown = ({ title, isInputExist, dataInDiv, toggleDropdown }) => {
+  const wrapper = useRef(undefined);
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      if (!wrapper.current?.contains(e.target)) toggleDropdown();
+    };
+    document.addEventListener('click', clickOutside);
+    return () => {
+      document.removeEventListener('click', clickOutside);
+    };
+  }, []);
+
   return (
-    <DropdownWrapper>
+    <DropdownWrapper ref={wrapper}>
       <Header>
         <Title>{title}</Title>
         <RiCloseLine onClick={toggleDropdown} />
