@@ -9,6 +9,9 @@ import debounceHook from '@utils/debounceHook';
 const LabelAdder = ({ getData }) => {
   const [preview, setPreview] = useState({ title: 'Label Prieview', description: '', color: '#0366d6' });
   const debouncedPreview = debounceHook(preview, 1000);
+  const resetForm = () => {
+    setPreview({ title: 'Label Prieview', description: '', color: '#0366d6' });
+  };
   const handleChangeTitle = (e) => {
     setPreview({
       ...preview,
@@ -30,10 +33,8 @@ const LabelAdder = ({ getData }) => {
   };
   const handleClickCreate = async () => {
     await service.addLabel(debouncedPreview);
-    await getData();
-    debouncedPreview.title = 'Label Prieview';
-    debouncedPreview.description = '';
-    debouncedPreview.description = '#0366d6';
+    getData();
+    resetForm();
   };
   return (
     <>
