@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import service from '@services';
 import Label from '@components/common/label';
+import Button from '@components/common/Button';
 import fontColorContrast from 'font-color-contrast';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import debounceHook from '@utils/debounceHook';
 
 const LabelAdder = ({ getData }) => {
-  const [preview, setPreview] = useState({ title: 'Label Prieview', description: '', color: '#0366d6' });
+  const [preview, setPreview] = useState({ title: '', description: '', color: '#0366d6' });
   const debouncedPreview = debounceHook(preview, 1000);
   const resetForm = () => {
-    setPreview({ title: 'Label Prieview', description: '', color: '#0366d6' });
+    setPreview({ title: '', description: '', color: '#0366d6' });
   };
   const handleChangeTitle = (e) => {
     setPreview({
@@ -41,7 +42,7 @@ const LabelAdder = ({ getData }) => {
       <AdderForm>
         <PreviewBox>
           <Label
-            text={debouncedPreview.title}
+            text={debouncedPreview.title === '' ? 'Label Preview' : debouncedPreview.title}
             bg={debouncedPreview.color}
             color={fontColorContrast(debouncedPreview.color)}
           />
@@ -51,7 +52,11 @@ const LabelAdder = ({ getData }) => {
             <LabelBox>
               <label htmlFor='label-name'>Label name</label>
             </LabelBox>
-            <Input placeholder='이름' value={preview.title} onChange={(e) => handleChangeTitle(e)} />
+            <Input
+              placeholder='Label Prieview'
+              value={preview.title}
+              onChange={(e) => handleChangeTitle(e)}
+            />
           </FormGroup>
           <FormGroup>
             <LabelBox>
@@ -71,10 +76,14 @@ const LabelAdder = ({ getData }) => {
           </FormGroup>
           <FormGroup>
             <BtnBox>
-              <button type='button'>cancel</button>
-              <button type='button' onClick={(e) => handleClickCreate(e)}>
-                Create Label
-              </button>
+              <Button size='large' type='secondary' text='Cancel' />
+              <Button
+                size='large'
+                type='primary'
+                text=' Create Label'
+                disabled={debouncedPreview.title === ''}
+                onClick={(e) => handleClickCreate(e)}
+              />
             </BtnBox>
           </FormGroup>
         </FlexBox>
@@ -116,8 +125,7 @@ const LabelBox = styled.div`
 const BtnBox = styled.div`
   display: flex;
   margin-top: 25px;
-  align-items: flex-end;
-  font-weight: bold;
+  justify-content: flex-end;
   font-size: ${({ theme }) => theme.fontSize.md};
 `;
 
