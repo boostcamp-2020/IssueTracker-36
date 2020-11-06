@@ -5,7 +5,7 @@ import Dropdown from '@components/common/Dropdown';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
 const IssueSelectFilter = ({ filterName }) => {
-  const [showDropdown, setShowDropdown] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -26,6 +26,7 @@ const SelectFilter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-left: 20px;
 `;
 
 const FilterButton = styled.div`
