@@ -10,10 +10,10 @@ const IssueListHeader = () => {
       </TD>
       <TD>
         <Filters>
-          <IssueSelectFilter filterName='Authors' />
-          <IssueSelectFilter filterName='Labels' />
+          <IssueSelectFilter filterName='Author' />
+          <IssueSelectFilter filterName='Label' />
           <IssueSelectFilter filterName='Milestones' />
-          <IssueSelectFilter filterName='Assignees' />
+          <IssueSelectFilter filterName='Assignee' />
         </Filters>
       </TD>
     </Wrapper>
@@ -27,7 +27,7 @@ const Wrapper = styled.tr`
 `;
 
 const TD = styled.td`
-  padding: 10px 20px;
+  padding: 15px 20px;
 `;
 
 const Checkbox = styled.input.attrs({

@@ -49,7 +49,7 @@ const getIssues = async (req, res) => {
           },
         },
       ],
-      order: [['created_at', 'DESC']],
+      order: [['id', 'DESC']],
     });
 
     return res.json(issues);

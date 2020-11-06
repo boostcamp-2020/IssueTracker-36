@@ -26,20 +26,23 @@ const SelectFilter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-left: 20px;
+  margin-left: 25px;
 `;
 
 const FilterButton = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  color: ${({ theme }) => theme.color.secondaryTextColor};
   &:hover {
+    color: black;
     cursor: pointer;
   }
 `;
 
 const FilterName = styled.div`
   margin-right: 5px;
+  font-size: ${({ theme }) => theme.fontSize.sm};
   user-select: none;
 `;
 
