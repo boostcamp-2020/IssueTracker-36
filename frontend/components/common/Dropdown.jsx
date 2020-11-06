@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { RiCloseLine } from 'react-icons/ri';
 
-const Dropdown = ({ title, isInputExist, dataInDiv }) => {
+const Dropdown = ({ title, isInputExist, dataInDiv, toggleDropdown }) => {
   return (
     <DropdownWrapper>
       <Header>
         <Title>{title}</Title>
-        <RiCloseLine />
+        <RiCloseLine onClick={toggleDropdown} />
       </Header>
       {isInputExist && (
         <SearchWrapper>
@@ -23,8 +23,9 @@ const Dropdown = ({ title, isInputExist, dataInDiv }) => {
 };
 
 const DropdownWrapper = styled.div`
+  position: absolute;
   width: 300px;
-  margin: 0;
+  margin-top: 25px;
   background-color: white;
   border-radius: 3px;
   box-shadow: 0 0 3px gray;
@@ -83,6 +84,7 @@ Dropdown.propTypes = {
   title: PropTypes.string.isRequired,
   isInputExist: PropTypes.bool.isRequired,
   dataInDiv: PropTypes.array,
+  toggleDropdown: PropTypes.func.isRequired,
 };
 
 Dropdown.defaultProps = {
