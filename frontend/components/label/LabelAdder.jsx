@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import service from '@services';
-import Label from '@components/common/label';
+import Label from '@components/common/Label';
 import fontColorContrast from 'font-color-contrast';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
