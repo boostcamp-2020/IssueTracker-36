@@ -3,7 +3,10 @@ import styled from 'styled-components';
 
 const users = ({ data }) => {
   return data.reduce((acc, user) => {
-    // TODO: user data에 따른 div 생성
+    acc.push({
+      id: user.id,
+      div: <div>{user.nickName}</div>,
+    });
     return acc;
   }, []);
 };
@@ -32,7 +35,6 @@ const milestones = ({ data }) => {
       id: milestone.id,
       div: <div>{milestone.title}</div>,
     });
-
     return acc;
   }, []);
 };

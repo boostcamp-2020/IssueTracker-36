@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Dropdown from '@components/common/Dropdown';
 import service from '@services';
-import optionGenerator from '@utils/option-generator';
+import optionGenerator from '@utils/OptionGenerator';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
 const IssueSelectFilter = ({ filterName, dropdownTitle }) => {
@@ -22,8 +22,7 @@ const IssueSelectFilter = ({ filterName, dropdownTitle }) => {
         break;
       case 'Author':
       case 'Assignee':
-        // TODO: getUsers 구현
-        // setOptionData(optionGenerator.users(await service.getUsers()));
+        setOptionData(optionGenerator.users(await service.getUsers()));
         break;
       case 'Milestones':
         setOptionData(optionGenerator.milestones(await service.getMilestones({})));
