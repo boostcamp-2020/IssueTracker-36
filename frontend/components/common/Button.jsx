@@ -40,13 +40,12 @@ Button.defaultProps = {
 
 const ButtonWrapper = styled.button`
   display: inline-flex;
-  align-items: center;
   border-radius: 6px;
-  line-height: 20px;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   white-space: nowrap;
-  vertical-align: middle;
   transition: background-color ease 0.1s;
+  font-weight: 500;
+  line-height: 20px;
 
   &.primary-btn {
     background-color: ${({ theme }) => theme.color.greenColor};
@@ -83,7 +82,7 @@ const ButtonWrapper = styled.button`
   }
   &.sm-btn {
     padding: 3px 12px;
-    font-size: ${({ theme }) => theme.fontSize.sm};
+    font-size: ${({ theme }) => theme.fontSize.xs};
     svg {
       width: 14px;
       height: 14px;
@@ -91,7 +90,7 @@ const ButtonWrapper = styled.button`
   }
   &.lg-btn {
     padding: 5px 16px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.sm};
     svg {
       width: 16px;
       height: 16px;
@@ -120,16 +119,19 @@ const Counter = styled.span`
   background-color: ${({ theme }) => theme.color.counterBgColor};
   border-radius: 2rem;
   margin-left: 4px;
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  min-width: 20px;
+  line-height: 18px;
+  text-align: center;
+  border: 1px solid transparent;
 
   ${ButtonWrapper}.sm-btn & {
-    height: 16px;
-    line-height: 16px;
-    font-size: ${({ theme }) => theme.fontSize.xs};
+    height: 17px;
+    line-height: 17px;
   }
   ${ButtonWrapper}.lg-btn & {
     height: 18px;
     line-height: 18px;
-    font-size: ${({ theme }) => theme.fontSize.sm};
   }
 `;
 

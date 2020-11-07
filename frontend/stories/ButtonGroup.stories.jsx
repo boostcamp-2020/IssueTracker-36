@@ -34,7 +34,7 @@ export const Examples = () => (
     </p>
     <p>
       <ButtonGroup>
-        <Button text='Labels' size='large' type='tertiary' icon={<AiOutlineTag />} />
+        <Button text='Labels' size='large' type='tertiary' icon={<AiOutlineTag />} count={40} />
         <Button text='Milestones' size='large' type='tertiary' icon={<GoMilestone />} />
       </ButtonGroup>
     </p>
