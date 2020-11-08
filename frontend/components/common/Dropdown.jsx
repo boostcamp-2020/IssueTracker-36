@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import { RiCloseLine } from 'react-icons/ri';
 
-const Dropdown = ({ title, isInputExist, dataInDiv, toggleDropdown }) => {
+const Dropdown = ({ title, isInputExist, options, toggleDropdown }) => {
   const wrapper = useRef(undefined);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Dropdown = ({ title, isInputExist, dataInDiv, toggleDropdown }) => {
         </SearchWrapper>
       )}
       <OptionsWrapper>
-        {dataInDiv.map(({ id, div }) => (
+        {options.map(({ id, div }) => (
           <Option key={id}>{div}</Option>
         ))}
       </OptionsWrapper>
@@ -108,12 +108,12 @@ const Option = styled.div`
 Dropdown.propTypes = {
   title: PropTypes.string.isRequired,
   isInputExist: PropTypes.bool.isRequired,
-  dataInDiv: PropTypes.array,
+  options: PropTypes.array,
   toggleDropdown: PropTypes.func.isRequired,
 };
 
 Dropdown.defaultProps = {
-  dataInDiv: [],
+  options: [],
 };
 
 export default Dropdown;
