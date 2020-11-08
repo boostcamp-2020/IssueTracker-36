@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ReactMarkdown from 'react-markdown';
 
-const WritingArea = () => {
-  const [text, setText] = useState('');
+const WritingArea = ({ initValue }) => {
+  const [text, setText] = useState(initValue);
   const [isPreview, setIsPreview] = useState(false);
 
   const clickTab = (clickedPreview) => {
@@ -22,7 +24,13 @@ const WritingArea = () => {
           Preview
         </Tab>
       </Header>
-      <Textarea placeholder='Leave a comment' value={text} onChange={inputTextarea} />
+      <Body>
+        {isPreview ? (
+          <>{text.length ? <ReactMarkdown>{text}</ReactMarkdown> : 'Nothing to preview'}</>
+        ) : (
+          <Textarea placeholder='Leave a comment' value={text} onChange={inputTextarea} />
+        )}
+      </Body>
     </>
   );
 };
@@ -44,8 +52,11 @@ const Tab = styled.li`
   cursor: pointer;
 `;
 
-const Textarea = styled.textarea`
+const Body = styled.div`
   margin: 5px 10px;
+`;
+
+const Textarea = styled.textarea`
   padding: 10px;
   width: 100%;
   min-width: 100%;
@@ -57,5 +68,13 @@ const Textarea = styled.textarea`
     box-shadow: 0 0 3px ${({ theme }) => theme.color.blueColor};
   }
 `;
+
+WritingArea.propTypes = {
+  initValue: PropTypes.string,
+};
+
+WritingArea.defaultProps = {
+  initValue: '',
+};
 
 export default WritingArea;
