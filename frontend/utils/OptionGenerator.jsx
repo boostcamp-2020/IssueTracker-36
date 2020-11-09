@@ -1,47 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { GoCheck } from 'react-icons/go';
+import { RiCloseLine } from 'react-icons/ri';
 
-const users = ({ data }) => {
+const UserOption = ({ selected, nickName }) => {
+  const [isSelected, setIsSelected] = useState(selected);
+  const onClick = () => {
+    setIsSelected(!isSelected);
+  };
+
+  return (
+    <UserOptionWrapper onClick={onClick}>
+      <CheckedWrapper>{isSelected && <GoCheck />}</CheckedWrapper>
+      <p>{nickName}</p>
+    </UserOptionWrapper>
+  );
+};
+
+const users = ({ data }, selectedUser = []) => {
   return data.reduce((acc, user) => {
     acc.push({
       id: user.id,
-      div: <div>{user.nickName}</div>,
+      div: <UserOption selected={selectedUser.includes(user.id)} nickName={user.nickName} />,
     });
     return acc;
   }, []);
 };
 
-const labels = ({ data }) => {
+const UserOptionWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 15px;
+`;
+
+UserOption.propTypes = {
+  selected: PropTypes.bool.isRequired,
+  nickName: PropTypes.string.isRequired,
+};
+
+const LabelOption = ({ selected, label }) => {
+  const [isSelected, setIsSelected] = useState(selected);
+  const onClick = () => {
+    setIsSelected(!isSelected);
+  };
+
+  return (
+    <LabelOptionWrapper key={label.id} onClick={onClick}>
+      <CheckedWrapper>{isSelected && <GoCheck />}</CheckedWrapper>
+      <LabelColor color={label.color} />
+      <LabelInfoWrapper>
+        <div>{label.title}</div>
+        <LabelDescription>{label.description}</LabelDescription>
+      </LabelInfoWrapper>
+      <UnCheckWrapper>{isSelected && <RiCloseLine onClick={onClick} />}</UnCheckWrapper>
+    </LabelOptionWrapper>
+  );
+};
+
+const labels = ({ data }, selectedLabels = []) => {
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
-      div: (
-        <LabelOption key={label.id}>
-          <LabelColor color={label.color} />
-          <LabelInfoWrapper>
-            <LabelTitle>{label.title}</LabelTitle>
-            <LabelDescription>{label.description}</LabelDescription>
-          </LabelInfoWrapper>
-        </LabelOption>
-      ),
+      div: <LabelOption selected={selectedLabels.includes(label.id)} label={label} />,
     });
     return acc;
   }, []);
 };
 
-const milestones = ({ data }) => {
-  return data.reduce((acc, milestone) => {
-    acc.push({
-      id: milestone.id,
-      div: <div>{milestone.title}</div>,
-    });
-    return acc;
-  }, []);
-};
-
-const LabelOption = styled.div`
+const LabelOptionWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 8px 15px;
+`;
+
+const CheckedWrapper = styled.div`
+  width: 20px;
 `;
 
 const LabelColor = styled.div`
@@ -54,14 +89,33 @@ const LabelColor = styled.div`
 const LabelInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
   margin-left: 10px;
 `;
 
-const LabelTitle = styled.div``;
 const LabelDescription = styled.div`
   margin-top: 3px;
   color: gray;
   font-weight: lighter;
 `;
+
+const UnCheckWrapper = styled.div`
+  width: 20px;
+`;
+
+LabelOption.propTypes = {
+  selected: PropTypes.bool.isRequired,
+  label: PropTypes.object.isRequired,
+};
+
+const milestones = ({ data }) => {
+  return data.reduce((acc, milestone) => {
+    acc.push({
+      id: milestone.id,
+      div: <div>{milestone.title}</div>,
+    });
+    return acc;
+  }, []);
+};
 
 export default { users, labels, milestones };
