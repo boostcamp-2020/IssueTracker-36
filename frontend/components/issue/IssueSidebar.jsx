@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Dropdown from '@components/common/Dropdown';
 import optionGenerator from '@utils/OptionGenerator';
@@ -119,5 +120,10 @@ const Title = styled.div`
     color: ${({ theme }) => theme.color.blueColor};
   }
 `;
+
+IssueSidebar.propTypes = {
+  currentSelect: PropTypes.object.isRequired,
+  chageSelect: PropTypes.func.isRequired,
+};
 
 export default IssueSidebar;

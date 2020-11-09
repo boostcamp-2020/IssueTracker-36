@@ -57,7 +57,7 @@ const Dropdown = ({
               onClick(id);
             }}
           >
-            <OptionContent>{div}</OptionContent>
+            {div}
           </Option>
         ))}
       </OptionsWrapper>
@@ -133,10 +133,6 @@ const Option = styled.div`
     background-color: ${({ theme }) => theme.color.hoverBgColor};
     cursor: pointer;
   }
-`;
-
-const OptionContent = styled.div`
-  padding: 8px 15px;
 `;
 
 Dropdown.propTypes = {

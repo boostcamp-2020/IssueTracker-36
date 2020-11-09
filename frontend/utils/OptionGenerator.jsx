@@ -32,6 +32,7 @@ const UserOptionWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 8px 15px;
 `;
 
 UserOption.propTypes = {
@@ -71,6 +72,7 @@ const labels = ({ data }, selectedLabels = []) => {
 const LabelOptionWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 8px 15px;
 `;
 
 const CheckedWrapper = styled.div`
