@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import WritingArea from '@components/common/WritingArea';
 
-const NewIssueForm = () => {
-  const clickButton = (text) => {
-    // TODO: submit 클릭 동작
+const NewIssueForm = ({ onSubmit }) => {
+  const title = useRef(undefined);
+  const clickButton = (content) => {
+    onSubmit(title.current.value, content);
   };
 
   return (
     <Wrapper>
       <TitleWrapper>
-        <Title placeholder='Title' />
+        <Title placeholder='Title' ref={title} />
       </TitleWrapper>
       <WritingArea buttonText='Submit new issue' onButtonClick={clickButton} />
     </Wrapper>
@@ -36,5 +38,9 @@ const Title = styled.input`
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   border-radius: 5px;
 `;
+
+NewIssueForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default NewIssueForm;
