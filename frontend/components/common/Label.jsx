@@ -36,7 +36,7 @@ const LabelWrapper = styled.div`
   font-weight: 600;
   line-height: 22px !important;
   border: 1px solid transparent;
-  border-radius: '2em';
+  border-radius: 2em;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
     Segoe UI Emoji;
 `;
