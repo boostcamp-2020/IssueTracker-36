@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   IssueLabel.associate = (m) => {
-    IssueLabel.belongsTo(m.label);
-    IssueLabel.belongsTo(m.issue);
+    IssueLabel.belongsTo(m.label, { onDelete: 'CASCADE' });
+    IssueLabel.belongsTo(m.issue, { onDelete: 'CASCADE' });
   };
   return IssueLabel;
 };

@@ -34,7 +34,6 @@ const HeaderSlot = styled.thead`
 const BodySlot = styled.tbody``;
 const Table = styled.table`
   border-collapse: collapse;
-
   margin: 0px;
   width: ${(props) => props.width};
 `;

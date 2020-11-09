@@ -22,7 +22,6 @@ Label.defaultProps = {
 
 const LabelWrapper = styled.div`
   display: inline-block;
-
   vertical-align: baseline;
   margin: 2px;
   text-align: center;
