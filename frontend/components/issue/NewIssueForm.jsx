@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import WritingArea from '@components/common/WritingArea';
 
 const NewIssueForm = () => {
-  const clickButton = (text) => {};
+  const clickButton = (text) => {
+    // TODO: submit 클릭 동작
+  };
 
   return (
     <Wrapper>

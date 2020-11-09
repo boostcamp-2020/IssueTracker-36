@@ -31,7 +31,6 @@ const FormWrapper = styled.div`
 const SidebarWrapper = styled.div`
   flex: 1;
   margin-left: 15px;
-  border: 1px solid red;
 `;
 
 export default IssueAddPage;

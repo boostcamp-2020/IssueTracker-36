@@ -53,6 +53,7 @@ const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
           onClick={() => {
             onButtonClick(text);
           }}
+          disabled={!text.length}
         />
       </ButtonWrapper>
     </Wrapper>
