@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 import MainPageLayout from '@layouts/MainPageLayout';
 import service from '@services';
 import styled from 'styled-components';
 import WritingArea from '@components/common/WritingArea';
 import IssueDetailHeader from '@components/issue/issueDetailHeader';
 
-const IssueDetailPage = (id) => {
+const IssueDetailPage = () => {
+  const location = useLocation();
   const [issue, setissueInfo] = useState([]);
   const getIssue = async () => {
-    const issueInfo = await service.getIssue(2);
+    const issueInfo = await service.getIssue(location.state.id);
     setissueInfo(issueInfo.data);
-    console.log(issueInfo.data.isClosed);
   };
   useEffect(() => {
     getIssue();
