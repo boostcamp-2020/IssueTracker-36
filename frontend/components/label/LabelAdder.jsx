@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import service from '@services';
-import Label from '@components/common/label';
+import Label from '@components/common/Label';
 import Button from '@components/common/Button';
 import fontColorContrast from 'font-color-contrast';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import debounceHook from '@utils/debounceHook';
+import debounceHook from '@utils/DebounceHook';
 
 const LabelAdder = ({ getData }) => {
   const [preview, setPreview] = useState({ title: '', description: '', color: '#0366d6' });

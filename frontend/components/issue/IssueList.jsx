@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Mytable from '@components/common/table';
+import Mytable from '@components/common/Table';
 import IssueCard from '@components/IssueCard';
-import Label from '@components/common/label';
+import Label from '@components/common/Label';
 import IssueListHeader from './IssueListHeader';
 
 const labelGenerator = (issueLabels) => {
