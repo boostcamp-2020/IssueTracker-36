@@ -8,7 +8,7 @@ const Dropdown = ({ title, isInputExist, options, toggleDropdown }) => {
 
   useEffect(() => {
     const clickOutside = (e) => {
-      if (!wrapper.current?.contains(e.target)) toggleDropdown();
+      if (!wrapper.current?.contains(e.target) && !e.target.closest('svg')) toggleDropdown();
     };
     document.addEventListener('click', clickOutside);
     return () => {
