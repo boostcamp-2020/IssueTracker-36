@@ -58,7 +58,6 @@ module.exports = async (req, res) => {
     res.sendStatus(200);
   } catch (err) {
     if (transaction) await transaction.rollback();
-    console.log(err);
     res.sendStatus(500);
   }
 };
