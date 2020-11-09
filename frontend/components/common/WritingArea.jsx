@@ -24,7 +24,7 @@ const WritingArea = ({ initValue }) => {
   }, [text]);
 
   return (
-    <>
+    <Wrapper>
       <Header>
         <Tab onClick={() => clickTab(false)} isSelected={!isPreview}>
           Write
@@ -45,9 +45,15 @@ const WritingArea = ({ initValue }) => {
           </TextAreaWrapper>
         )}
       </Body>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
 const Header = styled.ul`
   padding: 10px;
@@ -67,7 +73,7 @@ const Tab = styled.li`
 `;
 
 const Body = styled.div`
-  margin: 5px 10px;
+  margin: 15px 10px;
 `;
 
 const TextAreaWrapper = styled.div`
