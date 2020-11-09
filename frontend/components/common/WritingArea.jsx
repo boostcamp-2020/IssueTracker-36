@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
+import Button from '@components/common/Button';
 
-const WritingArea = ({ initValue }) => {
+const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
   const [text, setText] = useState(initValue);
   const [isPreview, setIsPreview] = useState(false);
   const [showNumber, setShowNumber] = useState(false);
@@ -45,6 +46,15 @@ const WritingArea = ({ initValue }) => {
           </TextAreaWrapper>
         )}
       </Body>
+      <ButtonWrapper>
+        <Button
+          size='large'
+          text={buttonText}
+          onClick={() => {
+            onButtonClick(text);
+          }}
+        />
+      </ButtonWrapper>
     </Wrapper>
   );
 };
@@ -102,8 +112,17 @@ const TypedLettersNumber = styled.div`
   display: ${(props) => (props.showNumber ? '' : 'none')};
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 10px;
+`;
+
 WritingArea.propTypes = {
   initValue: PropTypes.string,
+  buttonText: PropTypes.string.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
 };
 
 WritingArea.defaultProps = {
