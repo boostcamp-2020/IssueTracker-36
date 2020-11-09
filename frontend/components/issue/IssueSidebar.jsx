@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Dropdown from '@components/common/Dropdown';
+import Label from '@components/common/Label';
 import optionGenerator from '@utils/OptionGenerator';
 import service from '@services';
 import { RiSettings4Line } from 'react-icons/ri';
@@ -17,7 +18,7 @@ const SidebarTab = ({
   defaultSelect,
   chageSelect,
   selectedItems,
-  noSelection,
+  allowMultiple,
 }) => {
   return (
     <>
@@ -36,11 +37,10 @@ const SidebarTab = ({
             onChange={(selected) => {
               chageSelect({ type, newSelection: selected });
             }}
+            allowMultiple={allowMultiple}
           />
         )}
-        {selectedItems?.length
-          ? selectedItems.map((selectedItem) => <div key={selectedItem}>{selectedItem}</div>)
-          : noSelection}
+        {selectedItems()}
       </Wrapper>
     </>
   );
@@ -49,6 +49,11 @@ const SidebarTab = ({
 const IssueSidebar = ({ currentSelect, chageSelect }) => {
   const [dropdown, setDropdown] = useState('');
   const [options, setOptions] = useState([]);
+  const [data, setData] = useState({
+    users: [],
+    labels: [],
+    milestones: [],
+  });
   const toggleDropdown = () => {
     setDropdown('');
     setOptions([]);
@@ -56,18 +61,18 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
 
   const onClick = async (tabName) => {
     setDropdown(tabName);
-    switch (tabName) {
-      case 'assignee':
-        setOptions(optionGenerator.users(await service.getUsers(), currentSelect.assignees));
-        break;
-      case 'label':
-        setOptions(optionGenerator.labels(await service.getLabels()));
-        break;
-      case 'milestone':
-        setOptions(optionGenerator.milestones(await service.getMilestones({})));
-        break;
-      default:
-        setOptions([]);
+    if (tabName === 'assignee') {
+      const users = await service.getUsers();
+      setData({ ...data, users });
+      setOptions(optionGenerator.users(users, currentSelect.assignees));
+    } else if (tabName === 'label') {
+      const labels = await service.getLabels();
+      setData({ ...data, labels });
+      setOptions(optionGenerator.labels(labels, currentSelect.labels));
+    } else if (tabName === 'milestone') {
+      const milestones = await service.getMilestones({});
+      setData({ ...data, milestones });
+      setOptions(optionGenerator.milestones(milestones, currentSelect.milestone));
     }
   };
 
@@ -85,8 +90,17 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
         toggleDropdown={toggleDropdown}
         defaultSelect={currentSelect.assignees}
         chageSelect={chageSelect}
-        selectedItems={currentSelect.assignees}
-        noSelection='No one'
+        allowMultiple
+        selectedItems={() => {
+          if (!currentSelect.assignees.length) return <div>No one</div>;
+          return currentSelect.assignees.map((assignee) => {
+            return (
+              <SelectedUser key={assignee}>
+                {data.users.data.find((user) => user.id === assignee).nickName}
+              </SelectedUser>
+            );
+          });
+        }}
       />
       <SidebarTab
         dropdown={dropdown}
@@ -100,8 +114,14 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
         toggleDropdown={toggleDropdown}
         defaultSelect={currentSelect.labels}
         chageSelect={chageSelect}
-        selectedItems={currentSelect.labels}
-        noSelection='None yet'
+        allowMultiple
+        selectedItems={() => {
+          if (!currentSelect.labels.length) return <div>None yet</div>;
+          return currentSelect.labels.map((labelId) => {
+            const currentLabel = data.labels.data.find((label) => label.id === labelId);
+            return <Label key={labelId} text={currentLabel.title} bg={currentLabel.color} />;
+          });
+        }}
       />
       <SidebarTab
         dropdown={dropdown}
@@ -114,9 +134,19 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
         options={options}
         toggleDropdown={toggleDropdown}
         defaultSelect={currentSelect.milestone}
-        chageSelect={chageSelect}
-        selectedItems={currentSelect.milestone}
-        noSelection='No milestone'
+        chageSelect={({ type, newSelection }) => {
+          chageSelect({ type, newSelection });
+          toggleDropdown();
+        }}
+        allowMultiple={false}
+        selectedItems={() => {
+          if (!currentSelect.milestone) return <div>No milestone</div>;
+          return (
+            <div>
+              {data.milestones.data.find((milestone) => milestone.id === currentSelect.milestone)?.title}
+            </div>
+          );
+        }}
       />
     </>
   );
@@ -138,6 +168,11 @@ const Title = styled.div`
   &:hover {
     color: ${({ theme }) => theme.color.blueColor};
   }
+`;
+
+const SelectedUser = styled.div`
+  padding: 5px;
+  font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 
 IssueSidebar.propTypes = {
