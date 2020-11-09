@@ -1,5 +1,5 @@
 import React from 'react';
-import Mytable from '@components/common/table';
+import Mytable from '@components/common/Table';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { GoMilestone, GoCheck, GoCalendar } from 'react-icons/go';
@@ -88,7 +88,7 @@ const TR = styled.tr`
 `;
 const Btn = styled.button`
   color: ${(props) => props.theme.color.grayColor};
-  &: focus {
+  &:focus {
     color: ${(props) => props.theme.color.blackColor};
   }
 `;

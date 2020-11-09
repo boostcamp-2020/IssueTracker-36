@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import service from '@services';
 import Label from '@components/common/label';
 import Button from '@components/common/Button';
