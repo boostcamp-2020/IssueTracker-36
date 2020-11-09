@@ -6,8 +6,12 @@ const getters = (apiRequest) => {
       },
     });
   };
+  const getMilestone = (id) => {
+    return apiRequest.get(`/api/milestone/${id}`);
+  };
   return {
     getMilestones,
+    getMilestone,
   };
 };
 export default getters;

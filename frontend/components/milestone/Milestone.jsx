@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { GoCalendar } from 'react-icons/go';
 import Moment from 'react-moment';
+import MilestoneGraph from '@components/milestone/MilestoneGraph';
 
 const Milestone = ({ milestone }) => {
   const clickEditBtn = async (id) => {
@@ -29,10 +30,10 @@ const Milestone = ({ milestone }) => {
         {description}
       </TD>
       <TD>
-        <div>그래프</div>
-        <br />
-        <div>그래프설명</div>
-        <br />
+        <div>
+          <MilestoneGraph id={id} graphDescription />
+        </div>
+        <br/>
         <BTN onClick={() => clickEditBtn(id)}>edit</BTN>
         <BTN onClick={() => clickCloseBtn(id)}>close</BTN>
         <DeleteBTN onClick={() => clickDeleteBtn(id)}>delete</DeleteBTN>
