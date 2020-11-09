@@ -30,6 +30,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^3.11.0",
+    "react-is": "^17.0.1",
     "react-markdown": "^5.0.2",
     "react-moment": "^1.0.0",
     "react-router-dom": "^5.2.0",
@@ -45,7 +46,6 @@
     "@storybook/addon-knobs": "^6.0.28",
     "@storybook/addon-links": "^6.0.28",
     "@storybook/react": "^6.0.28",
-    "react-is": "^17.0.1",
     "webpack-dev-server": "^3.11.0"
   }
 }
