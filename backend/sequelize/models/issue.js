@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   Issue.associate = (m) => {
     Issue.hasMany(m.issue_label);
     Issue.hasMany(m.user_issue);
+    Issue.hasMany(m.comment);
     Issue.belongsTo(m.milestone);
   };
   return Issue;

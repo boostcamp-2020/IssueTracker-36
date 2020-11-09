@@ -1,13 +1,25 @@
-const { issue } = require('../../sequelize/models');
+const { issue, comment, reaction, user_issue } = require('../../sequelize/models');
 
-/**
- * @todo 하나의 issue 데이터 받아오는 로직 구현
- */
 const getIssue = async (req, res) => {
   try {
-    const issues = await issue.findAll();
-    res.json({ issues });
+    const { id } = req.params;
+    const result = await issue.findOne({
+      where: {
+        id,
+      },
+      include: [
+        {
+          model: comment,
+          include: [reaction],
+        },
+        {
+          model: user_issue,
+        },
+      ],
+    });
+    res.json(result);
   } catch (e) {
+    console.log(e);
     res.sendStatus(500);
   }
 };
