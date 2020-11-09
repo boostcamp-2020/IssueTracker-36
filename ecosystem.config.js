@@ -29,7 +29,7 @@ module.exports = {
           port: '5556',
         },
       ],
-      ref: 'origin/feat/deploy', // 서버에서 clone할 브랜치
+      ref: 'origin/dev', // 서버에서 clone할 브랜치
       repo: 'git@github.com:boostcamp-2020/IssueTracker-36.git', // Git 저장소 URL
       ssh_options: 'StrictHostKeyChecking=no', // SSH 접속 옵션.
       path: '/home', // 앱을 설치할 폴더 위치
@@ -47,7 +47,7 @@ module.exports = {
           port: '5555',
         },
       ],
-      ref: 'origin/feat/deploy', // 서버에서 clone할 브랜치
+      ref: 'origin/dev', // 서버에서 clone할 브랜치
       repo: 'git@github.com:boostcamp-2020/IssueTracker-36.git', // Git 저장소 URL
       ssh_options: 'StrictHostKeyChecking=no', // SSH 접속 옵션.
       path: '/home', // 앱을 설치할 폴더 위치
