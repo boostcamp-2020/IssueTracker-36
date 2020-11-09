@@ -33,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     },
   );
-  // Milestone.associate = (m) => {
-  //   Milestone.hasMany(m.issue);
-  // };
+  Milestone.associate = (m) => {
+    Milestone.hasMany(m.issue);
+  };
   return Milestone;
 };
