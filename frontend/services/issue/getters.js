@@ -9,9 +9,12 @@ const getters = (apiRequest) => {
     };
     return apiRequest.get(`/api/issues`, { params });
   };
-
+  const getIssue = (id) => {
+    return apiRequest.get(`/api/issue/${id}`);
+  };
   return {
     initialGetIssues,
+    getIssue,
   };
 };
 
