@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
     await userIssue.bulkCreate(assigneeDatas, { transaction });
 
     await transaction.commit();
-    res.sendStatus(200);
+    res.json(createdIssue);
   } catch (err) {
     if (transaction) await transaction.rollback();
     res.sendStatus(500);
