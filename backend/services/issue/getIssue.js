@@ -1,4 +1,4 @@
-const { issue, comment, reaction, user_issue } = require('../../sequelize/models');
+const { issue, comment, reaction, user_issue: userIssue } = require('../../sequelize/models');
 
 const getIssue = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ const getIssue = async (req, res) => {
           include: [reaction],
         },
         {
-          model: user_issue,
+          model: userIssue,
         },
       ],
     });

@@ -10,12 +10,15 @@ router.get('/issue/:id', service.getIssue);
 // post
 
 router.post('/issue', service.addIssue);
-router.post('/issue/:issue_id/user/:user_id', service.addIssueUser);
-router.post('/issue/:issue_id/label/:label_id', service.addIssueLabel);
+router.post('/issue/:issueId/user/:userId', service.addIssueUser);
+router.post('/issue/:issueId/label/:labelId', service.addIssueLabel);
 // patch
 router.patch('/issues', service.patchIssues);
 router.patch('/issue/:id', service.editIssue);
 
 // delete
+router.delete('/issue/:id', service.deleteIssue);
+router.delete('/issue/:issueId/user/:userId', service.deleteIssueUser);
+router.delete('/issue/:issueId/label/:labelId', service.deleteIssueLabel);
 
 module.exports = router;
