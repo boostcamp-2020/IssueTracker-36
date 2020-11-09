@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
+import Button from '@components/common/Button';
 
-const WritingArea = ({ initValue }) => {
+const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
   const [text, setText] = useState(initValue);
   const [isPreview, setIsPreview] = useState(false);
   const [showNumber, setShowNumber] = useState(false);
@@ -24,7 +25,7 @@ const WritingArea = ({ initValue }) => {
   }, [text]);
 
   return (
-    <>
+    <Wrapper>
       <Header>
         <Tab onClick={() => clickTab(false)} isSelected={!isPreview}>
           Write
@@ -45,9 +46,25 @@ const WritingArea = ({ initValue }) => {
           </TextAreaWrapper>
         )}
       </Body>
-    </>
+      <ButtonWrapper>
+        <Button
+          size='large'
+          text={buttonText}
+          onClick={() => {
+            onButtonClick(text);
+          }}
+          disabled={!text.length}
+        />
+      </ButtonWrapper>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
 const Header = styled.ul`
   padding: 10px;
@@ -67,7 +84,7 @@ const Tab = styled.li`
 `;
 
 const Body = styled.div`
-  margin: 5px 10px;
+  margin: 15px 10px;
 `;
 
 const TextAreaWrapper = styled.div`
@@ -96,8 +113,17 @@ const TypedLettersNumber = styled.div`
   display: ${(props) => (props.showNumber ? '' : 'none')};
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 10px;
+`;
+
 WritingArea.propTypes = {
   initValue: PropTypes.string,
+  buttonText: PropTypes.string.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
 };
 
 WritingArea.defaultProps = {

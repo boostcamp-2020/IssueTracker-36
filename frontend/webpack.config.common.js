@@ -14,6 +14,9 @@ module.exports = {
       '@plugins': path.resolve(__dirname, './plugins'),
     },
     extensions: ['.js', '.jsx'],
+    fallback: {
+      path: false,
+    },
   },
   entry: {
     app: ['./index.jsx'],
