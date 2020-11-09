@@ -7,11 +7,11 @@ import IssueSidebar from '@components/issue/IssueSidebar';
 const selectReducer = (state, action) => {
   switch (action.type) {
     case 'assignee':
-      return { ...state, user: action.newSelction };
+      return { ...state, assignees: action.newSelection };
     case 'label':
-      return { ...state, labels: action.newSelction };
+      return { ...state, labels: action.newSelection };
     case 'milestone':
-      return { ...state, milestone: action.newSelction };
+      return { ...state, milestone: action.newSelection };
     default:
       return state;
   }
