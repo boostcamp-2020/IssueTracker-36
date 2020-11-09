@@ -29,7 +29,7 @@ const IssueList = ({ issues }) => {
                 issueId={issue.id}
                 created={issue.createdAt}
                 userNickname={issue.user_issues[0].user.nickName}
-                milestoneName={issue.milestone.title}
+                milestoneName={issue.milestone?.title}
                 isClosed={issue.isClosed}
                 key={issue.id}
               />
