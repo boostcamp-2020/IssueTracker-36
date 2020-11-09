@@ -7,9 +7,7 @@ const dev = process.env.NODE_ENV === 'development';
 
 require('dotenv').config();
 
-if (dev) {
-  app.use(morgan('dev'));
-}
+app.use(morgan(dev ? 'dev' : 'combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
