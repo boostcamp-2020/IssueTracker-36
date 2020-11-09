@@ -39,7 +39,13 @@ const IssueSelectFilter = ({ filterName, dropdownTitle }) => {
         <RiArrowDownSFill />
       </FilterButton>
       {showDropdown && (
-        <Dropdown title={dropdownTitle} isInputExist options={optionData} toggleDropdown={toggleDropdown} />
+        <Dropdown
+          title={dropdownTitle}
+          isInputExist
+          options={optionData}
+          marginTop='25px'
+          toggleDropdown={toggleDropdown}
+        />
       )}
     </SelectFilter>
   );

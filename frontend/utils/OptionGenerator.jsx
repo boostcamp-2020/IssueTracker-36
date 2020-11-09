@@ -22,7 +22,7 @@ const users = ({ data }, selectedUser = []) => {
   return data.reduce((acc, user) => {
     acc.push({
       id: user.id,
-      div: <UserOption selected={selectedUser.indexOf(user.id) !== -1} nickName={user.nickName} />,
+      div: <UserOption selected={selectedUser.includes(user.id)} nickName={user.nickName} />,
     });
     return acc;
   }, []);
@@ -62,7 +62,7 @@ const labels = ({ data }, selectedLabels = []) => {
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
-      div: <LabelOption selected={selectedLabels.indexOf(label.id) !== -1} label={label} />,
+      div: <LabelOption selected={selectedLabels.includes(label.id)} label={label} />,
     });
     return acc;
   }, []);

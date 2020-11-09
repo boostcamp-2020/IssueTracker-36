@@ -1,10 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import { RiCloseLine } from 'react-icons/ri';
 
-const Dropdown = ({ title, isInputExist, options, toggleDropdown }) => {
+const Dropdown = ({
+  title,
+  isInputExist,
+  options,
+  toggleDropdown,
+  defaultSelect,
+  onChange,
+  width,
+  marginTop,
+}) => {
   const wrapper = useRef(undefined);
+  const [selected, setSelected] = useState(defaultSelect);
 
   useEffect(() => {
     const clickOutside = (e) => {
@@ -13,11 +23,23 @@ const Dropdown = ({ title, isInputExist, options, toggleDropdown }) => {
     document.addEventListener('click', clickOutside);
     return () => {
       document.removeEventListener('click', clickOutside);
+      onChange(selected);
     };
-  }, []);
+  }, [selected]);
+
+  const onClick = (id) => {
+    if (!selected.includes(id)) setSelected([...selected, id]);
+    else
+      setSelected(
+        selected.reduce((acc, prevId) => {
+          if (prevId !== id) acc.push(prevId);
+          return acc;
+        }, []),
+      );
+  };
 
   return (
-    <DropdownWrapper ref={wrapper}>
+    <DropdownWrapper ref={wrapper} width={width} marginTop={marginTop}>
       <Header>
         <Title>{title}</Title>
         <RiCloseLine onClick={toggleDropdown} />
@@ -29,7 +51,14 @@ const Dropdown = ({ title, isInputExist, options, toggleDropdown }) => {
       )}
       <OptionsWrapper>
         {options.map(({ id, div }) => (
-          <Option key={id}>{div}</Option>
+          <Option
+            key={id}
+            onClick={() => {
+              onClick(id);
+            }}
+          >
+            <OptionContent>{div}</OptionContent>
+          </Option>
         ))}
       </OptionsWrapper>
     </DropdownWrapper>
@@ -43,11 +72,12 @@ const boxFade = keyframes`
 
 const DropdownWrapper = styled.div`
   position: absolute;
-  width: 280px;
-  margin-top: 25px;
+  width: ${(props) => props.width || '280px'};
+  margin-top: ${(props) => props.marginTop};
   background-color: white;
   border-radius: 3px;
   box-shadow: 0 0 3px gray;
+  z-index: 2;
   animation: ${boxFade} 0.2s;
 `;
 
@@ -95,7 +125,7 @@ const OptionsWrapper = styled.div`
 `;
 
 const Option = styled.div`
-  padding: 8px 20px;
+  height: fit-content;
   font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: bold;
   border-top: 1px solid ${({ theme }) => theme.color.borderColor};
@@ -105,15 +135,28 @@ const Option = styled.div`
   }
 `;
 
+const OptionContent = styled.div`
+  padding: 8px 15px;
+`;
+
 Dropdown.propTypes = {
   title: PropTypes.string.isRequired,
-  isInputExist: PropTypes.bool.isRequired,
+  isInputExist: PropTypes.bool,
   options: PropTypes.array,
   toggleDropdown: PropTypes.func.isRequired,
+  defaultSelect: PropTypes.array,
+  onChange: PropTypes.func,
+  width: PropTypes.string,
+  marginTop: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
+  isInputExist: true,
   options: [],
+  defaultSelect: [],
+  onChange: () => {},
+  width: undefined,
+  marginTop: '0px',
 };
 
 export default Dropdown;
