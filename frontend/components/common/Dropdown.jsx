@@ -1,33 +1,54 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { RiCloseLine } from 'react-icons/ri';
 
-const Dropdown = ({ title, isInputExist, dataInDiv }) => {
+const Dropdown = ({ title, isInputExist, options, toggleDropdown }) => {
+  const wrapper = useRef(undefined);
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      if (!wrapper.current?.contains(e.target)) toggleDropdown();
+    };
+    document.addEventListener('click', clickOutside);
+    return () => {
+      document.removeEventListener('click', clickOutside);
+    };
+  }, []);
+
   return (
-    <DropdownWrapper>
+    <DropdownWrapper ref={wrapper}>
       <Header>
         <Title>{title}</Title>
-        <RiCloseLine />
+        <RiCloseLine onClick={toggleDropdown} />
       </Header>
       {isInputExist && (
         <SearchWrapper>
           <Search />
         </SearchWrapper>
       )}
-      {dataInDiv.map((data) => (
-        <Option>{data}</Option>
-      ))}
+      <OptionsWrapper>
+        {options.map(({ id, div }) => (
+          <Option key={id}>{div}</Option>
+        ))}
+      </OptionsWrapper>
     </DropdownWrapper>
   );
 };
 
+const boxFade = keyframes`
+  0% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+`;
+
 const DropdownWrapper = styled.div`
-  width: 300px;
-  margin: 0;
+  position: absolute;
+  width: 280px;
+  margin-top: 25px;
   background-color: white;
   border-radius: 3px;
   box-shadow: 0 0 3px gray;
+  animation: ${boxFade} 0.2s;
 `;
 
 const Header = styled.div`
@@ -47,7 +68,7 @@ const Header = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: bold;
 `;
 
@@ -68,6 +89,11 @@ const Search = styled.input`
   }
 `;
 
+const OptionsWrapper = styled.div`
+  max-height: 350px;
+  overflow-y: auto;
+`;
+
 const Option = styled.div`
   padding: 8px 20px;
   font-size: ${({ theme }) => theme.fontSize.xs};
@@ -82,11 +108,12 @@ const Option = styled.div`
 Dropdown.propTypes = {
   title: PropTypes.string.isRequired,
   isInputExist: PropTypes.bool.isRequired,
-  dataInDiv: PropTypes.array,
+  options: PropTypes.array,
+  toggleDropdown: PropTypes.func.isRequired,
 };
 
 Dropdown.defaultProps = {
-  dataInDiv: [],
+  options: [],
 };
 
 export default Dropdown;
