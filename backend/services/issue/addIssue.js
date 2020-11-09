@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
     // 이슈등록
-    const creaatedIssue = await issue.create(
+    const createdIssue = await issue.create(
       {
         title,
         isClosed: 0,
@@ -15,14 +15,11 @@ module.exports = async (req, res) => {
     );
 
     //   라벨 등록
-    const labelDatas = [];
-    labelIds.forEach((id) => {
-      const obj = {
-        issueId: creaatedIssue.id,
+    const labelDatas = labelIds.map((id) => {
+      return {
+        issueId: createdIssue.id,
         labelId: id,
       };
-
-      labelDatas.push(obj);
     });
 
     await issue_label.bulkCreate(labelDatas, { transaction });
@@ -33,31 +30,29 @@ module.exports = async (req, res) => {
         content,
         isMain: 1,
         isClosed: 0,
-        issueId: creaatedIssue.id,
+        issueId: createdIssue.id,
         userId: uid,
       },
       { transaction },
     );
 
     //  assignee 등록
-    const asigneeDatas = [
-      {
-        issueId: creaatedIssue.id,
-        userId: uid,
-        is_owner: 1,
-      },
-    ];
 
-    assigneeIds.forEach((id) => {
-      const obj = {
-        issueId: creaatedIssue.id,
+    const assigneeDatas = assigneeIds.map((id) => {
+      return {
+        issueId: createdIssue.id,
         userId: id,
         is_owner: 0,
       };
-      asigneeDatas.push(obj);
     });
 
-    await user_issue.bulkCreate(asigneeDatas, { transaction });
+    assigneeDatas.push({
+      issueId: createdIssue.id,
+      userId: uid,
+      is_owner: 1,
+    });
+
+    await user_issue.bulkCreate(assigneeDatas, { transaction });
 
     await transaction.commit();
     res.sendStatus(200);
