@@ -9,7 +9,7 @@ import styled from 'styled-components';
 const IssueDetailHeader = ({ issue }) => {
   const { title, id, isClosed, createdAt } = issue;
   const user = issue.user_issues ? issue.user_issues[0].user.nickName : '';
-  const comment = issue.comment ? issue.comment.length : 0;
+  const commentNumber = issue.comment ? issue.comment.length : 0;
   return (
     <>
       <IssueHeader>
@@ -24,7 +24,7 @@ const IssueDetailHeader = ({ issue }) => {
             )}
             {`${user} opened this issue `}
             <Moment fromNow>{createdAt}</Moment>
-            {` · ${comment} comment`}
+            {` · ${commentNumber} comment`}
           </IssueInfo>
         </IssueTitle>
         <ButtonWrapper>

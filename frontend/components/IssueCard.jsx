@@ -20,9 +20,13 @@ const IssueCard = ({ title, labelList, issueId, created, userNickname, milestone
             <GoIssueOpened style={{ color: 'green' }} />
           )}
         </IssueClosedIcon>
-        <Title onClick={() => {
-            history.push({ pathname: `/issues/${issueId}`, state: { id: issueId } });
-          }}>{title}</Title>
+        <Title
+          onClick={() => {
+            history.push(`/issues/${issueId}`);
+          }}
+        >
+          {title}
+        </Title>
         {labelList.map((label) => label)}
       </CardMain>
       <CardInfo>
