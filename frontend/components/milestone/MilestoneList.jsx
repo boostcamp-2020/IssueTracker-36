@@ -1,5 +1,5 @@
 import React from 'react';
-import Mytable from '@components/common/table';
+import Mytable from '@components/common/Table';
 import MilestoneHeader from '@components/milestone/MilestoneListHeader';
 import Milestone from '@components/milestone/Milestone';
 import PropTypes from 'prop-types';
