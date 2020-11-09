@@ -12,6 +12,7 @@ const Dropdown = ({
   onChange,
   width,
   marginTop,
+  allowMultiple,
 }) => {
   const wrapper = useRef(undefined);
   const [selected, setSelected] = useState(defaultSelect);
@@ -28,7 +29,8 @@ const Dropdown = ({
   }, [selected]);
 
   const onClick = (id) => {
-    if (!selected.includes(id)) setSelected([...selected, id]);
+    if (!allowMultiple) setSelected(id);
+    else if (!selected.includes(id)) setSelected([...selected, id]);
     else
       setSelected(
         selected.reduce((acc, prevId) => {
@@ -130,7 +132,8 @@ const Option = styled.div`
   font-weight: bold;
   border-top: 1px solid ${({ theme }) => theme.color.borderColor};
   &:hover {
-    background-color: ${({ theme }) => theme.color.hoverBgColor};
+    color: white;
+    background-color: ${({ theme }) => theme.color.blueColor};
     cursor: pointer;
   }
 `;
@@ -140,10 +143,11 @@ Dropdown.propTypes = {
   isInputExist: PropTypes.bool,
   options: PropTypes.array,
   toggleDropdown: PropTypes.func.isRequired,
-  defaultSelect: PropTypes.array,
+  defaultSelect: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
   onChange: PropTypes.func,
   width: PropTypes.string,
   marginTop: PropTypes.string,
+  allowMultiple: PropTypes.bool,
 };
 
 Dropdown.defaultProps = {
@@ -153,6 +157,7 @@ Dropdown.defaultProps = {
   onChange: () => {},
   width: undefined,
   marginTop: '0px',
+  allowMultiple: true,
 };
 
 export default Dropdown;
