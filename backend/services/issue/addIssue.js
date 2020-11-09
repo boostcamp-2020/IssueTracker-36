@@ -1,4 +1,10 @@
-const { sequelize, issue, comment, user_issue, issue_label } = require('../../sequelize/models');
+const {
+  sequelize,
+  issue,
+  comment,
+  user_issue: userIssue,
+  issue_label: issueLabel,
+} = require('../../sequelize/models');
 
 module.exports = async (req, res) => {
   const { uid, title, content, assigneeIds, labelIds, milestoneId } = req.body;
@@ -22,7 +28,7 @@ module.exports = async (req, res) => {
       };
     });
 
-    await issue_label.bulkCreate(labelDatas, { transaction });
+    await issueLabel.bulkCreate(labelDatas, { transaction });
 
     //  댓글 등록
     await comment.create(
@@ -52,7 +58,7 @@ module.exports = async (req, res) => {
       is_owner: 1,
     });
 
-    await user_issue.bulkCreate(assigneeDatas, { transaction });
+    await userIssue.bulkCreate(assigneeDatas, { transaction });
 
     await transaction.commit();
     res.sendStatus(200);
