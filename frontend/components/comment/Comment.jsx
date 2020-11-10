@@ -3,20 +3,23 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import ReactionButton from '@components/comment/ReactionButton';
+import ReactMarkdown from 'react-markdown';
 
-const Comment = ({ comment: { isMain, content, updatedAt, reactions, userId } }) => {
+const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) => {
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>
       <Head>
         <Title>
-          <NickName>{userId}</NickName> commented <Moment fromNow>{updatedAt}</Moment>
+          <NickName>{user.nickName}</NickName> commented <Moment fromNow>{updatedAt}</Moment>
         </Title>
         <Buttons>
           <ReactionButton onClickReaction={console.log} />
           <EditButton type='button'>Edit</EditButton>
         </Buttons>
       </Head>
-      <Body>{content}</Body>
+      <Body>
+        <ReactMarkdown className='markdown-body'>{content}</ReactMarkdown>
+      </Body>
     </CommentWrapper>
   );
 };

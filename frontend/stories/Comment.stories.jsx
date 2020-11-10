@@ -3,18 +3,23 @@ import Comment from '@components/comment/Comment';
 import { text, array, boolean } from '@storybook/addon-knobs';
 
 export default {
-  title: 'Comment',
+  title: 'Comment/Comment',
   component: Comment,
 };
 
 const comment = {
   id: 53,
   isMain: true,
-  content: 'This is Comment!! comment id=53',
+  content: `## HI! ISSUE-2 
+  - This is Comment!! comment id=53 
+  - zdsadasdasdasdasdsadasdasasdasda
+  - **1234**
+  `,
   createdAt: '2020-11-09T07:10:40.000Z',
   updatedAt: '2020-11-09T07:10:40.000Z',
   userId: 14,
   issueId: 2,
+  user: { nickName: 'user-14' },
   reactions: [
     {
       id: 24,
