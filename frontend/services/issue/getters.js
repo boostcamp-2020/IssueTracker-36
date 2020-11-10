@@ -1,19 +1,12 @@
-// const querystring = require('querystring');
-
 const getters = (apiRequest) => {
-  const initialGetIssues = (count) => {
-    const params = {
-      page: 1,
-      count,
-      closed: 'false',
-    };
-    return apiRequest.get(`/api/issues`, { params });
-  };
   const getIssue = (id) => {
     return apiRequest.get(`/api/issue/${id}`);
   };
+  const getIssues = (pathname, queries) => {
+    return apiRequest.get(`/api${pathname}${queries}`);
+  };
   return {
-    initialGetIssues,
+    getIssues,
     getIssue,
   };
 };
