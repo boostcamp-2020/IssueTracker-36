@@ -9,7 +9,7 @@ router.get('/milestone/:id', service.getMilestone);
 
 // post
 // patch
-router.patch('/milestone/:id', service.editMilestone);
+router.patch('/milestone/:id', service.updateMilestone);
 
 // delete
 router.delete('/milestone/:id', service.deleteMilestone);

@@ -1,6 +1,6 @@
 const { milestone: Milestone } = require('../../sequelize/models');
 
-const editMilestone = async (req, res) => {
+const updateMilestone = async (req, res) => {
   try {
     const { title, dueDate, description, isClosed } = req.body;
     const milestone = await Milestone.findByPk(req.params.id);
@@ -20,4 +20,4 @@ const editMilestone = async (req, res) => {
   }
 };
 
-module.exports = editMilestone;
+module.exports = updateMilestone;
