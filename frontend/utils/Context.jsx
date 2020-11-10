@@ -20,7 +20,7 @@ const reducer = (state, action) => {
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, {
     userInfo: {},
-    issueFilter: [],
+    issueFilter: {},
     labels: [],
     milestones: [],
   });
