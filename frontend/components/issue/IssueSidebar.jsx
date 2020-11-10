@@ -137,13 +137,13 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
         defaultSelect={currentSelect.milestone}
         chageSelect={({ type, newSelection }) => {
           chageSelect({ type, newSelection });
-          toggleDropdown();
+          if (newSelection.length && newSelection[0] !== currentSelect.milestone[0]) toggleDropdown();
         }}
         allowMultiple={false}
         selectedItems={() => {
-          if (!currentSelect.milestone) return <div>No milestone</div>;
+          if (!currentSelect.milestone.length) return <div>No milestone</div>;
           const selectedMilestone = data.milestones.data.find(
-            (milestone) => milestone.id === currentSelect.milestone,
+            (milestone) => milestone.id === currentSelect.milestone[0],
           );
           return (
             <div>

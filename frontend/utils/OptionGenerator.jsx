@@ -126,7 +126,7 @@ const milestones = ({ data }, selectedMilestone) => {
       id: milestone.id,
       div: (
         <MilestoneOption
-          selected={selectedMilestone === milestone.id}
+          selected={selectedMilestone[0] === milestone.id}
           title={milestone.title}
           dueDate={new Date(milestone.dueDate)}
         />
