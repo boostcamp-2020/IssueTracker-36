@@ -4,8 +4,11 @@ import styled from 'styled-components';
 import Moment from 'react-moment';
 import { VscMilestone } from 'react-icons/vsc';
 import { GoIssueOpened, GoIssueClosed } from 'react-icons/go';
+import { useHistory } from 'react-router-dom';
+
 
 const IssueCard = ({ title, labelList, issueId, created, userNickname, milestoneName, isClosed }) => {
+  const history = useHistory();
   return (
     <Wrapper>
       <CardMain>
@@ -17,7 +20,13 @@ const IssueCard = ({ title, labelList, issueId, created, userNickname, milestone
             <GoIssueOpened style={{ color: 'green' }} />
           )}
         </IssueClosedIcon>
-        <Title>{title}</Title>
+        <Title
+          onClick={() => {
+            history.push(`/issues/${issueId}`);
+          }}
+        >
+          {title}
+        </Title>
         {labelList.map((label) => label)}
       </CardMain>
       <CardInfo>
@@ -66,7 +75,7 @@ const IssueClosedIcon = styled.div`
   }
 `;
 
-const Title = styled.h2`
+const Title = styled.button`
   margin-right: 5px;
   font-size: ${({ theme }) => theme.fontSize.md};
   &:hover {
