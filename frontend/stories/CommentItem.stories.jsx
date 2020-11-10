@@ -1,9 +1,9 @@
 import React from 'react';
-import Comment from '@components/comment/Comment';
+import CommentItem from '@components/comment/CommentItem';
 
 export default {
-  title: 'Comment/Comment',
-  component: Comment,
+  title: 'Comment/CommentItem',
+  component: CommentItem,
 };
 
 const comment = {
@@ -47,4 +47,4 @@ const comment = {
   ],
 };
 
-export const example = () => <Comment comment={comment} />;
+export const example = () => <CommentItem comment={comment} />;
