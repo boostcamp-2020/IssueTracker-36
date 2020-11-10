@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Dropdown from '@components/common/Dropdown';
 import Label from '@components/common/Label';
+import ProgressBar from '@components/common/ProgressBar';
 import optionGenerator from '@utils/OptionGenerator';
 import service from '@services';
 import { RiSettings4Line } from 'react-icons/ri';
@@ -141,9 +142,18 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
         allowMultiple={false}
         selectedItems={() => {
           if (!currentSelect.milestone) return <div>No milestone</div>;
+          const selectedMilestone = data.milestones.data.find(
+            (milestone) => milestone.id === currentSelect.milestone,
+          );
           return (
             <div>
-              {data.milestones.data.find((milestone) => milestone.id === currentSelect.milestone)?.title}
+              <ProgressBar
+                progress={
+                  ((selectedMilestone?.closedIssueNumber || 0) * 100) /
+                  (selectedMilestone?.closedIssueNumber + selectedMilestone?.openedIssueNumber)
+                }
+              />
+              {selectedMilestone?.title}
             </div>
           );
         }}
