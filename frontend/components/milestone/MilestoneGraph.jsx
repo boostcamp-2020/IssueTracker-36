@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import ProgressBar from '@components/common/ProgressBar';
-import service from '@services';
 import PropTypes from 'prop-types';
 
-const MilestoneGraph = ({ id, graphDescription }) => {
+const MilestoneGraph = ({ closedIssueNumber, openedIssueNumber, graphDescription }) => {
   const [progress, setProgress] = useState(0);
   const [openNum, setOpenNum] = useState([]);
   const [closedNum, setClosedNum] = useState([]);
-  const getProgress = async () => {
-    const milestone = await service.getMilestone(id);
-    const closed = milestone.data.issues.filter((value) => {
-      return !value.isClosed;
-    });
-    const total = milestone.data.issues.length;
-    const completed = Math.floor((closed.length / total) * 100) || 0;
+  const getProgress = () => {
+    const completed = Math.floor((closedIssueNumber / (closedIssueNumber + openedIssueNumber)) * 100) || 0;
     setProgress(completed);
-    setClosedNum(closed.length);
-    setOpenNum(total - closed.length);
+    setClosedNum(closedIssueNumber);
+    setOpenNum(openedIssueNumber);
   };
   useEffect(() => {
     getProgress();
@@ -30,7 +24,8 @@ const MilestoneGraph = ({ id, graphDescription }) => {
 };
 
 MilestoneGraph.propTypes = {
-  id: PropTypes.number.isRequired,
+  closedIssueNumber: PropTypes.number.isRequired,
+  openedIssueNumber: PropTypes.number.isRequired,
   graphDescription: PropTypes.bool,
 };
 MilestoneGraph.defaultProps = {
