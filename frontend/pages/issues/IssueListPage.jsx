@@ -11,21 +11,32 @@ const IssueListPage = () => {
   const issuesPerPage = 20;
   const history = useHistory();
   const [issues, setIssues] = useState([]);
+  const [LabelMilestoneNumer, setLabelMilestoneNumber] = useState({ labels: 0, milestones: 0 });
 
   useEffect(async () => {
-    const { data } = await service.initialGetIssues(issuesPerPage);
-    setIssues(data.rows);
+    const { data: issuesResponse } = await service.initialGetIssues(issuesPerPage);
+    setIssues(issuesResponse.rows);
+    const { data: labelsResponse } = await service.getLabels();
+    const { data: milestonesResponse } = await service.getMilestones({});
+    setLabelMilestoneNumber({
+      labels: labelsResponse.length,
+      milestones: milestonesResponse.length,
+    });
   }, []);
 
   return (
     <MainPageLayout>
       <NavBar>
-        <LabelMilestoneTab />
+        <LabelMilestoneTab
+          labelsNumber={LabelMilestoneNumer.labels}
+          milestonesNumber={LabelMilestoneNumer.milestones}
+        />
         <Button
           text='New issue'
           onClick={() => {
             history.push('/issues/new');
           }}
+          size='large'
         />
       </NavBar>
       <IssueList issues={issues} />
