@@ -36,6 +36,7 @@ const IssueListPage = () => {
           onClick={() => {
             history.push('/issues/new');
           }}
+          size='large'
         />
       </NavBar>
       <IssueList issues={issues} />
