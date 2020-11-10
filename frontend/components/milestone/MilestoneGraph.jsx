@@ -9,20 +9,20 @@ const MilestoneGraph = ({ id, graphDescription }) => {
   const [closedNum, setClosedNum] = useState([]);
   const getProgress = async () => {
     const milestone = await service.getMilestone(id);
-    const open = milestone.data.issues.filter((value) => {
+    const closed = milestone.data.issues.filter((value) => {
       return !value.isClosed;
     });
     const total = milestone.data.issues.length;
-    const completed = Math.floor((open.length / total) * 100) || 0;
+    const completed = Math.floor((closed.length / total) * 100) || 0;
     setProgress(completed);
-    setOpenNum(open.length);
-    setClosedNum(total - open.length);
+    setClosedNum(closed.length);
+    setOpenNum(total - closed.length);
   };
   useEffect(() => {
     getProgress();
   }, []);
   return (
-    <> 
+    <>
       <ProgressBar progress={progress} />
       {graphDescription && <div>{`${progress}% Completed ${openNum} Open ${closedNum} Closed`}</div>}
     </>
@@ -33,7 +33,7 @@ MilestoneGraph.propTypes = {
   id: PropTypes.number.isRequired,
   graphDescription: PropTypes.bool,
 };
-MilestoneGraph.defaultProps={
+MilestoneGraph.defaultProps = {
   graphDescription: false,
-}
+};
 export default MilestoneGraph;
