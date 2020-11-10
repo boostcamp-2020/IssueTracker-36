@@ -29,9 +29,20 @@ const getIssues = async (req, res) => {
           model: user_issue,
           required: true,
           where: {
-            user_id: {
-              [Op.eq]: req.query.author,
-            },
+            [Op.or]: [
+              {
+                user_id: {
+                  [Op.eq]: req.query.author,
+                },
+                is_owner: 1,
+              },
+              {
+                user_id: {
+                  [Op.eq]: req.query.assignee,
+                },
+                is_owner: 0,
+              },
+            ],
           },
           include: [
             {
@@ -41,6 +52,7 @@ const getIssues = async (req, res) => {
           ],
         },
       ],
+      where: { milestone_id: req.query.milestone },
     });
 
     return res.json(issues);
