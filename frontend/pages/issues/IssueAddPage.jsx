@@ -24,7 +24,7 @@ const IssueAddPage = () => {
   const [currentSelect, dispatch] = useReducer(selectReducer, {
     assignees: [],
     labels: [],
-    milestone: undefined,
+    milestone: [],
   });
 
   const onSubmit = async (title, content) => {

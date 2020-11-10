@@ -22,18 +22,21 @@ const Dropdown = ({
       if (!wrapper.current?.contains(e.target) && !e.target.closest('svg')) toggleDropdown();
     };
     document.addEventListener('click', clickOutside);
+    onChange(selected);
     return () => {
       document.removeEventListener('click', clickOutside);
-      onChange(selected);
     };
   }, [selected]);
 
   const onClick = (id) => {
-    if (!allowMultiple) setSelected(id);
-    else if (!selected.includes(id)) setSelected([...selected, id]);
+    if (!allowMultiple) {
+      if (selected[0] === id) setSelected([]);
+      else setSelected([id]);
+    } else if (!selected.includes(id)) setSelected([...selected, id]);
     else
       setSelected(
         selected.reduce((acc, prevId) => {
+          console.log(prevId, id);
           if (prevId !== id) acc.push(prevId);
           return acc;
         }, []),

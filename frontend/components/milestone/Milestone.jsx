@@ -18,7 +18,7 @@ const Milestone = ({ milestone }) => {
     // TODO:삭제
     console.log(id);
   };
-  const { id, title, description, dueDate } = milestone;
+  const { id, title, description, dueDate, closedIssueNumber, openedIssueNumber } = milestone;
   return (
     <TR>
       <TD align='left' padding='10px'>
@@ -31,9 +31,13 @@ const Milestone = ({ milestone }) => {
       </TD>
       <TD>
         <div>
-          <MilestoneGraph id={id} graphDescription />
+          <MilestoneGraph
+            closedIssueNumber={closedIssueNumber}
+            openedIssueNumber={openedIssueNumber}
+            graphDescription
+          />
         </div>
-        <br/>
+        <br />
         <BTN onClick={() => clickEditBtn(id)}>edit</BTN>
         <BTN onClick={() => clickCloseBtn(id)}>close</BTN>
         <DeleteBTN onClick={() => clickDeleteBtn(id)}>delete</DeleteBTN>
