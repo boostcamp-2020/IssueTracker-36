@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import Button from '@components/common/Button';
 
+window.process = { cwd: () => '' };
+
 const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
   const [text, setText] = useState(initValue);
   const [isPreview, setIsPreview] = useState(false);
@@ -36,7 +38,7 @@ const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
       </Header>
       <Body>
         {isPreview ? (
-          <>{text.length ? <ReactMarkdown>{text}</ReactMarkdown> : 'Nothing to preview'}</>
+          <>{text.length ? <ReactMarkdown source={text} /> : 'Nothing to preview'}</>
         ) : (
           <TextAreaWrapper>
             <Textarea placeholder='Leave a comment' value={text} onChange={inputTextarea} />
@@ -84,7 +86,8 @@ const Tab = styled.li`
 `;
 
 const Body = styled.div`
-  margin: 15px 10px;
+  list-style-position: inside;
+  margin: 25px;
 `;
 
 const TextAreaWrapper = styled.div`

@@ -2,13 +2,58 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Dropdown from '@components/common/Dropdown';
+import Label from '@components/common/Label';
 import optionGenerator from '@utils/OptionGenerator';
 import service from '@services';
 import { RiSettings4Line } from 'react-icons/ri';
 
+const SidebarTab = ({
+  dropdown,
+  type,
+  onClick,
+  title,
+  dropdownTitle,
+  options,
+  toggleDropdown,
+  defaultSelect,
+  chageSelect,
+  selectedItems,
+  allowMultiple,
+}) => {
+  return (
+    <>
+      <Wrapper>
+        <Title onClick={onClick}>
+          <p>{title}</p>
+          <RiSettings4Line />
+        </Title>
+        {dropdown === type && (
+          <Dropdown
+            title={dropdownTitle}
+            toggleDropdown={toggleDropdown}
+            width='100%'
+            options={options}
+            defaultSelect={defaultSelect}
+            onChange={(selected) => {
+              chageSelect({ type, newSelection: selected });
+            }}
+            allowMultiple={allowMultiple}
+          />
+        )}
+        {selectedItems()}
+      </Wrapper>
+    </>
+  );
+};
+
 const IssueSidebar = ({ currentSelect, chageSelect }) => {
   const [dropdown, setDropdown] = useState('');
   const [options, setOptions] = useState([]);
+  const [data, setData] = useState({
+    users: [],
+    labels: [],
+    milestones: [],
+  });
   const toggleDropdown = () => {
     setDropdown('');
     setOptions([]);
@@ -16,89 +61,93 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
 
   const onClick = async (tabName) => {
     setDropdown(tabName);
-    switch (tabName) {
-      case 'assignee':
-        setOptions(optionGenerator.users(await service.getUsers(), currentSelect.assignees));
-        break;
-      case 'label':
-        setOptions(optionGenerator.labels(await service.getLabels()));
-        break;
-      case 'milestone':
-        setOptions(optionGenerator.milestones(await service.getMilestones({})));
-        break;
-      default:
-        setOptions([]);
+    if (tabName === 'assignee') {
+      const users = await service.getUsers();
+      setData({ ...data, users });
+      setOptions(optionGenerator.users(users, currentSelect.assignees));
+    } else if (tabName === 'label') {
+      const labels = await service.getLabels();
+      setData({ ...data, labels });
+      setOptions(optionGenerator.labels(labels, currentSelect.labels));
+    } else if (tabName === 'milestone') {
+      const milestones = await service.getMilestones({});
+      setData({ ...data, milestones });
+      setOptions(optionGenerator.milestones(milestones, currentSelect.milestone));
     }
   };
 
   return (
     <>
-      <Wrapper>
-        <Title
-          onClick={() => {
-            onClick('assignee');
-          }}
-        >
-          <p>Assignee</p>
-          <RiSettings4Line />
-        </Title>
-        {dropdown === 'assignee' && (
-          <Dropdown
-            title='Assign up to 10 people to this issue'
-            toggleDropdown={toggleDropdown}
-            width='100%'
-            options={options}
-            defaultSelect={currentSelect.assignees}
-            onChange={(selected) => {
-              chageSelect({ type: 'assignee', newSelection: selected });
-            }}
-          />
-        )}
-        {currentSelect.assignees.length
-          ? currentSelect.assignees.map((selectedAssignee) => (
-              <div key={selectedAssignee}>{selectedAssignee}</div>
-            ))
-          : 'No one'}
-      </Wrapper>
-      <Wrapper>
-        <Title
-          onClick={() => {
-            onClick('label');
-          }}
-        >
-          <p>Label</p>
-          <RiSettings4Line />
-        </Title>
-        {dropdown === 'label' && (
-          <Dropdown
-            title='Apply labels to this issue'
-            toggleDropdown={toggleDropdown}
-            width='100%'
-            options={options}
-            defaultSelect={currentSelect.labels}
-            onChange={(selected) => {
-              chageSelect({ type: 'label', newSelection: selected });
-            }}
-          />
-        )}
-        {currentSelect.labels.length
-          ? currentSelect.labels.map((selectedLabel) => <div key={selectedLabel}>{selectedLabel}</div>)
-          : 'None yet'}
-      </Wrapper>
-      <Wrapper>
-        <Title
-          onClick={() => {
-            onClick('milestone');
-          }}
-        >
-          <p>Milestone</p>
-          <RiSettings4Line />
-        </Title>
-        {dropdown === 'milestone' && (
-          <Dropdown title='Set milestone' toggleDropdown={toggleDropdown} width='100%' options={options} />
-        )}
-        {currentSelect.milestone ? '' : 'No milestone'}
-      </Wrapper>
+      <SidebarTab
+        dropdown={dropdown}
+        type='assignee'
+        onClick={() => {
+          onClick('assignee');
+        }}
+        title='Assignee'
+        dropdownTitle='Assign up to 10 people to this issue'
+        options={options}
+        toggleDropdown={toggleDropdown}
+        defaultSelect={currentSelect.assignees}
+        chageSelect={chageSelect}
+        allowMultiple
+        selectedItems={() => {
+          if (!currentSelect.assignees.length) return <div>No one</div>;
+          return currentSelect.assignees.map((assignee) => {
+            return (
+              <SelectedUser key={assignee}>
+                {data.users.data.find((user) => user.id === assignee).nickName}
+              </SelectedUser>
+            );
+          });
+        }}
+      />
+      <SidebarTab
+        dropdown={dropdown}
+        type='label'
+        onClick={() => {
+          onClick('label');
+        }}
+        title='Label'
+        dropdownTitle='Apply labels to this issue'
+        options={options}
+        toggleDropdown={toggleDropdown}
+        defaultSelect={currentSelect.labels}
+        chageSelect={chageSelect}
+        allowMultiple
+        selectedItems={() => {
+          if (!currentSelect.labels.length) return <div>None yet</div>;
+          return currentSelect.labels.map((labelId) => {
+            const currentLabel = data.labels.data.find((label) => label.id === labelId);
+            return <Label key={labelId} text={currentLabel.title} bg={currentLabel.color} />;
+          });
+        }}
+      />
+      <SidebarTab
+        dropdown={dropdown}
+        type='milestone'
+        onClick={() => {
+          onClick('milestone');
+        }}
+        title='Milestone'
+        dropdownTitle='Set milestone'
+        options={options}
+        toggleDropdown={toggleDropdown}
+        defaultSelect={currentSelect.milestone}
+        chageSelect={({ type, newSelection }) => {
+          chageSelect({ type, newSelection });
+          toggleDropdown();
+        }}
+        allowMultiple={false}
+        selectedItems={() => {
+          if (!currentSelect.milestone) return <div>No milestone</div>;
+          return (
+            <div>
+              {data.milestones.data.find((milestone) => milestone.id === currentSelect.milestone)?.title}
+            </div>
+          );
+        }}
+      />
     </>
   );
 };
@@ -106,7 +155,7 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
 const Wrapper = styled.div`
   position: relative;
   padding: 20px 0;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
   font-size: ${({ theme }) => theme.fontSize.sm};
 `;
 
@@ -119,6 +168,11 @@ const Title = styled.div`
   &:hover {
     color: ${({ theme }) => theme.color.blueColor};
   }
+`;
+
+const SelectedUser = styled.div`
+  padding: 5px;
+  font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 
 IssueSidebar.propTypes = {

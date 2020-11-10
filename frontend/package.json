@@ -25,6 +25,7 @@
     "font-color-contrast": "^1.0.3",
     "html-webpack-plugin": "^4.2.0",
     "moment": "^2.29.1",
+    "path-browserify": "^1.0.1",
     "prop-types": "^15.7.2",
     "qs": "^6.9.4",
     "react": "^17.0.1",

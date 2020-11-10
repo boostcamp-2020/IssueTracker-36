@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import moment from 'moment';
 import { GoCheck } from 'react-icons/go';
 import { RiCloseLine } from 'react-icons/ri';
+import { AiOutlineCalendar, AiOutlineWarning } from 'react-icons/ai';
 
 const UserOption = ({ selected, nickName }) => {
   const [isSelected, setIsSelected] = useState(selected);
@@ -11,10 +13,10 @@ const UserOption = ({ selected, nickName }) => {
   };
 
   return (
-    <UserOptionWrapper onClick={onClick}>
+    <OptionWrapper onClick={onClick}>
       <CheckedWrapper>{isSelected && <GoCheck />}</CheckedWrapper>
       <p>{nickName}</p>
-    </UserOptionWrapper>
+    </OptionWrapper>
   );
 };
 
@@ -28,13 +30,6 @@ const users = ({ data }, selectedUser = []) => {
   }, []);
 };
 
-const UserOptionWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 8px 15px;
-`;
-
 UserOption.propTypes = {
   selected: PropTypes.bool.isRequired,
   nickName: PropTypes.string.isRequired,
@@ -47,7 +42,7 @@ const LabelOption = ({ selected, label }) => {
   };
 
   return (
-    <LabelOptionWrapper key={label.id} onClick={onClick}>
+    <OptionWrapper key={label.id} onClick={onClick}>
       <CheckedWrapper>{isSelected && <GoCheck />}</CheckedWrapper>
       <LabelColor color={label.color} />
       <LabelInfoWrapper>
@@ -55,7 +50,7 @@ const LabelOption = ({ selected, label }) => {
         <LabelDescription>{label.description}</LabelDescription>
       </LabelInfoWrapper>
       <UnCheckWrapper>{isSelected && <RiCloseLine onClick={onClick} />}</UnCheckWrapper>
-    </LabelOptionWrapper>
+    </OptionWrapper>
   );
 };
 
@@ -68,16 +63,6 @@ const labels = ({ data }, selectedLabels = []) => {
     return acc;
   }, []);
 };
-
-const LabelOptionWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 8px 15px;
-`;
-
-const CheckedWrapper = styled.div`
-  width: 20px;
-`;
 
 const LabelColor = styled.div`
   width: 15px;
@@ -108,14 +93,75 @@ LabelOption.propTypes = {
   label: PropTypes.object.isRequired,
 };
 
-const milestones = ({ data }) => {
+const MilestoneOption = ({ selected, dueDate, title }) => {
+  const [isSelected, setIsSelected] = useState(selected);
+  const onClick = () => {
+    setIsSelected(!isSelected);
+  };
+
+  return (
+    <OptionWrapper onClick={onClick}>
+      <CheckedWrapper>{isSelected && <GoCheck />}</CheckedWrapper>
+      <MilestoneBody>
+        <MilestoneTitle>{title}</MilestoneTitle>
+        {moment(dueDate).isAfter(new Date()) ? (
+          <MilestoneDueInfo>
+            <AiOutlineCalendar />
+            <div>Milestone due by {moment(dueDate).format('YYYY/MM/DD')}</div>
+          </MilestoneDueInfo>
+        ) : (
+          <MilestoneDueInfo style={{ color: 'red' }}>
+            <AiOutlineWarning />
+            <div>Past due by {moment(new Date()).diff(moment(dueDate), 'days') + 1} days</div>
+          </MilestoneDueInfo>
+        )}
+      </MilestoneBody>
+    </OptionWrapper>
+  );
+};
+
+const milestones = ({ data }, selectedMilestone) => {
   return data.reduce((acc, milestone) => {
     acc.push({
       id: milestone.id,
-      div: <div>{milestone.title}</div>,
+      div: (
+        <MilestoneOption
+          selected={selectedMilestone === milestone.id}
+          title={milestone.title}
+          dueDate={new Date(milestone.dueDate)}
+        />
+      ),
     });
     return acc;
   }, []);
 };
+
+const MilestoneBody = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MilestoneTitle = styled.div`
+  font-size: ${({ theme }) => theme.fontSize.sm};
+`;
+
+const MilestoneDueInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 7px;
+  > svg {
+    margin-right: 7px;
+  }
+`;
+
+const OptionWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 10px 15px;
+`;
+
+const CheckedWrapper = styled.div`
+  width: 20px;
+`;
 
 export default { users, labels, milestones };
