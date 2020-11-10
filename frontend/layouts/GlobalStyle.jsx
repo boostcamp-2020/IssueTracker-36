@@ -20,6 +20,7 @@ const theme = {
     grayColor: '#c0c1c2',
     blackColor: '#000000',
     inputContrast: '#fafbfc',
+    mainCommentHeadColor: '#f1f8ff',
   },
   fontSize: {
     xl: '32px',
