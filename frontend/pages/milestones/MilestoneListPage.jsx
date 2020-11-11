@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import service from '@services';
 import MilestoneList from '@components/milestone/MilestoneList';
 import Button from '@components/common/Button';
+import reducer from './milestone-list-page-reducer';
 
 const MilestoneListPage = ({ setNewButton }) => {
-  const [open, setOpenMilestone] = useState([]);
-  const [close, setClosedMilestone] = useState([]);
-  const [milestoneList, setMilestoneList] = useState([]);
+  const [milestoneList, milestoneListDispatch] = useReducer(reducer, { open: 0, close: 0, milestones: [] });
   const [state, setState] = useState('open');
   const history = useHistory();
   const TRUE = 1;
@@ -17,15 +16,18 @@ const MilestoneListPage = ({ setNewButton }) => {
   const getNumber = async () => {
     const openedMilestones = await service.getMilestones({ isClosed: FALSE });
     const closedMilestones = await service.getMilestones({ isClosed: TRUE });
-    setOpenMilestone(openedMilestones.data);
-    setClosedMilestone(closedMilestones.data);
+    milestoneListDispatch({
+      type: 'setNumber',
+      open: openedMilestones.data.length,
+      close: closedMilestones.data.length,
+    });
   };
   const getMilestones = async (status) => {
     const milestones =
       status === 'close'
         ? await service.getMilestones({ isClosed: TRUE })
         : await service.getMilestones({ isClosed: FALSE });
-    setMilestoneList(milestones.data);
+    milestoneListDispatch({ type: 'init', data: milestones.data });
     setState(status);
   };
   useEffect(() => {
@@ -45,11 +47,12 @@ const MilestoneListPage = ({ setNewButton }) => {
   return (
     <>
       <MilestoneList
-        milestoneList={milestoneList}
+        milestoneList={milestoneList.milestones}
         state={state}
-        open={open}
-        close={close}
+        open={milestoneList.open}
+        close={milestoneList.close}
         getMilestones={getMilestones}
+        milestoneListDispatch={milestoneListDispatch}
       />
     </>
   );

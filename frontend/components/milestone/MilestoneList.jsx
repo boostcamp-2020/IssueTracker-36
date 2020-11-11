@@ -4,7 +4,7 @@ import MilestoneHeader from '@components/milestone/MilestoneListHeader';
 import Milestone from '@components/milestone/Milestone';
 import PropTypes from 'prop-types';
 
-const MilestoneList = ({ milestoneList, state, open, close, getMilestones }) => {
+const MilestoneList = ({ milestoneList, state, open, close, getMilestones, milestoneListDispatch }) => {
   return (
     <>
       <Mytable
@@ -14,7 +14,13 @@ const MilestoneList = ({ milestoneList, state, open, close, getMilestones }) => 
         }}
         renderBody={() => {
           return milestoneList.map((milestone) => {
-            return <Milestone milestone={milestone} key={milestone.id} />;
+            return (
+              <Milestone
+                milestone={milestone}
+                key={milestone.id}
+                milestoneListDispatch={milestoneListDispatch}
+              />
+            );
           });
         }}
       />
@@ -24,8 +30,8 @@ const MilestoneList = ({ milestoneList, state, open, close, getMilestones }) => 
 MilestoneList.propTypes = {
   milestoneList: PropTypes.array.isRequired,
   state: PropTypes.string.isRequired,
-  open: PropTypes.array.isRequired,
-  close: PropTypes.array.isRequired,
+  open: PropTypes.number.isRequired,
+  close: PropTypes.number.isRequired,
   getMilestones: PropTypes.func.isRequired,
 };
 

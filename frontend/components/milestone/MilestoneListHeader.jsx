@@ -11,11 +11,11 @@ const MilestoneHeader = ({ state, open, close, getMilestones }) => {
           <HeaderText>
             <Btn onClick={() => getMilestones('open')} selected={state === 'open'}>
               <GoMilestone />
-              {open.length} Open
+              {open} Open
             </Btn>
             <Btn onClick={() => getMilestones('close')} selected={state === 'close'}>
               <GoCheck />
-              {close.length} Closed
+              {close} Closed
             </Btn>
           </HeaderText>
         </td>
@@ -25,8 +25,8 @@ const MilestoneHeader = ({ state, open, close, getMilestones }) => {
 };
 MilestoneHeader.propTypes = {
   state: PropTypes.string.isRequired,
-  open: PropTypes.array.isRequired,
-  close: PropTypes.array.isRequired,
+  open: PropTypes.number.isRequired,
+  close: PropTypes.number.isRequired,
   getMilestones: PropTypes.func.isRequired,
 };
 

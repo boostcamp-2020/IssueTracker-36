@@ -6,20 +6,20 @@ import Moment from 'react-moment';
 import MilestoneGraph from '@components/milestone/MilestoneGraph';
 import service from '@services';
 
-const Milestone = ({ milestone }) => {
+const Milestone = ({ milestone, milestoneListDispatch }) => {
   const clickEditBtn = async (id) => {
     // TODO:수정
     console.log(id);
   };
-  const clickCloseBtn = async (id) => {
+  const clickCloseBtn = async (id, isClosed) => {
     // TODO: close
     console.log(id);
   };
-  const clickDeleteBtn = async (id) => {
+  const clickDeleteBtn = async (id, isClosed) => {
     try {
       if (confirm('삭제하시겠습니까?')) {
         await service.deleteMilestone(id);
-        window.location.reload();
+        milestoneListDispatch({ type: 'delete', id, isClosed });
       }
     } catch (e) {
       alert('오류가 발생했습니다');
@@ -55,14 +55,15 @@ const Milestone = ({ milestone }) => {
         </div>
         <br />
         <BTN onClick={() => clickEditBtn(id)}>Edit</BTN>
-        <BTN onClick={() => clickCloseBtn(id)}>{isClosed ? 'Reopen' : 'Close'}</BTN>
-        <DeleteBTN onClick={() => clickDeleteBtn(id)}>Delete</DeleteBTN>
+        <BTN onClick={() => clickCloseBtn(id, isClosed)}>{isClosed ? 'Reopen' : 'Close'}</BTN>
+        <DeleteBTN onClick={() => clickDeleteBtn(id, isClosed)}>Delete</DeleteBTN>
       </TD>
     </TR>
   );
 };
 Milestone.propTypes = {
   milestone: PropTypes.object.isRequired,
+  milestoneListDispatch: PropTypes.func.isRequired,
 };
 
 const TR = styled.tr`
