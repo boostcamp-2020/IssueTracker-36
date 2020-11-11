@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { GoMilestone, GoCheck } from 'react-icons/go';
 import PropTypes from 'prop-types';
+import { MilestoneContext } from '@store/MilestoneProvider';
 
-const MilestoneHeader = ({ state, open, close, getMilestones }) => {
+const MilestoneHeader = ({ state, onChangeOpenState }) => {
+  const [milestones] = useContext(MilestoneContext);
   return (
     <>
       <MilestoneListHeader>
         <td colSpan='2'>
           <HeaderText>
-            <Btn onClick={() => getMilestones('open')} style={{ color: state === 'open' ? 'black' : '' }}>
+            <Btn onClick={() => onChangeOpenState(true)} style={{ color: state ? 'black' : '' }}>
               <GoMilestone />
-              {open.length} Open
+              {milestones.open.length} Open
             </Btn>
-            <Btn onClick={() => getMilestones('close')} style={{ color: state === 'close' ? 'black' : '' }}>
+            <Btn onClick={() => onChangeOpenState(false)} style={{ color: !state ? 'black' : '' }}>
               <GoCheck />
-              {close.length} Closed
+              {milestones.close.length} Closed
             </Btn>
           </HeaderText>
         </td>
@@ -24,10 +26,8 @@ const MilestoneHeader = ({ state, open, close, getMilestones }) => {
   );
 };
 MilestoneHeader.propTypes = {
-  state: PropTypes.string.isRequired,
-  open: PropTypes.array.isRequired,
-  close: PropTypes.array.isRequired,
-  getMilestones: PropTypes.func.isRequired,
+  state: PropTypes.bool.isRequired,
+  onChangeOpenState: PropTypes.func.isRequired,
 };
 
 const MilestoneListHeader = styled.tr`

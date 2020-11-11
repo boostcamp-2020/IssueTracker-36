@@ -3,7 +3,6 @@ import labelService from './label';
 import milestoneService from './milestones';
 import issueService from './issue';
 import userService from './users';
-// import auth from './auth';
 
 const Service = () => {
   return {
@@ -11,7 +10,6 @@ const Service = () => {
     ...milestoneService(apiRequest),
     ...issueService(apiRequest),
     ...userService(apiRequest),
-    // ...auth(),
   };
 };
 
