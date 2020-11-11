@@ -4,8 +4,13 @@ const updaters = (apiRequest) => {
     return apiRequest.patch(`/api/milestone/${id}`, body);
   };
 
+  const updateMilestone = (id, updatedContents) => {
+    return apiRequest.patch(`/api/milestone/${id}`, updatedContents);
+  };
+
   return {
     changeClosed,
+    updateMilestone,
   };
 };
 
