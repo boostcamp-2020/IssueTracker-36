@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import oauthGithub from '@services/auth/oauth-github';
-import userInfo from '@utils/user-info';
+import tokenStorage from '@utils/tokenStorage';
 import AuthPageLayout from '@layouts/AuthPageLayout';
+import { UserContext } from '@store/UserProvider';
+import { userActions } from '@store/actions';
 
 const LoggingInPage = ({ history, location }) => {
+  const [, dispatch] = useContext(UserContext);
   const { code } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
@@ -13,7 +16,11 @@ const LoggingInPage = ({ history, location }) => {
   useEffect(async () => {
     try {
       await oauthGithub(code);
-      userInfo.login();
+      const token = tokenStorage.getToken();
+      dispatch({
+        type: userActions.LOGIN,
+        payload: { token },
+      });
       history.push('/issues');
     } catch (err) {
       alert('로그인 중 오류가 발생했습니다.');

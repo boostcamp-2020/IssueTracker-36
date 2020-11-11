@@ -1,36 +1,45 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { GoCalendar } from 'react-icons/go';
 import Moment from 'react-moment';
+import { MilestoneContext } from '@store/MilestoneProvider';
+import { milestoneActions } from '@store/actions';
 import MilestoneGraph from '@components/milestone/MilestoneGraph';
 import service from '@services';
+import { GoCalendar } from 'react-icons/go';
 
-const Milestone = ({ milestone, milestoneListDispatch }) => {
+const Milestone = ({ milestone }) => {
   const history = useHistory();
-  const clickEditBtn = async (id) => {
+  const [, dispatch] = useContext(MilestoneContext);
+  const { id, title, isClosed, description, dueDate, closedIssueNumber, openedIssueNumber } = milestone;
+
+  const clickEditBtn = () => {
     history.push(`/milestones/${id}/edit`);
   };
-  const clickCloseBtn = async (id, isClosed) => {
+  const clickCloseBtn = async () => {
     try {
       await service.changeClosed(id, !isClosed);
-      milestoneListDispatch({ type: 'changeClosed', id, isClosed });
+      //TODO: status 변경 이후 작업
     } catch (e) {
       alert('오류가 발생했습니다');
     }
   };
-  const clickDeleteBtn = async (id, isClosed) => {
+
+  const clickDeleteBtn = async () => {
     try {
       if (confirm('삭제하시겠습니까?')) {
         await service.deleteMilestone(id, isClosed);
-        milestoneListDispatch({ type: 'delete', id, isClosed });
+        dispatch({
+          type: milestoneActions.DELETE_MILESTONE,
+          payload: id,
+        });
       }
     } catch (e) {
       alert('오류가 발생했습니다');
     }
   };
-  const { id, title, description, dueDate, isClosed, closedIssueNumber, openedIssueNumber } = milestone;
+
   return (
     <TR>
       <Info>
@@ -59,16 +68,15 @@ const Milestone = ({ milestone, milestoneListDispatch }) => {
           />
         </div>
         <br />
-        <BTN onClick={() => clickEditBtn(id)}>Edit</BTN>
-        <BTN onClick={() => clickCloseBtn(id, isClosed)}>{isClosed ? 'Reopen' : 'Close'}</BTN>
-        <DeleteBTN onClick={() => clickDeleteBtn(id, isClosed)}>Delete</DeleteBTN>
+        <BTN onClick={() => clickEditBtn()}>Edit</BTN>
+        <BTN onClick={() => clickCloseBtn()}>{isClosed ? 'Reopen' : 'Close'}</BTN>
+        <DeleteBTN onClick={() => clickDeleteBtn()}>Delete</DeleteBTN>
       </TD>
     </TR>
   );
 };
 Milestone.propTypes = {
   milestone: PropTypes.object.isRequired,
-  milestoneListDispatch: PropTypes.func.isRequired,
 };
 
 const TR = styled.tr`

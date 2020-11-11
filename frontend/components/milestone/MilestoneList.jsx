@@ -1,26 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Mytable from '@components/common/Table';
 import MilestoneHeader from '@components/milestone/MilestoneListHeader';
 import Milestone from '@components/milestone/Milestone';
-import PropTypes from 'prop-types';
 
-const MilestoneList = ({ milestoneList, state, open, close, getMilestones, milestoneListDispatch }) => {
+const MilestoneList = ({ milestoneList, state, onChangeOpenState }) => {
   return (
     <>
       <Mytable
         width='100%'
         renderHeader={() => {
-          return <MilestoneHeader state={state} open={open} close={close} getMilestones={getMilestones} />;
+          return <MilestoneHeader state={state} onChangeOpenState={onChangeOpenState} />;
         }}
         renderBody={() => {
           return milestoneList.map((milestone) => {
-            return (
-              <Milestone
-                milestone={milestone}
-                key={milestone.id}
-                milestoneListDispatch={milestoneListDispatch}
-              />
-            );
+            return <Milestone milestone={milestone} key={milestone.id} />;
           });
         }}
       />
@@ -29,11 +23,8 @@ const MilestoneList = ({ milestoneList, state, open, close, getMilestones, miles
 };
 MilestoneList.propTypes = {
   milestoneList: PropTypes.array.isRequired,
-  state: PropTypes.string.isRequired,
-  open: PropTypes.number.isRequired,
-  close: PropTypes.number.isRequired,
-  getMilestones: PropTypes.func.isRequired,
-  milestoneListDispatch: PropTypes.func.isRequired,
+  state: PropTypes.bool.isRequired,
+  onChangeOpenState: PropTypes.func.isRequired,
 };
 
 export default MilestoneList;

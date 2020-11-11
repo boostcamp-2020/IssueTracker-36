@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import LabelList from '@components/label/LabelList';
 import LabelAdder from '@components/label/LabelAdder';
-import service from '@services';
+import { LabelContext } from '@store/LabelProvider';
+import { labelActions } from '@store/actions';
 
 const LabelListPage = () => {
-  const [data, setData] = useState([]);
-
-  const getData = async () => {
-    const res = await service.getLabels();
-    setData(res.data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const [labels, dispatch] = useContext(LabelContext);
+  const onAddLabel = (label) =>
+    dispatch({
+      type: labelActions.ADD_LABEL,
+      payload: label,
+    });
+  const onDeleteLabel = (id) =>
+    dispatch({
+      type: labelActions.DELETE_LABEL,
+      payload: id,
+    });
 
   return (
     <>
-      <LabelAdder getData={getData} />
-      <LabelList data={data} getData={getData} />
+      <LabelAdder onAddLabel={onAddLabel} />
+      <LabelList labels={labels} onDeleteLabel={onDeleteLabel} />
     </>
   );
 };
