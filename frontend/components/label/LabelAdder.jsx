@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import debounceHook from '@utils/DebounceHook';
 
-const LabelAdder = ({ onAddLabel }) => {
+const LabelAdder = ({ onAddLabel, onCancel }) => {
   const [preview, setPreview] = useState({ title: '', description: '', color: '#0366d6' });
   const debouncedPreview = debounceHook(preview, 1000);
   const resetForm = () => {
@@ -76,14 +76,18 @@ const LabelAdder = ({ onAddLabel }) => {
           </FormGroup>
           <FormGroup>
             <BtnBox>
-              <Button size='large' type='secondary' text='Cancel' />
-              <Button
-                size='large'
-                type='primary'
-                text=' Create Label'
-                disabled={debouncedPreview.title === ''}
-                onClick={(e) => handleClickCreate(e)}
-              />
+              <BtnWrapper>
+                <Button size='large' type='secondary' text='Cancel' onClick={onCancel} />
+              </BtnWrapper>
+              <BtnWrapper>
+                <Button
+                  size='large'
+                  type='primary'
+                  text=' Create Label'
+                  disabled={debouncedPreview.title === ''}
+                  onClick={handleClickCreate}
+                />
+              </BtnWrapper>
             </BtnBox>
           </FormGroup>
         </FlexBox>
@@ -93,6 +97,7 @@ const LabelAdder = ({ onAddLabel }) => {
 };
 LabelAdder.propTypes = {
   onAddLabel: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 const AdderForm = styled.form`
   width: 100%;
@@ -127,6 +132,10 @@ const BtnBox = styled.div`
   margin-top: 25px;
   justify-content: flex-end;
   font-size: ${({ theme }) => theme.fontSize.md};
+`;
+
+const BtnWrapper = styled.div`
+  margin-left: 10px;
 `;
 
 const FormGroup = styled.dl`

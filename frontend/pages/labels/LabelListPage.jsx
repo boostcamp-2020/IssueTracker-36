@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useReducer } from 'react';
+import PropTypes from 'prop-types';
 import LabelList from '@components/label/LabelList';
 import LabelAdder from '@components/label/LabelAdder';
 import { LabelContext } from '@store/LabelProvider';
@@ -30,10 +31,14 @@ const LabelListPage = ({ setNewButton }) => {
 
   return (
     <>
-      {showLabelAdder && <LabelAdder onAddLabel={onAddLabel} />}
+      {showLabelAdder && <LabelAdder onAddLabel={onAddLabel} onCancel={showLabelAdderDispatch} />}
       <LabelList labels={labels} onDeleteLabel={onDeleteLabel} />
     </>
   );
+};
+
+LabelListPage.propTypes = {
+  setNewButton: PropTypes.func.isRequired,
 };
 
 export default LabelListPage;

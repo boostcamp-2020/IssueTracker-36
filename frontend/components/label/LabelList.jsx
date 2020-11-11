@@ -9,8 +9,10 @@ import PropTypes from 'prop-types';
 const LabelList = ({ labels, onDeleteLabel }) => {
   const clickEditBtn = async () => {};
   const clickDeleteBtn = async (id) => {
-    const { data: effectedRow } = await service.deleteLabel(id);
-    if (effectedRow === 1) onDeleteLabel(id);
+    if (confirm('삭제하시겠습니까?')) {
+      const { data: effectedRow } = await service.deleteLabel(id);
+      if (effectedRow === 1) onDeleteLabel(id);
+    }
   };
 
   return (
@@ -34,11 +36,10 @@ const LabelList = ({ labels, onDeleteLabel }) => {
                   <Label text={label.title} bg={label.color} color={fontColorContrast(label.color)} />
                 </TD>
                 <TD align='left'>{label.description}</TD>
-
-                <TD>
+                <TD width='100px;' align='left'>
                   <BTN onClick={() => clickEditBtn(label)}>edit</BTN>
                 </TD>
-                <TD>
+                <TD width='100px;' align='left'>
                   <BTN onClick={() => clickDeleteBtn(label.id)}>delete</BTN>
                 </TD>
               </TR>
@@ -55,8 +56,7 @@ LabelList.propTypes = {
 };
 
 const LabelListHeader = styled.tr`
-  line-height: 60px;
-  height: 60px;
+  line-height: 50px;
   padding-left: 18px;
 `;
 
@@ -68,6 +68,7 @@ const TD = styled.td`
   width: ${(props) => props.width || ''};
   text-align: ${(props) => props.align || 'center'};
   padding: ${(props) => props.padding || '5px'};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 `;
 
 const HeaderText = styled.p`
@@ -90,5 +91,9 @@ const BTN = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  &:hover {
+    color: ${({ theme }) => theme.color.blueColor};
+    text-decoration: underline;
+  }
 `;
 export default LabelList;
