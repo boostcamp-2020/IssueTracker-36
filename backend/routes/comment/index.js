@@ -7,5 +7,6 @@ const service = require('../../services').comment;
 router.post('/comment', service.addComment);
 // patch
 // delete
+router.delete('/comment/:id', service.deleteComment);
 
 module.exports = router;
