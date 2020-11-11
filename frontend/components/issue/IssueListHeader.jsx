@@ -43,6 +43,7 @@ const IssueListHeader = ({ filterData, setFilterData, onClickSelectAll, selected
     <Wrapper>
       <TD>
         <Checkbox checked={forMarkAs} readOnly onChange={(e) => onClickSelectAll(e)} />
+        {selectedIssues.length !== 0 && <span>{selectedIssues.length} selected</span>}
       </TD>
       <TD>
         <Filters>
@@ -84,7 +85,11 @@ const TD = styled.td`
 
 const Checkbox = styled.input.attrs({
   type: 'checkbox',
-})``;
+})`
+  margin-right: 10px;
+  color: ${({ theme }) => theme.color.grayColor};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+`;
 
 const Filters = styled.div`
   display: flex;
