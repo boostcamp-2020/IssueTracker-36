@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import LabelList from '@components/label/LabelList';
 import LabelAdder from '@components/label/LabelAdder';
-import service from '@services';
+import { LabelContext } from '@store/LabelProvider';
 
 const LabelListPage = () => {
-  const [data, setData] = useState([]);
-
-  const getData = async () => {
-    const res = await service.getLabels();
-    setData(res.data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const [data, dispatch] = useContext(LabelContext);
+  const getData = () => {};
 
   return (
     <>

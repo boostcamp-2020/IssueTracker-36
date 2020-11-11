@@ -23,7 +23,7 @@ const IssueDetailPage = () => {
       <IssueDetail>
         <IssueComment>
           본문,댓글
-        <WritingArea />
+          <WritingArea />
         </IssueComment>
         <IssueSide>사이드</IssueSide>
       </IssueDetail>

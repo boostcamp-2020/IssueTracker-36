@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import MilestoneList from '@components/milestone/MilestoneList';
-import { MilestoneContext } from '@utils/store/Store';
+import { MilestoneContext } from '@store/MilestoneProvider';
 
 const MilestoneListPage = () => {
-  const milestones = useContext(MilestoneContext);
+  const [milestones, dispatch] = useContext(MilestoneContext);
   const [isOpen, setIsOpen] = useState(true);
 
   return (

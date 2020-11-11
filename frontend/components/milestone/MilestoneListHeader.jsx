@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { GoMilestone, GoCheck } from 'react-icons/go';
 import PropTypes from 'prop-types';
-import { MilestoneContext } from '@utils/store/Store';
+import { MilestoneContext } from '@store/MilestoneProvider';
 
 const MilestoneHeader = ({ state, onChangeState }) => {
-  const milestones = useContext(MilestoneContext);
+  const [milestones] = useContext(MilestoneContext);
   return (
     <>
       <MilestoneListHeader>

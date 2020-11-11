@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PrivateRoute from '@utils/PrivateRoute';
 import { GlobalStyle, theme } from '@layouts/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
-import Store from '@utils/store/Store';
+import Store from '@store';
 import {
   IssueAddPage,
   IssueDetailPage,
