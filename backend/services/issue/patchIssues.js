@@ -3,11 +3,11 @@ const { issue } = require('../../sequelize/models');
 
 module.exports = async (req, res) => {
   try {
-    const { issuesId, isClose } = req.body;
-    if (!Array.isArray(issuesId) || typeof isClose !== 'boolean') throw new TypeError();
+    const { issuesId, isClosed } = req.body;
+    if (!Array.isArray(issuesId) || typeof isClosed !== 'boolean') throw new TypeError();
 
     await issue.update(
-      { isClosed: isClose },
+      { isClosed },
       {
         where: {
           id: {
