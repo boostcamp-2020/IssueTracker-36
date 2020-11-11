@@ -12,8 +12,9 @@ const { Op } = sequelize;
 
 const getIssues = async (req, res) => {
   try {
-    const { page, count, closed, milestone, author, assignee, labels } = req.query;
-
+    const { page, count, isClosed, milestone, author, assignee } = req.query;
+    let { label } = req.query;
+    console.log(req.query);
     const parsed = {
       page: (page && parseInt(page, 10)) || 1,
       count: (count && parseInt(count, 10)) || 20,
@@ -33,7 +34,7 @@ const getIssues = async (req, res) => {
     const where = {};
     const userWhere = {};
 
-    switch (closed) {
+    switch (isClosed) {
       case undefined:
       case 'false':
         where.isClosed = false;
@@ -67,9 +68,11 @@ const getIssues = async (req, res) => {
     }
 
     if (parsed.milestone) where.milestone_id = milestone;
-    if (labels) {
-      const labelArray = labels.split(',');
-      labelArray.forEach((labelId) => {
+    if (label) {
+      if (typeof label === 'string') {
+        label = [label];
+      }
+      label.forEach((labelId) => {
         const parsedLabelId = parseInt(labelId, 10);
         if (Number.isNaN(parsedLabelId) || parsedLabelId < 1) throw new TypeError();
       });
@@ -83,7 +86,7 @@ const getIssues = async (req, res) => {
       });
       const possibleIssues = issue.reduce((acc, possibleIssue) => {
         const issueLabel = possibleIssue.dataValues.label_id.split(',');
-        if (labelArray.every((label) => issueLabel.includes(label)))
+        if (label.every((checkingLabel) => issueLabel.includes(checkingLabel)))
           acc.push(possibleIssue.dataValues.issue_id);
         return acc;
       }, []);
