@@ -45,7 +45,7 @@ const HeaderText = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 60px;
+  height: 50px;
   padding-left: 40px;
   color: ${(props) => props.theme.color.grayColor};
   font-size: ${(props) => props.theme.fontSize.md};

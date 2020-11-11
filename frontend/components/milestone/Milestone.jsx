@@ -18,17 +18,26 @@ const Milestone = ({ milestone }) => {
     // TODO:삭제
     console.log(id);
   };
-  const { id, title, description, dueDate, closedIssueNumber, openedIssueNumber } = milestone;
+  const { id, title, description, dueDate, isClosed, closedIssueNumber, openedIssueNumber } = milestone;
   return (
     <TR>
-      <TD align='left' padding='10px'>
+      <Info>
         <Title>{title}</Title>
         <br />
-        <GoCalendar /> Due by
-        <Moment format='MM,DD,YYYY'>{dueDate}</Moment>
-        <br />
-        {description}
-      </TD>
+        <ContentWrapper>
+          <GoCalendar />
+          {dueDate ? (
+            <>
+              Due by
+              <Moment format='MM,DD,YYYY'>{dueDate}</Moment>
+            </>
+          ) : (
+            'No due date'
+          )}
+          <br />
+          {description && description}
+        </ContentWrapper>
+      </Info>
       <TD>
         <div>
           <MilestoneGraph
@@ -38,9 +47,9 @@ const Milestone = ({ milestone }) => {
           />
         </div>
         <br />
-        <BTN onClick={() => clickEditBtn(id)}>edit</BTN>
-        <BTN onClick={() => clickCloseBtn(id)}>close</BTN>
-        <DeleteBTN onClick={() => clickDeleteBtn(id)}>delete</DeleteBTN>
+        <BTN onClick={() => clickEditBtn(id)}>Edit</BTN>
+        <BTN onClick={() => clickCloseBtn(id)}>{isClosed ? 'Reopen' : 'Close'}</BTN>
+        <DeleteBTN onClick={() => clickDeleteBtn(id)}>Delete</DeleteBTN>
       </TD>
     </TR>
   );
@@ -51,28 +60,36 @@ Milestone.propTypes = {
 
 const TR = styled.tr`
   border: 1px solid ${({ theme }) => theme.color.borderColor};
+  padding: 10px;
   &:hover {
     background-color: ${({ theme }) => theme.color.hoverBgColor};
   }
 `;
+
 const TD = styled.td`
-  width: ${(props) => props.width || ''};
-  text-align: ${(props) => props.align || 'center'};
-  padding: ${(props) => props.padding || '5px'};
+  padding: 15px 20px;
 `;
+const Info = styled(TD)`
+  width: 470px;
+`;
+
 const Title = styled.h1`
   font-size: 1.5em;
   color: ${(props) => props.theme.color.blackColor};
 `;
+
+const ContentWrapper = styled.div`
+  color: ${({ theme }) => theme.color.secondaryTextColor};
+  > svg {
+    margin-right: 10px;
+  }
+`;
+
 const BTN = styled.button`
-  width: ${(props) => props.width || ''};
-  text-align: ${(props) => props.align || 'center'};
-  padding: ${(props) => props.padding || '5px'};
   color: ${(props) => props.theme.color.blueColor};
   font-size: ${(props) => props.theme.fontSize.md};
+  margin-right: 20px;
   cursor: pointer;
-  padding: 1px;
-  display: inline-block;
 `;
 const DeleteBTN = styled(BTN)`
   color: ${(props) => props.theme.color.redColor};
