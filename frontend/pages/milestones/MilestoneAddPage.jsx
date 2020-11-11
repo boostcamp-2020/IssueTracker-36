@@ -1,13 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import MainPageLayout from '@layouts/MainPageLayout';
 import Button from '@components/common/Button';
 import MilestoneForm from '@components/milestone/MilestoneForm';
 import service from '@services';
+import { MilestoneContext } from '@store/MilestoneProvider';
+import { milestoneActions } from '@store/actions';
 
 const MilestoneAddPage = () => {
   const history = useHistory();
+  const [, dispatch] = useContext(MilestoneContext);
   const [isTitleEmpty, setIsTitleEmpty] = useState(true);
   const title = useRef('');
   const dueDate = useRef(undefined);
@@ -15,7 +18,15 @@ const MilestoneAddPage = () => {
 
   const handleClickCreate = async () => {
     try {
-      await service.addMilestone(title.current.value, dueDate.current.value, description.current.value);
+      const { data } = await service.addMilestone(
+        title.current.value,
+        dueDate.current.value,
+        description.current.value,
+      );
+      dispatch({
+        type: milestoneActions.ADD_MILESTONE,
+        payload: data,
+      });
       history.push('/milestones');
     } catch (e) {
       alert('오류가 발생했습니다');

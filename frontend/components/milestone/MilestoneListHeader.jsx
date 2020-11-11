@@ -11,11 +11,11 @@ const MilestoneHeader = ({ state, onChangeOpenState }) => {
       <MilestoneListHeader>
         <td colSpan='2'>
           <HeaderText>
-            <Btn onClick={() => onChangeOpenState(true)} selected={state === 'open'}>
+            <Btn onClick={() => onChangeOpenState(true)} selected={state}>
               <GoMilestone />
               {milestones.open.length} Open
             </Btn>
-            <Btn onClick={() => onChangeOpenState(false)} selected={state === 'close'}>
+            <Btn onClick={() => onChangeOpenState(false)} selected={!state}>
               <GoCheck />
               {milestones.close.length} Closed
             </Btn>

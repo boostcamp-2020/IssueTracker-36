@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
+import { MilestoneContext } from '@store/MilestoneProvider';
+import { milestoneActions } from '@store/actions';
 import Milestoneform from '@components/milestone/MilestoneForm';
 import Button from '@components/common/Button';
 import service from '@services';
@@ -11,6 +13,7 @@ const MilestoneEditPage = ({ match }) => {
   const {
     params: { id },
   } = match;
+  const [, dispatch] = useContext(MilestoneContext);
   const [prevContents, setPrevContents] = useState({
     title: '',
     dueDate: '',
@@ -40,7 +43,11 @@ const MilestoneEditPage = ({ match }) => {
         if (titleContent !== prevContents.title) updatedContents.title = titleContent;
         if (dueDateContent !== prevContents.dueDate) updatedContents.dueDate = dueDateContent;
         if (descriptionContent !== prevContents.description) updatedContents.description = descriptionContent;
-        await service.updateMilestone(id, updatedContents);
+        const { data } = await service.updateMilestone(id, updatedContents);
+        dispatch({
+          type: milestoneActions.UPDATE_MILESTONE,
+          payload: data,
+        });
         history.push('/milestones');
       }
     } catch (e) {

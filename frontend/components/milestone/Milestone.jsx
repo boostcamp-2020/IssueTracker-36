@@ -20,7 +20,10 @@ const Milestone = ({ milestone }) => {
   const clickCloseBtn = async () => {
     try {
       await service.changeClosed(id, !isClosed);
-      //TODO: status 변경 이후 작업
+      dispatch({
+        type: milestoneActions.CHANGE_CLOSED,
+        payload: { id, isClosed },
+      });
     } catch (e) {
       alert('오류가 발생했습니다');
     }
