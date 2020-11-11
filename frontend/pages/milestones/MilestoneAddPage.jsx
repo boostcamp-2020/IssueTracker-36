@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import MainPageLayout from '@layouts/MainPageLayout';
@@ -8,15 +8,15 @@ import service from '@services';
 
 const MilestoneAddPage = () => {
   const history = useHistory();
-  const title = useRef(undefined);
+  const [isTitleEmpty, setIsTitleEmpty] = useState(true);
+  const title = useRef('');
   const dueDate = useRef(undefined);
-  const description = useRef(undefined);
+  const description = useRef('');
 
   const handleClickCreate = async () => {
     try {
-      //   await service.addMisestone(title, dueDate, description);
-      console.log(title.current.value, dueDate.current.value, description.current.value);
-      //   history.push('/milestones');
+      await service.addMilestone(title.current.value, dueDate.current.value, description.current.value);
+      history.push('/milestones');
     } catch (e) {
       alert('오류가 발생했습니다');
     }
@@ -32,13 +32,18 @@ const MilestoneAddPage = () => {
         </SubHeader>
       </HeaderWrapper>
       <br />
-      <NewMilestoneForm title={title} dueDate={dueDate} description={description} />
+      <NewMilestoneForm
+        title={title}
+        dueDate={dueDate}
+        description={description}
+        setIsTitleEmpty={setIsTitleEmpty}
+      />
       <ButtonWrapper>
         <Button
           size='large'
           type='primary'
           text=' Create Milestone'
-          disabled={title === ''}
+          disabled={isTitleEmpty}
           onClick={handleClickCreate}
         />
       </ButtonWrapper>

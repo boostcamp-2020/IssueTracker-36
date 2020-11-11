@@ -2,7 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const MilestoneAddForm = ({ title, dueDate, description }) => {
+const MilestoneAddForm = ({ title, dueDate, description, setIsTitleEmpty }) => {
+  const onChangeTitle = (e) => {
+    if (e.target.value.length) setIsTitleEmpty(false);
+    else setIsTitleEmpty(true);
+  };
+
   return (
     <Wrapper>
       <FormWrapper>
@@ -15,6 +20,7 @@ const MilestoneAddForm = ({ title, dueDate, description }) => {
           id='milestone_title'
           name='milestone[title]'
           className='input-box'
+          onChange={onChangeTitle}
           ref={title}
         />
       </FormWrapper>
@@ -54,6 +60,7 @@ MilestoneAddForm.propTypes = {
   title: PropTypes.object.isRequired,
   dueDate: PropTypes.object.isRequired,
   description: PropTypes.object.isRequired,
+  setIsTitleEmpty: PropTypes.func.isRequired,
 };
 
 const LabelWrapper = styled.div`
