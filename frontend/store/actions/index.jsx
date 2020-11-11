@@ -8,6 +8,8 @@ export const milestoneActions = {
   ADD_MILESTONES: 'addMilestones',
   ADD_MILESTONE: 'addMilestone',
   DELETE_MILESTONE: 'deleteMilestone',
+  UPDATE_MILESTONE: 'updateMilestone',
+  CHANGE_CLOSED: 'changeClosed',
 };
 
 export const userActions = {

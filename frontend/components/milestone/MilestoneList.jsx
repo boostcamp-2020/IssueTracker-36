@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Mytable from '@components/common/Table';
 import MilestoneHeader from '@components/milestone/MilestoneListHeader';
 import Milestone from '@components/milestone/Milestone';
-import PropTypes from 'prop-types';
 
 const MilestoneList = ({ milestoneList, state, onChangeOpenState }) => {
   return (

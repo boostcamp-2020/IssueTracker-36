@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { GoMilestone, GoCheck } from 'react-icons/go';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { MilestoneContext } from '@store/MilestoneProvider';
+import { GoMilestone, GoCheck } from 'react-icons/go';
 
 const MilestoneHeader = ({ state, onChangeOpenState }) => {
   const [milestones] = useContext(MilestoneContext);
@@ -11,11 +11,11 @@ const MilestoneHeader = ({ state, onChangeOpenState }) => {
       <MilestoneListHeader>
         <td colSpan='2'>
           <HeaderText>
-            <Btn onClick={() => onChangeOpenState(true)} style={{ color: state ? 'black' : '' }}>
+            <Btn onClick={() => onChangeOpenState(true)} selected={state}>
               <GoMilestone />
               {milestones.open.length} Open
             </Btn>
-            <Btn onClick={() => onChangeOpenState(false)} style={{ color: !state ? 'black' : '' }}>
+            <Btn onClick={() => onChangeOpenState(false)} selected={!state}>
               <GoCheck />
               {milestones.close.length} Closed
             </Btn>
@@ -32,15 +32,22 @@ MilestoneHeader.propTypes = {
 
 const MilestoneListHeader = styled.tr`
   background-color: #eee;
-  height: 60px;
-  padding-left: 18px;
 `;
 const Btn = styled.button`
-  color: ${(props) => props.theme.color.grayColor};
+  margin-right: 15px;
+  color: ${(props) => (props.selected ? 'black' : props.theme.color.grayColor)};
+  font-weight: ${(props) => props.selected && 'bold'};
+  > svg {
+    margin-right: 5px;
+  }
 `;
-const HeaderText = styled.p`
+const HeaderText = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  padding-left: 40px;
   color: ${(props) => props.theme.color.grayColor};
   font-size: ${(props) => props.theme.fontSize.md};
-  padding-left: 20px;
 `;
 export default MilestoneHeader;
