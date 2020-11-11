@@ -23,17 +23,31 @@ const selectReducer = (state, action) => {
 
 const IssueDetailPage = () => {
   const params = useParams();
-  const [issue, setissueInfo] = useState({ comments: [] });
+  const [issue, setissueInfo] = useState({ isClosed: true, comments: [] });
   const [user, setUser] = useState({});
   const [currentSelect, dispatch] = useReducer(selectReducer, {
     assignees: [],
     labels: [],
     milestone: [],
   });
+
   const getIssue = async () => {
     const issueInfo = await service.getIssue(params.id);
     setissueInfo(issueInfo.data);
   };
+  const updateState = async () => {
+    const updateIssue = await service.updateIssue(params.id, { title: issue.title, closed: !issue.isClosed });
+    setissueInfo({ ...issue, isClosed: updateIssue.data.isClosed });
+  }
+  const updateTitle = async (title) => {
+    const updateIssue = await service.updateIssue(params.id, { title, closed: issue.isClosed });
+    setissueInfo({ ...issue, title: updateIssue.data.title });
+  }
+  const addComment = async (content) => {
+    await service.addComment({ uid: user.id, content, issueId: issue.id });
+    getIssue();
+  }
+
   useEffect(() => {
     getIssue();
     service.getUsers().then(({ data }) => {
@@ -43,13 +57,20 @@ const IssueDetailPage = () => {
 
   return (
     <MainPageLayout>
-      <IssueDetailHeader issue={issue} />
+      <IssueDetailHeader issue={issue} onClickBtn={updateTitle} />
       <IssueDetail>
         <IssueComment>
           <Maincontents>
             <CommentList comments={issue.comments} />
           </Maincontents>
-          <NewCommentForm user={user} />
+          <NewCommentForm
+            user={user}
+            isClosed={issue.isClosed}
+            leftBtnText={issue.isClosed ? 'Reopen Issue' : 'Close issue'}
+            rightBtnText='comment'
+            onClickLeftBtn={updateState}
+            onClickRightBtn={addComment}
+          />
         </IssueComment>
         <IssueSide>
           <IssueSidebar currentSelect={currentSelect} chageSelect={dispatch} />
@@ -79,5 +100,6 @@ const IssueSide = styled.div`
   display: flex;
   flex-direction: column;
   flex: 3;
+  padding: 10px;
 `;
 export default IssueDetailPage;
