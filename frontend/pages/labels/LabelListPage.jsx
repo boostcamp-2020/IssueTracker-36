@@ -5,6 +5,7 @@ import LabelAdder from '@components/label/LabelAdder';
 import { LabelContext } from '@store/LabelProvider';
 import { labelActions } from '@store/actions';
 import Button from '@components/common/Button';
+import service from '@services';
 
 const reducer = (state, action) => {
   return !state;
@@ -13,12 +14,14 @@ const reducer = (state, action) => {
 const LabelListPage = ({ setNewButton }) => {
   const [labels, dispatch] = useContext(LabelContext);
   const [showLabelAdder, showLabelAdderDispatch] = useReducer(reducer, false);
-  const onAddLabel = (label) =>
+  const onAddLabel = async (debouncedPreview) => {
+    const { data } = await service.addLabel(debouncedPreview);
     dispatch({
       type: labelActions.ADD_LABEL,
-      payload: label,
+      payload: data,
     });
-  const onDeleteLabel = (id) =>
+  };
+  const onDeleteLabel = async (id) =>
     dispatch({
       type: labelActions.DELETE_LABEL,
       payload: id,
@@ -31,7 +34,9 @@ const LabelListPage = ({ setNewButton }) => {
 
   return (
     <>
-      {showLabelAdder && <LabelAdder onAddLabel={onAddLabel} onCancel={showLabelAdderDispatch} />}
+      {showLabelAdder && (
+        <LabelAdder onConfirm={onAddLabel} onCancel={showLabelAdderDispatch} confirmText='Create label' />
+      )}
       <LabelList labels={labels} onDeleteLabel={onDeleteLabel} />
     </>
   );

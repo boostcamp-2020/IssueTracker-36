@@ -7,8 +7,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import debounceHook from '@utils/DebounceHook';
 
-const LabelAdder = ({ onAddLabel, onCancel }) => {
-  const [preview, setPreview] = useState({ title: '', description: '', color: '#0366d6' });
+const LabelAdder = ({ onConfirm, onCancel, defaultValue, confirmText }) => {
+  const [preview, setPreview] = useState(defaultValue);
   const debouncedPreview = debounceHook(preview, 1000);
   const resetForm = () => {
     setPreview({ title: '', description: '', color: '#0366d6' });
@@ -32,9 +32,8 @@ const LabelAdder = ({ onAddLabel, onCancel }) => {
       color: e.target.value,
     });
   };
-  const handleClickCreate = async () => {
-    const { data } = await service.addLabel(debouncedPreview);
-    onAddLabel(data);
+  const handleClickConfirm = async () => {
+    await onConfirm(debouncedPreview);
     resetForm();
   };
   return (
@@ -83,9 +82,9 @@ const LabelAdder = ({ onAddLabel, onCancel }) => {
                 <Button
                   size='large'
                   type='primary'
-                  text=' Create Label'
+                  text={confirmText}
                   disabled={debouncedPreview.title === ''}
-                  onClick={handleClickCreate}
+                  onClick={handleClickConfirm}
                 />
               </BtnWrapper>
             </BtnBox>
@@ -96,21 +95,26 @@ const LabelAdder = ({ onAddLabel, onCancel }) => {
   );
 };
 LabelAdder.propTypes = {
-  onAddLabel: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  defaultValue: PropTypes.object,
 };
+LabelAdder.defaultProps = {
+  defaultValue: { title: '', description: '', color: '#0366d6' },
+};
+
 const AdderForm = styled.form`
   width: 100%;
   background-color: ${({ theme }) => theme.color.shadeBgColor};
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   border-radius: 6px;
   padding: 16px;
-  margin-bottom: 16px !important;
 `;
 const PreviewBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   width: 100%;
-
-  display: block;
   margin-bottom: 8px !important;
 `;
 const FlexBox = styled.div`
