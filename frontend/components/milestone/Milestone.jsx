@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { GoCalendar } from 'react-icons/go';
@@ -7,9 +8,9 @@ import MilestoneGraph from '@components/milestone/MilestoneGraph';
 import service from '@services';
 
 const Milestone = ({ milestone, milestoneListDispatch }) => {
+  const history = useHistory();
   const clickEditBtn = async (id) => {
-    // TODO:수정
-    console.log(id);
+    history.push(`/milestones/${id}/edit`);
   };
   const clickCloseBtn = async (id, isClosed) => {
     try {
