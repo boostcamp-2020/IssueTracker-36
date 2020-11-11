@@ -53,6 +53,7 @@ const IssueListPage = ({ location }) => {
           text += ` ${key}:${labelId}`;
         });
       } else {
+        if (urlObject[key] === undefined) return;
         text += ` ${key}:${urlObject[key]}`;
       }
     });
@@ -62,12 +63,14 @@ const IssueListPage = ({ location }) => {
     }
     inputRef.current.value = text;
   };
-
+  const getIssues = async () => {
+    const { data: issuesResponse } = await service.getIssues(location.pathname, location.search);
+    setIssues(issuesResponse.rows);
+  };
   useEffect(async () => {
     urlToInputText();
     setFilterData(urlObject);
-    const { data: issuesResponse } = await service.getIssues(location.pathname, location.search);
-    setIssues(issuesResponse.rows);
+    getIssues();
     const { data: labelsResponse } = await service.getLabels();
     const { data: milestonesResponse } = await service.getMilestones({});
     setLabelMilestoneNumber({
@@ -92,7 +95,12 @@ const IssueListPage = ({ location }) => {
           size='large'
         />
       </NavBar>
-      <IssueList issues={issues} filterData={filterData} setFilterData={setFilterData} />
+      <IssueList
+        issues={issues}
+        filterData={filterData}
+        setFilterData={setFilterData}
+        getIssues={getIssues}
+      />
     </MainPageLayout>
   );
 };

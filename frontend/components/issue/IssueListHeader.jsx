@@ -2,9 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import IssueSelectFilter from './IssueSelectFilter';
-import Button from '@components/common/Button';
 
-const IssueListHeader = ({ filterData, setFilterData, onClickSelectAll, selectedIssues }) => {
+const IssueListHeader = ({
+  filterData,
+  setFilterData,
+  onClickSelectAll,
+  selectedIssues,
+  setSelectedIssues,
+  getIssues,
+}) => {
   const forMarkAs = selectedIssues[0] !== undefined;
   const filters = [
     {
@@ -57,6 +63,8 @@ const IssueListHeader = ({ filterData, setFilterData, onClickSelectAll, selected
                 setFilterData={setFilterData}
                 isInputExist={isInputExist}
                 selectedIssues={selectedIssues}
+                setSelectedIssues={setSelectedIssues}
+                getIssues={getIssues}
               />
             );
           })}
@@ -71,6 +79,8 @@ IssueListHeader.propTypes = {
   setFilterData: PropTypes.func.isRequired,
   onClickSelectAll: PropTypes.func.isRequired,
   selectedIssues: PropTypes.array.isRequired,
+  setSelectedIssues: PropTypes.func.isRequired,
+  getIssues: PropTypes.func.isRequired,
 };
 
 const Wrapper = styled.tr`
@@ -80,7 +90,7 @@ const Wrapper = styled.tr`
 `;
 
 const TD = styled.td`
-  padding: 15px 20px;
+  padding: 15px 16px;
 `;
 
 const Checkbox = styled.input.attrs({

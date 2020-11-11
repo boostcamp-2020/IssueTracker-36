@@ -13,7 +13,7 @@ const labelGenerator = (issueLabels) => {
   }, []);
 };
 
-const IssueList = ({ issues, filterData, setFilterData }) => {
+const IssueList = ({ issues, filterData, setFilterData, getIssues }) => {
   const [selectedIssues, setSelectedIssues] = useState([]);
   const onClickSelectAll = (e) => {
     if (e.target.checked) {
@@ -40,6 +40,8 @@ const IssueList = ({ issues, filterData, setFilterData }) => {
               setFilterData={setFilterData}
               onClickSelectAll={onClickSelectAll}
               selectedIssues={selectedIssues}
+              setSelectedIssues={setSelectedIssues}
+              getIssues={getIssues}
             />
           );
         }}
@@ -70,6 +72,7 @@ IssueList.propTypes = {
   issues: PropTypes.array,
   filterData: PropTypes.object.isRequired,
   setFilterData: PropTypes.func.isRequired,
+  getIssues: PropTypes.func.isRequired,
 };
 
 IssueList.defaultProps = {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import qs from 'query-string';
@@ -10,13 +10,15 @@ import optionGenerator from '@utils/OptionGenerator';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
 const filterAuthor = (history, filterData, authorId) => {
+  console.log(filterData);
   const url = qs.stringifyUrl({
     url: '/issues',
     query: {
       ...filterData,
-      author: authorId,
+      author: Number(filterData.author) === authorId ? undefined : authorId,
     },
   });
+  // console.log(url);
   history.push(url);
 };
 const filterMilestone = (history, filterData, milestoneId) => {
@@ -24,7 +26,7 @@ const filterMilestone = (history, filterData, milestoneId) => {
     url: '/issues',
     query: {
       ...filterData,
-      milestone: milestoneId,
+      milestone: Number(filterData.milestone) === milestoneId ? undefined : milestoneId,
     },
   });
   history.push(url);
@@ -34,7 +36,7 @@ const filterAssignee = (history, filterData, assigneeId) => {
     url: '/issues',
     query: {
       ...filterData,
-      assignee: assigneeId,
+      assignee: Number(filterData.assignee) === assigneeId ? undefined : assigneeId,
     },
   });
   history.push(url);
@@ -50,25 +52,21 @@ const filterLabels = (history, filterData, labelId) => {
   });
   history.push(url);
 };
-const filterMarkAs = (selectedIssues) => async (type) => {
-  switch (type) {
-    case 'Open':
-      console.log('open');
-      await service.patchIssues(selectedIssues, false);
-      break;
-    case 'Closed':
-      console.log('close');
-      await service.patchIssues(selectedIssues, true);
-      break;
-    default:
-  }
-};
 
-const IssueSelectFilter = ({ filterName, dropdownTitle, filterData, isInputExist, selectedIssues }) => {
+const IssueSelectFilter = ({
+  filterName,
+  dropdownTitle,
+  filterData,
+  isInputExist,
+  selectedIssues,
+  setSelectedIssues,
+  getIssues,
+}) => {
   const markAsActons = [
     { id: 1, type: 'Open' },
     { id: 2, type: 'Closed' },
   ];
+
   const [showDropdown, setShowDropdown] = useState(false);
   const history = useHistory();
 
@@ -76,6 +74,20 @@ const IssueSelectFilter = ({ filterName, dropdownTitle, filterData, isInputExist
     setShowDropdown(!showDropdown);
   };
   const [optionData, setOptionData] = useState([]);
+  const filterMarkAs = async (type) => {
+    switch (type) {
+      case 'Open':
+        await service.patchIssues(selectedIssues, false);
+        break;
+      case 'Closed':
+        await service.patchIssues(selectedIssues, true);
+        break;
+      default:
+    }
+    getIssues();
+    setShowDropdown(!showDropdown);
+    setSelectedIssues([]);
+  };
   useEffect(async () => {
     if (!showDropdown) return;
     switch (filterName) {
@@ -116,7 +128,7 @@ const IssueSelectFilter = ({ filterName, dropdownTitle, filterData, isInputExist
         );
         break;
       case 'Mark As':
-        setOptionData(optionGenerator.markAs(markAsActons, filterMarkAs(selectedIssues)));
+        setOptionData(optionGenerator.markAs(markAsActons, filterMarkAs));
         break;
       default:
         setOptionData([]);
@@ -172,6 +184,8 @@ IssueSelectFilter.propTypes = {
   filterData: PropTypes.object.isRequired,
   isInputExist: PropTypes.bool.isRequired,
   selectedIssues: PropTypes.array.isRequired,
+  getIssues: PropTypes.func.isRequired,
+  setSelectedIssues: PropTypes.func.isRequired,
 };
 
 export default IssueSelectFilter;
