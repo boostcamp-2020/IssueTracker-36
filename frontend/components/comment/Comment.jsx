@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Moment from 'react-moment';
 import ReactionButton from '@components/comment/ReactionButton';
 import ReactMarkdown from 'react-markdown';
+import Emoji from '@components/common/Emoji';
 
 const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) => {
   return (
@@ -18,7 +19,18 @@ const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) =
         </Buttons>
       </Head>
       <Body>
-        <ReactMarkdown className='markdown-body'>{content}</ReactMarkdown>
+        <Markdown>
+          <ReactMarkdown className='markdown-body'>{content}</ReactMarkdown>
+        </Markdown>
+        {reactions && (
+          <ReactionButtonWrapper>
+            {reactions.map((reaction) => (
+              <EmojiButton type='button' key={reaction.id}>
+                <Emoji hexCode={reaction.type} />
+              </EmojiButton>
+            ))}
+          </ReactionButtonWrapper>
+        )}
       </Body>
     </CommentWrapper>
   );
@@ -106,8 +118,20 @@ const EditButton = styled.button`
 `;
 
 const Body = styled.div`
-  padding: 15px;
   border-radius: 0 0 6px 6px;
+`;
+
+const Markdown = styled.div`
+  padding: 15px;
+`;
+
+const ReactionButtonWrapper = styled.div`
+  border-top: 1px solid ${({ theme }) => theme.color.borderColor};
+`;
+
+const EmojiButton = styled.button`
+  padding: 8px 12px;
+  border-right: 1px solid ${({ theme }) => theme.color.borderColor};
 `;
 
 export default Comment;
