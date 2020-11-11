@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.color.whiteColor};
   border-radius: 6px;
   cursor: auto;
-
+  z-index: 1;
   &:before {
     top: -16.5px;
     right: 9px;
