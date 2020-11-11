@@ -9,6 +9,8 @@ module.exports = async (req, res) => {
       description,
       isClosed: false,
     });
+    result.dataValues.closedIssueNumber = 0;
+    result.dataValues.openedIssueNumber = 0;
     res.json(result);
   } catch (e) {
     res.sendStatus(500);
