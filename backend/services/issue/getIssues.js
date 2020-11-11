@@ -88,7 +88,7 @@ const getIssues = async (req, res) => {
         return acc;
       }, []);
       where.id = where.id
-        ? { [Op.in]: Array.from(new Set(where.id[Op.in].concat(possibleIssues))) }
+        ? { [Op.in]: where.id[Op.in].filter((id) => possibleIssues.includes(id)) }
         : { [Op.in]: possibleIssues };
     }
 
