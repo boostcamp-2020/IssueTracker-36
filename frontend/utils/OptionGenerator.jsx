@@ -196,7 +196,6 @@ const MarkAsOption = ({ type = '', clickAction = () => {} }) => {
 };
 
 const markAs = (data, clickAction = () => {}) => {
-  console.log(data);
   return data.reduce((acc, action) => {
     acc.push({
       id: action.id,
