@@ -21,7 +21,7 @@ const UserOption = ({ selected, nickName, clickAction }) => {
   );
 };
 
-const users = ({ data }, selectedUser = [], clickAction) => {
+const users = ({ data }, selectedUser = [], clickAction = () => {}) => {
   return data.reduce((acc, user) => {
     acc.push({
       id: user.id,
@@ -65,7 +65,7 @@ const LabelOption = ({ selected, label, clickAction }) => {
   );
 };
 
-const labels = ({ data }, selectedLabels = [], clickAction) => {
+const labels = ({ data }, selectedLabels = [], clickAction = () => {}) => {
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
@@ -132,7 +132,7 @@ const MilestoneOption = ({ selected, dueDate, title, clickAction }) => {
   );
 };
 
-const milestones = ({ data }, selectedMilestone = [], clickAction) => {
+const milestones = ({ data }, selectedMilestone = [], clickAction = () => {}) => {
   return data.reduce((acc, milestone) => {
     acc.push({
       id: milestone.id,
