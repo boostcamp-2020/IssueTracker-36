@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const MilestoneAddForm = ({ title, dueDate, description, setIsTitleEmpty }) => {
+const MilestoneAddForm = ({ title, dueDate, description, setIsTitleEmpty, defaultValue }) => {
   const onChangeTitle = (e) => {
     if (e.target.value.length) setIsTitleEmpty(false);
     else setIsTitleEmpty(true);
@@ -22,6 +22,7 @@ const MilestoneAddForm = ({ title, dueDate, description, setIsTitleEmpty }) => {
           className='input-box'
           onChange={onChangeTitle}
           ref={title}
+          defaultValue={defaultValue.title}
         />
       </FormWrapper>
       <FormWrapper>
@@ -36,6 +37,7 @@ const MilestoneAddForm = ({ title, dueDate, description, setIsTitleEmpty }) => {
           name='milestone[due_on]'
           className='input-box'
           ref={dueDate}
+          defaultValue={defaultValue.dueDate}
         />
       </FormWrapper>
       <FormWrapper>
@@ -50,6 +52,7 @@ const MilestoneAddForm = ({ title, dueDate, description, setIsTitleEmpty }) => {
           name='milestone[description]'
           className='input-box'
           ref={description}
+          defaultValue={defaultValue.description}
         />
       </FormWrapper>
     </Wrapper>
@@ -60,7 +63,13 @@ MilestoneAddForm.propTypes = {
   title: PropTypes.object.isRequired,
   dueDate: PropTypes.object.isRequired,
   description: PropTypes.object.isRequired,
-  setIsTitleEmpty: PropTypes.func.isRequired,
+  setIsTitleEmpty: PropTypes.func,
+  defaultValue: PropTypes.object,
+};
+
+MilestoneAddForm.defaultProps = {
+  setIsTitleEmpty: () => {},
+  defaultValue: { title: '', dueDate: '', description: '' },
 };
 
 const LabelWrapper = styled.div`

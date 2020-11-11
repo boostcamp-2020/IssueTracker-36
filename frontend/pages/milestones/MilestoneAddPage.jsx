@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import MainPageLayout from '@layouts/MainPageLayout';
 import Button from '@components/common/Button';
-import NewMilestoneForm from '@components/milestone/NewMilestoneForm';
+import MilestoneForm from '@components/milestone/MilestoneForm';
 import service from '@services';
 
 const MilestoneAddPage = () => {
@@ -32,7 +32,7 @@ const MilestoneAddPage = () => {
         </SubHeader>
       </HeaderWrapper>
       <br />
-      <NewMilestoneForm
+      <MilestoneForm
         title={title}
         dueDate={dueDate}
         description={description}
