@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { GoCalendar } from 'react-icons/go';
 import Moment from 'react-moment';
 import MilestoneGraph from '@components/milestone/MilestoneGraph';
+import service from '@services';
 
 const Milestone = ({ milestone }) => {
   const clickEditBtn = async (id) => {
@@ -15,8 +16,14 @@ const Milestone = ({ milestone }) => {
     console.log(id);
   };
   const clickDeleteBtn = async (id) => {
-    // TODO:삭제
-    console.log(id);
+    try {
+      if (confirm('삭제하시겠습니까?')) {
+        await service.deleteMilestone(id);
+        window.location.reload();
+      }
+    } catch (e) {
+      alert('오류가 발생했습니다');
+    }
   };
   const { id, title, description, dueDate, isClosed, closedIssueNumber, openedIssueNumber } = milestone;
   return (
