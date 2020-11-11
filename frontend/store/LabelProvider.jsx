@@ -15,6 +15,8 @@ const reducer = (state, action) => {
       return [...state, payload];
     case labelActions.DELETE_LABEL:
       return [...state.filter((label) => label.id !== payload)];
+    case labelActions.UPDATE_LABEL:
+      return [...state.map((label) => (label.id === payload.id ? { ...label, ...payload } : label))];
     default:
       return state;
   }
