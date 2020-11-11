@@ -1,11 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import LabelList from '@components/label/LabelList';
 import LabelAdder from '@components/label/LabelAdder';
 import { LabelContext } from '@store/LabelProvider';
 import { labelActions } from '@store/actions';
+import Button from '@components/common/Button';
 
-const LabelListPage = () => {
+const reducer = (state, action) => {
+  return !state;
+};
+
+const LabelListPage = ({ setNewButton }) => {
   const [labels, dispatch] = useContext(LabelContext);
+  const [showLabelAdder, showLabelAdderDispatch] = useReducer(reducer, false);
   const onAddLabel = (label) =>
     dispatch({
       type: labelActions.ADD_LABEL,
@@ -17,9 +23,14 @@ const LabelListPage = () => {
       payload: id,
     });
 
+  useEffect(() => {
+    const NewLabelButton = <Button text='New label' size='large' onClick={showLabelAdderDispatch} />;
+    setNewButton(NewLabelButton);
+  }, []);
+
   return (
     <>
-      <LabelAdder onAddLabel={onAddLabel} />
+      {showLabelAdder && <LabelAdder onAddLabel={onAddLabel} />}
       <LabelList labels={labels} onDeleteLabel={onDeleteLabel} />
     </>
   );
