@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FaRegSmile } from 'react-icons/fa';
 import Dropdown from '@components/comment/Dropdown';
-import Imoji from '@components/common/Imoji';
+import Emoji from '@components/common/Emoji';
 
 const reactions = {
   '+1': '0x1F44D',
@@ -26,7 +26,7 @@ const ReactionButton = ({ onClickReaction }) => {
 
   const openDropdown = () => setShowDropdown(true);
   const closeDropdown = () => setShowDropdown(false);
-  const onClickImoji = (label) => {
+  const onClickEmoji = (label) => {
     closeDropdown();
     onClickReaction(reactions[label]);
   };
@@ -39,21 +39,21 @@ const ReactionButton = ({ onClickReaction }) => {
       {showDropdown && (
         <Dropdown closeHandler={closeDropdown}>
           <Label>{hoverReaction || 'Pick your reaction'}</Label>
-          <ImojiWrapper>
+          <EmojiWrapper>
             {Object.entries(reactions).map(([label, hexCode]) => (
-              <ImojiButton
+              <EmojiButton
                 type='button'
                 onMouseOver={() => setHoverReaction(label)}
                 onMouseLeave={() => setHoverReaction(null)}
                 onFocus={() => setHoverReaction(label)}
                 onBlur={() => setHoverReaction(null)}
-                onClick={() => onClickImoji(label)}
+                onClick={() => onClickEmoji(label)}
                 key={label}
               >
-                <Imoji hexCode={hexCode} label={label} />
-              </ImojiButton>
+                <Emoji hexCode={hexCode} label={label} />
+              </EmojiButton>
             ))}
-          </ImojiWrapper>
+          </EmojiWrapper>
         </Dropdown>
       )}
     </ButtonWrapper>
@@ -89,14 +89,14 @@ const Label = styled.div`
   text-align: left;
 `;
 
-const ImojiWrapper = styled.div`
+const EmojiWrapper = styled.div`
   padding: 4px 8px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 `;
 
-const ImojiButton = styled.button`
+const EmojiButton = styled.button`
   width: 25%;
   padding: 4px;
 `;

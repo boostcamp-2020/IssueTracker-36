@@ -30,7 +30,7 @@ Avatar.defaultProps = {
 const Wrapper = styled.div`
   display: inline-block;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.color.iconColor};
+  background-color: ${({ theme }) => theme.color.borderColor};
 
   &.large-avatar {
     width: 40px;

@@ -10,7 +10,13 @@ const getIssue = async (req, res) => {
       include: [
         {
           model: comment,
-          include: [reaction],
+          include: [
+            {
+              model: user,
+              attributes: ['nickName'],
+            },
+            reaction,
+          ],
         },
         {
           model: userIssue,
