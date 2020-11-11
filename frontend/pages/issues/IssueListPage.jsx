@@ -22,12 +22,16 @@ const IssueListPage = ({ location }) => {
 
   const inputTextToUrl = (inputText) => {
     const queryArray = inputText.split(' ');
-    const queryObject = {};
+    const queryObject = { label: [] };
     queryArray.forEach((option) => {
       const key = option.split(':')[0];
-
       const val = option.split(':')[1];
-      queryObject[key] = val;
+
+      if (key === 'label') {
+        queryObject[key].push(Number(val));
+      } else {
+        queryObject[key] = val;
+      }
     });
     return qs.stringifyUrl({
       url: '/issues',
@@ -46,23 +50,22 @@ const IssueListPage = ({ location }) => {
     Object.keys(urlObject).forEach((key) => {
       if (typeof urlObject[key] === 'object') {
         urlObject[key].forEach((labelId) => {
-          text += ` ${key}:${labelId} `;
+          text += ` ${key}:${labelId}`;
         });
       } else {
-        text += ` ${key}:${urlObject[key]} `;
+        text += ` ${key}:${urlObject[key]}`;
       }
     });
     text.trim();
-    if (text === '') {
-      inputRef.current.value = 'is:open';
-    } else {
-      inputRef.current.value = text;
+    if (!urlObject.label || typeof urlObject.label === 'string') {
+      urlObject.label = [urlObject.label];
     }
+    inputRef.current.value = text;
   };
 
   useEffect(async () => {
     urlToInputText();
-
+    setFilterData(urlObject);
     const { data: issuesResponse } = await service.getIssues(location.pathname, location.search);
     setIssues(issuesResponse.rows);
     const { data: labelsResponse } = await service.getLabels();
