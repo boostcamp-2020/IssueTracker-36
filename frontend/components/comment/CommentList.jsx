@@ -7,8 +7,8 @@ const CommentList = ({ comments }) => {
   return (
     <ListWrapper>
       {comments.map((comment) => (
-        <ItemWrapper>
-          <CommentItem comment={comment} key={comment.id} />
+        <ItemWrapper key={comment.id}>
+          <CommentItem comment={comment} />
         </ItemWrapper>
       ))}
     </ListWrapper>
