@@ -6,7 +6,10 @@ import WritingArea from '@components/common/WritingArea';
 import Button from '@components/common/Button';
 import { GoIssueClosed } from 'react-icons/go';
 
-const CommentItem = ({ user, buttonText, onClickButton, isClosed }) => {
+const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickRightBtn, isClosed }) => {
+  const clickButton = (content) => {
+    onClickRightBtn(content);
+  };
   return (
     <ItemWrapper>
       <AvatarWrapper>
@@ -18,33 +21,20 @@ const CommentItem = ({ user, buttonText, onClickButton, isClosed }) => {
           renderButton={(text) => {
             return (
               <>
-                {isClosed ? (
-                  <Button
-                    size='large'
-                    text={buttonText}
-                    type='secondary'
-                    icon={
-                      <GoIssueClosed
-                        onClick={() => {
-                          onClickButton();
-                        }}
-                      />
-                    }
-                  />
-                ) : (
-                  <Button
-                    size='large'
-                    text={buttonText}
-                    type='secondary'
-                    onClick={() => {
-                       onClickButton();
-                  }}/>
-                )}
                 <Button
                   size='large'
-                  text='Comment'
+                  text={leftBtnText}
+                  type='secondary'
+                  icon={!isClosed && <GoIssueClosed />}
                   onClick={() => {
-                    onClickButton();
+                    onClickLeftBtn();
+                  }}
+                />
+                <Button
+                  size='large'
+                  text={rightBtnText}
+                  onClick={() => {
+                    clickButton(text);
                   }}
                   disabled={!text.length}
                 />
@@ -59,8 +49,10 @@ const CommentItem = ({ user, buttonText, onClickButton, isClosed }) => {
 CommentItem.propTypes = {
   user: PropTypes.object.isRequired,
   isClosed: PropTypes.bool.isRequired,
-  buttonText: PropTypes.string.isRequired,
-  onClickButton: PropTypes.func.isRequired,
+  leftBtnText : PropTypes.string.isRequired,
+  rightBtnText: PropTypes.string.isRequired,
+  onClickLeftBtn: PropTypes.func.isRequired,
+  onClickRightBtn: PropTypes.func.isRequired,
 };
 
 const ItemWrapper = styled.div`
