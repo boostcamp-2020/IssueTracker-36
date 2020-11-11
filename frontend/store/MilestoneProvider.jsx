@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useContext } from 'react';
 import service from '@services';
-import userInfo from '@utils/user-info';
 import PropTypes from 'prop-types';
 import { milestoneActions } from '@store/actions';
+import { UserContext } from '@store/UserProvider';
 
 const MilestoneContext = React.createContext();
 
@@ -32,9 +32,10 @@ const reducer = (state, action) => {
 
 const MilestoneProvider = ({ children }) => {
   const [milestones, dispatch] = useReducer(reducer, { open: [], close: [] });
+  const [user] = useContext(UserContext);
 
   useEffect(() => {
-    if (!userInfo.authorized) return;
+    if (!user.authorized) return;
     Promise.all([service.getMilestones({ isClosed: 0 }), service.getMilestones({ isClosed: 1 })])
       .then(([{ data: open }, { data: close }]) => {
         dispatch({
@@ -43,7 +44,8 @@ const MilestoneProvider = ({ children }) => {
         });
       })
       .catch(console.log);
-  }, []);
+  }, [user.authorized]);
+
   return <MilestoneContext.Provider value={[milestones, dispatch]}>{children}</MilestoneContext.Provider>;
 };
 

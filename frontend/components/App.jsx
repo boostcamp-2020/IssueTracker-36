@@ -21,7 +21,7 @@ const App = () => (
   <Store>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <BrowserRouter forceRefresh>
+      <BrowserRouter>
         <Switch>
           <Route exact path='/' component={LoginPage} />
           <Route path='/oauth/callback/github' component={LoggingInPage} />

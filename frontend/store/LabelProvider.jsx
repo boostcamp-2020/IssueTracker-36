@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useContext } from 'react';
 import service from '@services';
-import userInfo from '@utils/user-info';
 import PropTypes from 'prop-types';
 import { labelActions } from '@store/actions';
+import { UserContext } from '@store/UserProvider';
 
 const LabelContext = React.createContext();
 
@@ -22,9 +22,10 @@ const reducer = (state, action) => {
 
 const LabelProvider = ({ children }) => {
   const [labels, dispatch] = useReducer(reducer, []);
+  const [user] = useContext(UserContext);
 
   useEffect(() => {
-    if (!userInfo.authorized) return;
+    if (!user.authorized) return;
     service
       .getLabels()
       .then(({ data }) =>
@@ -34,7 +35,7 @@ const LabelProvider = ({ children }) => {
         }),
       )
       .catch(console.log);
-  }, []);
+  }, [user.authorized]);
 
   return <LabelContext.Provider value={[labels, dispatch]}>{children}</LabelContext.Provider>;
 };
