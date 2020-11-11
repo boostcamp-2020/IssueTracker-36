@@ -2,6 +2,9 @@ export const labelActions = {
   ADD_LABELS: 'addLabels',
   ADD_LABEL: 'addLabel',
   DELETE_LABEL: 'deleteLabel',
+  START_EDIT_LABEL: 'startEditLabel',
+  END_EDIT_LABEL: 'endEditLabel',
+  UPDATE_LABEL: 'updateLabel',
 };
 
 export const milestoneActions = {
