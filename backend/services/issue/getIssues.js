@@ -14,7 +14,6 @@ const getIssues = async (req, res) => {
   try {
     const { page, count, isClosed, milestone, author, assignee } = req.query;
     let { label } = req.query;
-    console.log(req.query);
     const parsed = {
       page: (page && parseInt(page, 10)) || 1,
       count: (count && parseInt(count, 10)) || 20,
