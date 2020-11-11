@@ -23,10 +23,18 @@ const reducer = (state, action) => {
             open: state.open - 1,
             milestones: state.milestones.filter((milestone) => milestone.id !== action.id),
           };
-
     case 'changeClosed':
-      // TODO: milestone close action
-      return state;
+      return action.isClosed
+        ? {
+            open: state.open + 1,
+            close: state.close - 1,
+            milestones: state.milestones.filter((milestone) => milestone.id !== action.id),
+          }
+        : {
+            open: state.open - 1,
+            close: state.close + 1,
+            milestones: state.milestones.filter((milestone) => milestone.id !== action.id),
+          };
     default:
       return state;
   }

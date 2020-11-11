@@ -12,13 +12,17 @@ const Milestone = ({ milestone, milestoneListDispatch }) => {
     console.log(id);
   };
   const clickCloseBtn = async (id, isClosed) => {
-    // TODO: close
-    console.log(id);
+    try {
+      await service.changeClosed(id, !isClosed);
+      milestoneListDispatch({ type: 'changeClosed', id, isClosed });
+    } catch (e) {
+      alert('오류가 발생했습니다');
+    }
   };
   const clickDeleteBtn = async (id, isClosed) => {
     try {
       if (confirm('삭제하시겠습니까?')) {
-        await service.deleteMilestone(id);
+        await service.deleteMilestone(id, isClosed);
         milestoneListDispatch({ type: 'delete', id, isClosed });
       }
     } catch (e) {

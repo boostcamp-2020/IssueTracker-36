@@ -33,6 +33,7 @@ MilestoneList.propTypes = {
   open: PropTypes.number.isRequired,
   close: PropTypes.number.isRequired,
   getMilestones: PropTypes.func.isRequired,
+  milestoneListDispatch: PropTypes.func.isRequired,
 };
 
 export default MilestoneList;
