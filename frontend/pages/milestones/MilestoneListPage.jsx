@@ -9,13 +9,12 @@ const MilestoneListPage = () => {
   const [state, setState] = useState('open');
   const TRUE = 1;
   const FALSE = 0;
-  const getOpen = async () => {
-    const milestones = await service.getMilestones({ isClosed: FALSE });
-    setOpenMilestone(milestones.data);
-  };
-  const getClosed = async () => {
-    const milestones = await service.getMilestones({ isClosed: TRUE });
-    setClosedMilestone(milestones.data);
+
+  const getNumber = async () => {
+    const openedMilestones = await service.getMilestones({ isClosed: FALSE });
+    const closedMilestones = await service.getMilestones({ isClosed: TRUE });
+    setOpenMilestone(openedMilestones.data);
+    setClosedMilestone(closedMilestones.data);
   };
   const getMilestones = async (status) => {
     const milestones =
@@ -26,8 +25,7 @@ const MilestoneListPage = () => {
     setState(status);
   };
   useEffect(() => {
-    getOpen();
-    getClosed();
+    getNumber();
     getMilestones('open');
   }, []);
   return (
