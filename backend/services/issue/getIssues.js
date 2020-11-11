@@ -1,60 +1,137 @@
-const { issue, milestone, user_issue, user, issue_label, label } = require('../../sequelize/models');
+const sequelize = require('sequelize');
+const {
+  issue: Issue,
+  milestone: Milestone,
+  user_issue: UserIssue,
+  user: User,
+  issue_label: IssueLabel,
+  label: Label,
+} = require('../../sequelize/models');
 
-/**
- * @todo 필터 검색 로직 구현
- */
+const { Op } = sequelize;
+
 const getIssues = async (req, res) => {
   try {
-    const { page, count, closed } = req.query;
-    const parsedPage = parseInt(page, 10);
-    const parsedCount = parseInt(count, 10);
-    const parsedClosed = closed === 'true';
+    const { page, count, closed, milestone, author, assignee, labels } = req.query;
 
-    if (Number.isNaN(parsedPage) || parsedPage < 1) {
-      return res.sendStatus(400);
+    const parsed = {
+      page: (page && parseInt(page, 10)) || 1,
+      count: (count && parseInt(count, 10)) || 20,
+      milestone: milestone && parseInt(milestone, 10),
+      author: author && parseInt(author, 10),
+      assignee: assignee && parseInt(assignee, 10),
+    };
+
+    if (
+      !Object.values(parsed).every(
+        (parsedNumber) => (!Number.isNaN(parsedNumber) && parsedNumber > 0) || parsedNumber === undefined,
+      )
+    )
+      throw new TypeError();
+
+    const offset = parsed.count * (parsed.page - 1);
+    const where = {};
+    const userWhere = {};
+
+    switch (closed) {
+      case undefined:
+      case 'false':
+        where.isClosed = false;
+        break;
+      case 'true':
+        where.isClosed = true;
+        break;
+      case 'none':
+        break;
+      default:
+        throw new TypeError();
     }
 
-    if (Number.isNaN(parsedCount) || parsedCount < 1) {
-      return res.sendStatus(400);
+    if (parsed.author) {
+      userWhere.user_id = parsed.author;
+      userWhere.is_owner = 1;
+    }
+    if (parsed.assignee) {
+      const userIssues = await UserIssue.findAll({
+        attributes: ['issue_id'],
+        where: {
+          user_id: parsed.assignee,
+          is_owner: 0,
+        },
+      });
+      const possibleIssues = userIssues.reduce((acc, userIssue) => {
+        acc.push(userIssue.dataValues.issue_id);
+        return acc;
+      }, []);
+      where.id = { [Op.in]: possibleIssues };
     }
 
-    const limit = parsedCount;
-    const offset = limit * (parsedPage - 1);
-    const issues = await issue.findAndCountAll({
-      limit,
+    if (parsed.milestone) where.milestone_id = milestone;
+    if (labels) {
+      const labelArray = labels.split(',');
+      labelArray.forEach((labelId) => {
+        const parsedLabelId = parseInt(labelId, 10);
+        if (Number.isNaN(parsedLabelId) || parsedLabelId < 1) throw new TypeError();
+      });
+      const issue = await IssueLabel.findAll({
+        attributes: [
+          'issue_id',
+          'label_id',
+          [sequelize.fn('GROUP_CONCAT', sequelize.col('label_id')), 'label_id'],
+        ],
+        group: ['issue_id'],
+      });
+      const possibleIssues = issue.reduce((acc, possibleIssue) => {
+        const issueLabel = possibleIssue.dataValues.label_id.split(',');
+        if (labelArray.every((label) => issueLabel.includes(label)))
+          acc.push(possibleIssue.dataValues.issue_id);
+        return acc;
+      }, []);
+      where.id = where.id
+        ? { [Op.in]: where.id[Op.in].filter((id) => possibleIssues.includes(id)) }
+        : { [Op.in]: possibleIssues };
+    }
+
+    const issues = await Issue.findAndCountAll({
+      limit: parsed.count,
       offset,
-      where: {
-        isClosed: parsedClosed,
-      },
+      where,
       include: [
         {
-          model: milestone,
+          model: UserIssue,
+          required: true,
+          attributes: ['is_owner'],
+          where: userWhere,
+          include: [
+            {
+              model: User,
+              attributes: ['nickName'],
+            },
+          ],
+        },
+        {
+          model: IssueLabel,
+          attributes: ['id'],
+          include: [
+            {
+              model: Label,
+              attributes: ['title', 'color'],
+            },
+          ],
+        },
+        {
+          model: Milestone,
           attributes: ['title'],
         },
-        {
-          model: user_issue,
-          attributes: ['id'],
-          include: {
-            model: user,
-            attributes: ['nickName'],
-          },
-        },
-        {
-          model: issue_label,
-          attributes: ['id'],
-          raw: true,
-          include: {
-            model: label,
-            attributes: ['title', 'color'],
-          },
-        },
       ],
-      order: [['created_at', 'DESC']],
+      order: [['id', 'DESC']],
     });
 
-    return res.json(issues);
-  } catch (e) {
-    return res.sendStatus(500);
+    res.json(issues);
+  } catch (err) {
+    console.log(err);
+    if (err instanceof TypeError) res.sendStatus(400);
+    else res.sendStatus(500);
   }
 };
 

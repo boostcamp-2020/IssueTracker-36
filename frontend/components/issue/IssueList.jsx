@@ -28,7 +28,7 @@ const IssueList = ({ issues }) => {
                 labelList={labelGenerator(issue.issue_labels)}
                 issueId={issue.id}
                 created={issue.createdAt}
-                userNickname={issue.user_issues[0].user.nickName}
+                userNickname={issue.user_issues.find((user) => user.is_owner).user.nickName}
                 milestoneName={issue.milestone?.title}
                 isClosed={issue.isClosed}
                 key={issue.id}

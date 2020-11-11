@@ -6,10 +6,11 @@ import { GoCheck } from 'react-icons/go';
 import { RiCloseLine } from 'react-icons/ri';
 import { AiOutlineCalendar, AiOutlineWarning } from 'react-icons/ai';
 
-const UserOption = ({ selected, nickName }) => {
+const UserOption = ({ selected, nickName, clickAction }) => {
   const [isSelected, setIsSelected] = useState(selected);
   const onClick = () => {
     setIsSelected(!isSelected);
+    clickAction();
   };
 
   return (
@@ -20,11 +21,19 @@ const UserOption = ({ selected, nickName }) => {
   );
 };
 
-const users = ({ data }, selectedUser = []) => {
+const users = ({ data }, selectedUser = [], clickAction) => {
   return data.reduce((acc, user) => {
     acc.push({
       id: user.id,
-      div: <UserOption selected={selectedUser.includes(user.id)} nickName={user.nickName} />,
+      div: (
+        <UserOption
+          selected={selectedUser.includes(user.id)}
+          nickName={user.nickName}
+          clickAction={() => {
+            clickAction(user.id);
+          }}
+        />
+      ),
     });
     return acc;
   }, []);
@@ -33,12 +42,14 @@ const users = ({ data }, selectedUser = []) => {
 UserOption.propTypes = {
   selected: PropTypes.bool.isRequired,
   nickName: PropTypes.string.isRequired,
+  clickAction: PropTypes.func.isRequired,
 };
 
-const LabelOption = ({ selected, label }) => {
+const LabelOption = ({ selected, label, clickAction }) => {
   const [isSelected, setIsSelected] = useState(selected);
   const onClick = () => {
     setIsSelected(!isSelected);
+    clickAction();
   };
 
   return (
@@ -54,7 +65,7 @@ const LabelOption = ({ selected, label }) => {
   );
 };
 
-const labels = ({ data }, selectedLabels = []) => {
+const labels = ({ data }, selectedLabels = [], clickAction) => {
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
@@ -93,10 +104,11 @@ LabelOption.propTypes = {
   label: PropTypes.object.isRequired,
 };
 
-const MilestoneOption = ({ selected, dueDate, title }) => {
+const MilestoneOption = ({ selected, dueDate, title, clickAction }) => {
   const [isSelected, setIsSelected] = useState(selected);
   const onClick = () => {
     setIsSelected(!isSelected);
+    clickAction();
   };
 
   return (
@@ -120,7 +132,7 @@ const MilestoneOption = ({ selected, dueDate, title }) => {
   );
 };
 
-const milestones = ({ data }, selectedMilestone) => {
+const milestones = ({ data }, selectedMilestone = [], clickAction) => {
   return data.reduce((acc, milestone) => {
     acc.push({
       id: milestone.id,
@@ -129,6 +141,9 @@ const milestones = ({ data }, selectedMilestone) => {
           selected={selectedMilestone[0] === milestone.id}
           title={milestone.title}
           dueDate={new Date(milestone.dueDate)}
+          clickAction={() => {
+            clickAction(milestone.id);
+          }}
         />
       ),
     });
