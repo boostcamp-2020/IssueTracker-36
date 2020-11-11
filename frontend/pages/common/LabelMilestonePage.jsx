@@ -15,7 +15,11 @@ const LabelMilestonePage = ({ location }) => {
       <LabelMilestonePageNavbar location={location} newButton={newButton} />
       <Switch>
         <Route path='/labels' component={LabelListPage} />
-        <Route exact path='/milestones' render={() => <MilestoneListPage setNewButton={setNewButton} />} />
+        <Route
+          exact
+          path='/milestones'
+          render={({ match }) => <MilestoneListPage setNewButton={setNewButton} match={match} />}
+        />
         <Route path='/milestones/:id/edit' component={MilestoneEditPage} />
       </Switch>
     </Layout>
