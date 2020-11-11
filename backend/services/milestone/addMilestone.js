@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
     const { title, dueDate, description } = req.body;
     const result = await milestone.create({
       title,
-      dueDate,
+      dueDate: dueDate || undefined,
       description,
       isClosed: false,
     });
