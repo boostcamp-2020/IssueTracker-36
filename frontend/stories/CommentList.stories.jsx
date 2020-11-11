@@ -46,4 +46,6 @@ const comments = [
   },
 ];
 
-export const example = () => <CommentList comments={comments} />;
+export const example = () => (
+  <CommentList comments={comments} onAddReaction={({ id, type }) => console.log(id, type)} />
+);

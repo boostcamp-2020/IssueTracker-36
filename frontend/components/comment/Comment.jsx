@@ -6,7 +6,9 @@ import ReactionButton from '@components/comment/ReactionButton';
 import ReactMarkdown from 'react-markdown';
 import Emoji from '@components/common/Emoji';
 
-const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) => {
+const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user }, onAddReaction }) => {
+  const onClickReaction = () => (type) => onAddReaction({ id, type });
+
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>
       <Head>
@@ -14,7 +16,7 @@ const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) =
           <NickName>{user.nickName}</NickName> commented <Moment fromNow>{updatedAt}</Moment>
         </Title>
         <Buttons>
-          <ReactionButton onClickReaction={console.log} />
+          <ReactionButton onClickReaction={onClickReaction()} />
           <EditButton type='button'>Edit</EditButton>
         </Buttons>
       </Head>
@@ -38,6 +40,7 @@ const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) =
 
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
+  onAddReaction: PropTypes.func.isRequired,
 };
 
 const CommentWrapper = styled.article`

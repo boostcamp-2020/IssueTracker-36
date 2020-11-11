@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import Comment from '@components/comment/Comment';
 import Avatar from '@components/common/Avatar';
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comment, onAddReaction }) => {
   return (
     <ItemWrapper>
       <AvatarWrapper>
         <Avatar alt={`${comment.user.nickName} profile image`} />
       </AvatarWrapper>
       <CommentWrapper>
-        <Comment comment={comment} />
+        <Comment comment={comment} onAddReaction={onAddReaction} />
       </CommentWrapper>
     </ItemWrapper>
   );
@@ -19,6 +19,7 @@ const CommentItem = ({ comment }) => {
 
 CommentItem.propTypes = {
   comment: PropTypes.object.isRequired,
+  onAddReaction: PropTypes.func.isRequired,
 };
 
 const ItemWrapper = styled.div`
