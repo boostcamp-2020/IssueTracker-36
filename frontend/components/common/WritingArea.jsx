@@ -65,7 +65,7 @@ const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
         ) : (
           <TextAreaWrapper>
             <Textarea
-              placeholder='Leave a comment'
+              placeholder='Leave a comment or drop image'
               value={text}
               onChange={inputTextarea}
               onDrop={dropImage}
