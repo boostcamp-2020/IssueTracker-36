@@ -9,11 +9,11 @@ const MilestoneHeader = ({ state, open, close, getMilestones }) => {
       <MilestoneListHeader>
         <td colSpan='2'>
           <HeaderText>
-            <Btn onClick={() => getMilestones('open')} style={{ color: state === 'open' ? 'black' : '' }}>
+            <Btn onClick={() => getMilestones('open')} selected={state === 'open'}>
               <GoMilestone />
               {open.length} Open
             </Btn>
-            <Btn onClick={() => getMilestones('close')} style={{ color: state === 'close' ? 'black' : '' }}>
+            <Btn onClick={() => getMilestones('close')} selected={state === 'close'}>
               <GoCheck />
               {close.length} Closed
             </Btn>
@@ -32,15 +32,22 @@ MilestoneHeader.propTypes = {
 
 const MilestoneListHeader = styled.tr`
   background-color: #eee;
-  height: 60px;
-  padding-left: 18px;
 `;
 const Btn = styled.button`
-  color: ${(props) => props.theme.color.grayColor};
+  margin-right: 15px;
+  color: ${(props) => (props.selected ? 'black' : props.theme.color.grayColor)};
+  font-weight: ${(props) => props.selected && 'bold'};
+  > svg {
+    margin-right: 5px;
+  }
 `;
-const HeaderText = styled.p`
+const HeaderText = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+  padding-left: 40px;
   color: ${(props) => props.theme.color.grayColor};
   font-size: ${(props) => props.theme.fontSize.md};
-  padding-left: 20px;
 `;
 export default MilestoneHeader;
