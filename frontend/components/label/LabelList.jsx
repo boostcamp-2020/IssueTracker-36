@@ -6,11 +6,11 @@ import fontColorContrast from 'font-color-contrast';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const LabelList = ({ data, getData }) => {
+const LabelList = ({ labels, onDeleteLabel }) => {
   const clickEditBtn = async () => {};
   const clickDeleteBtn = async (id) => {
-    await service.deleteLabel(id);
-    await getData();
+    const { data: effectedRow } = await service.deleteLabel(id);
+    if (effectedRow === 1) onDeleteLabel(id);
   };
 
   return (
@@ -21,13 +21,13 @@ const LabelList = ({ data, getData }) => {
           return (
             <LabelListHeader>
               <TD colSpan='5' align='left'>
-                <HeaderText>{data.length} labels</HeaderText>{' '}
+                <HeaderText>{labels.length} labels</HeaderText>{' '}
               </TD>
             </LabelListHeader>
           );
         }}
         renderBody={() => {
-          return data.map((label) => {
+          return labels.map((label) => {
             return (
               <TR key={label.id}>
                 <TD width='200px;' align='left' padding='10px'>
@@ -50,8 +50,8 @@ const LabelList = ({ data, getData }) => {
   );
 };
 LabelList.propTypes = {
-  data: PropTypes.array.isRequired,
-  getData: PropTypes.func.isRequired,
+  labels: PropTypes.array.isRequired,
+  onDeleteLabel: PropTypes.func.isRequired,
 };
 
 const LabelListHeader = styled.tr`

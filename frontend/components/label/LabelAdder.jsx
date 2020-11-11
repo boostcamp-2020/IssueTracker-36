@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import debounceHook from '@utils/DebounceHook';
 
-const LabelAdder = ({ getData }) => {
+const LabelAdder = ({ onAddLabel }) => {
   const [preview, setPreview] = useState({ title: '', description: '', color: '#0366d6' });
   const debouncedPreview = debounceHook(preview, 1000);
   const resetForm = () => {
@@ -33,8 +33,8 @@ const LabelAdder = ({ getData }) => {
     });
   };
   const handleClickCreate = async () => {
-    await service.addLabel(debouncedPreview);
-    getData();
+    const { data } = await service.addLabel(debouncedPreview);
+    onAddLabel(data);
     resetForm();
   };
   return (
@@ -92,7 +92,7 @@ const LabelAdder = ({ getData }) => {
   );
 };
 LabelAdder.propTypes = {
-  getData: PropTypes.func.isRequired,
+  onAddLabel: PropTypes.func.isRequired,
 };
 const AdderForm = styled.form`
   width: 100%;
