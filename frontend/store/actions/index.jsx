@@ -11,5 +11,6 @@ export const milestoneActions = {
 };
 
 export const userActions = {
-  SET_USER: 'setUser',
+  LOGIN: 'login',
+  LOGOUT: 'logout',
 };

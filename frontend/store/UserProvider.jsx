@@ -10,8 +10,8 @@ const reducer = (state, action) => {
     case userActions.LOGIN:
       return {
         ...state,
-        token: payload?.token,
-        authorized: !!payload?.token,
+        token: payload.token,
+        authorized: !!payload.token,
       };
     case userActions.LOGOUT:
       return {
