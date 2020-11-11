@@ -2,13 +2,12 @@ const { comment } = require('../../sequelize/models');
 
 const addComment = async (req, res) => {
   try {
-    const { isMain, content, issueId } = req.body;
+    const { content, issueId } = req.body;
 
-    if (isMain && typeof isMain !== 'boolean') throw new TypeError();
     if (content && typeof content !== 'string') throw new TypeError();
     if (issueId && typeof issueId !== 'number') throw new TypeError();
 
-    const newComment = await comment.create({ isMain, content, issueId });
+    const newComment = await comment.create({ user_id: req.body.uid, isMain: false, content, issueId });
 
     res.json(newComment);
   } catch (err) {
