@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { GoCalendar } from 'react-icons/go';
 import Moment from 'react-moment';
 import MilestoneGraph from '@components/milestone/MilestoneGraph';
+import { MilestoneContext } from '@store/MilestoneProvider';
+import { milestoneActions } from '@store/actions';
 
 const Milestone = ({ milestone }) => {
+  const [, dispatch] = useContext(MilestoneContext);
+  const { id, title, description, dueDate, closedIssueNumber, openedIssueNumber } = milestone;
+
   const clickEditBtn = async (id) => {
     // TODO:수정
     console.log(id);
@@ -16,9 +21,15 @@ const Milestone = ({ milestone }) => {
   };
   const clickDeleteBtn = async (id) => {
     // TODO:삭제
+    // 삭제 api 호출
+    // 성공 후 dispatch 호출
+    dispatch({
+      type: milestoneActions.DELETE_MILESTONE,
+      payload: id,
+    });
     console.log(id);
   };
-  const { id, title, description, dueDate, closedIssueNumber, openedIssueNumber } = milestone;
+
   return (
     <TR>
       <TD align='left' padding='10px'>

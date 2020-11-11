@@ -7,14 +7,14 @@ import { labelActions } from '@store/actions';
 const LabelContext = React.createContext();
 
 const reducer = (state, action) => {
-  console.log(action);
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case labelActions.ADD_LABELS:
-      return [...state, ...action.payload];
+      return [...state, ...payload];
     case labelActions.ADD_LABEL:
-      return [...state, action.payload];
+      return [...state, payload];
     case labelActions.DELETE_LABEL:
-      return [...state.filter((label) => label.id !== action.payload)];
+      return [...state.filter((label) => label.id !== payload)];
     default:
       return state;
   }

@@ -4,4 +4,12 @@ export const labelActions = {
   DELETE_LABEL: 'deleteLabel',
 };
 
-export const milestoneActions = {};
+export const milestoneActions = {
+  ADD_MILESTONES: 'addMilestones',
+  ADD_MILESTONE: 'addMilestone',
+  DELETE_MILESTONE: 'deleteMilestone',
+};
+
+export const userActions = {
+  SET_USER: 'setUser',
+};

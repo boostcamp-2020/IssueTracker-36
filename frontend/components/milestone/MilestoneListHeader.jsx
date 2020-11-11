@@ -4,18 +4,18 @@ import { GoMilestone, GoCheck } from 'react-icons/go';
 import PropTypes from 'prop-types';
 import { MilestoneContext } from '@store/MilestoneProvider';
 
-const MilestoneHeader = ({ state, onChangeState }) => {
+const MilestoneHeader = ({ state, onChangeOpenState }) => {
   const [milestones] = useContext(MilestoneContext);
   return (
     <>
       <MilestoneListHeader>
         <td colSpan='2'>
           <HeaderText>
-            <Btn onClick={() => onChangeState(true)} style={{ color: state ? 'black' : '' }}>
+            <Btn onClick={() => onChangeOpenState(true)} style={{ color: state ? 'black' : '' }}>
               <GoMilestone />
               {milestones.open.length} Open
             </Btn>
-            <Btn onClick={() => onChangeState(false)} style={{ color: !state ? 'black' : '' }}>
+            <Btn onClick={() => onChangeOpenState(false)} style={{ color: !state ? 'black' : '' }}>
               <GoCheck />
               {milestones.close.length} Closed
             </Btn>
@@ -27,7 +27,7 @@ const MilestoneHeader = ({ state, onChangeState }) => {
 };
 MilestoneHeader.propTypes = {
   state: PropTypes.bool.isRequired,
-  onChangeState: PropTypes.func.isRequired,
+  onChangeOpenState: PropTypes.func.isRequired,
 };
 
 const MilestoneListHeader = styled.tr`

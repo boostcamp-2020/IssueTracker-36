@@ -3,7 +3,7 @@ import MilestoneList from '@components/milestone/MilestoneList';
 import { MilestoneContext } from '@store/MilestoneProvider';
 
 const MilestoneListPage = () => {
-  const [milestones, dispatch] = useContext(MilestoneContext);
+  const [milestones] = useContext(MilestoneContext);
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -11,7 +11,7 @@ const MilestoneListPage = () => {
       <MilestoneList
         milestoneList={isOpen ? milestones.open : milestones.close}
         state={isOpen}
-        onChangeState={setIsOpen}
+        onChangeOpenState={setIsOpen}
       />
     </>
   );

@@ -4,13 +4,13 @@ import MilestoneHeader from '@components/milestone/MilestoneListHeader';
 import Milestone from '@components/milestone/Milestone';
 import PropTypes from 'prop-types';
 
-const MilestoneList = ({ milestoneList, state, onChangeState }) => {
+const MilestoneList = ({ milestoneList, state, onChangeOpenState }) => {
   return (
     <>
       <Mytable
         width='100%'
         renderHeader={() => {
-          return <MilestoneHeader state={state} onChangeState={onChangeState} />;
+          return <MilestoneHeader state={state} onChangeOpenState={onChangeOpenState} />;
         }}
         renderBody={() => {
           return milestoneList.map((milestone) => {
@@ -24,7 +24,7 @@ const MilestoneList = ({ milestoneList, state, onChangeState }) => {
 MilestoneList.propTypes = {
   milestoneList: PropTypes.array.isRequired,
   state: PropTypes.bool.isRequired,
-  onChangeState: PropTypes.func.isRequired,
+  onChangeOpenState: PropTypes.func.isRequired,
 };
 
 export default MilestoneList;
