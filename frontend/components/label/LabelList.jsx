@@ -72,8 +72,7 @@ LabelList.propTypes = {
 };
 
 const LabelListHeader = styled.tr`
-  line-height: 60px;
-  height: 60px;
+  line-height: 40px;
   padding-left: 18px;
 `;
 

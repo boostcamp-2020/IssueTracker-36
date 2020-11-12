@@ -135,6 +135,7 @@ const IssueListPage = ({ location }) => {
             history.push('/issues/new');
           }}
           size='large'
+          style={{ marginLeft: '10px' }}
         />
       </NavBar>
       <IssueList
@@ -164,7 +165,7 @@ const FilterInput = styled.input`
 const NavBar = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 `;
 const IconWrapper = styled.div`
   line-height: 20px;

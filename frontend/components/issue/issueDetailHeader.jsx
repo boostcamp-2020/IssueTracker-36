@@ -70,7 +70,6 @@ const IssueTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: ${({ theme }) => theme.fontSize.xl};
-  padding: 0 18px 18px;
 `;
 const IssueNumber = styled.span`
   color: ${({ theme }) => theme.color.grayColor};
@@ -79,7 +78,6 @@ const IssueInfo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0 18px;
   color: #696969;
   font-size: ${({ theme }) => theme.fontSize.sm};
 `;
@@ -87,7 +85,7 @@ const IssueHeader = styled.div`
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
-  padding-bottom: 20px;
+  padding-bottom: 15px;
   margin-bottom: 20px;
 `;
 const ButtonWrapper = styled.div`
