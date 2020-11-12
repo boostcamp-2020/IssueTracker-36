@@ -1,5 +1,5 @@
 import adders from './adders';
-// import deleters from './deleters';
+import deleters from './deleters';
 import getters from './getters';
 import updaters from './updaters';
 
@@ -8,7 +8,7 @@ const issueService = (apiRequest) => {
     ...adders(apiRequest),
     ...getters(apiRequest),
     ...updaters(apiRequest),
-    // ...deleters(axios),
+    ...deleters(apiRequest),
   };
 };
 
