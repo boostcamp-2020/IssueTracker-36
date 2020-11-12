@@ -54,10 +54,10 @@ Button.defaultProps = {
 const ButtonWrapper = styled.button`
   display: inline-flex;
   border-radius: 6px;
-  border: 1px solid ${({ theme }) => theme.color.borderColor};
+  border: 1px solid ${({ theme }) => theme.color.borderColorPrimary};
   white-space: nowrap;
   transition: background-color ease 0.1s;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 20px;
 
   &.primary-btn {
@@ -68,7 +68,7 @@ const ButtonWrapper = styled.button`
     }
     &:disabled {
       cursor: not-allowed;
-      filter: saturate(0.8) brightness(1.3);
+      background-color: #94d3a2;
     }
   }
   &.secondary-btn {
