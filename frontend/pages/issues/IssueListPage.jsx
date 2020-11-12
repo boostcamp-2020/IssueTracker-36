@@ -11,6 +11,7 @@ import qs from 'query-string';
 import Dropdown from '@components/common/Dropdown';
 import optionGenerator from '@utils/OptionGenerator';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
+import { BiSearchAlt2 } from 'react-icons/bi';
 import { UserContext } from '@store/UserProvider';
 
 const IssueListPage = ({ location }) => {
@@ -124,7 +125,10 @@ const IssueListPage = ({ location }) => {
             options={optionGenerator.isClosed(isClosedOptions)}
           />
         )}
-        <FilterInput ref={inputRef} onKeyPress={handleKeyPress} placeholder='Search all issues' />
+        <FilterWrapper>
+          <BiSearchAlt2 className='icon' />
+          <FilterInput ref={inputRef} onKeyPress={handleKeyPress} placeholder='Search all issues' />
+        </FilterWrapper>
         <LabelMilestoneTab
           labelsNumber={LabelMilestoneNumer.labels}
           milestonesNumber={LabelMilestoneNumer.milestones}
@@ -159,6 +163,19 @@ const FilterInput = styled.input`
   line-height: 20px;
   margin-right: 10px;
   width: 100%;
+  height: 100%;
+`;
+
+const FilterWrapper = styled.div`
+  position: relative;
+  > .icon {
+    position: absolute;
+    height: 100%;
+    padding: 10px 0px 9px 10px;
+    width: 32px;
+    z-index: 11;
+    color: ${({ theme }) => theme.color.iconColor};
+  }
 `;
 
 const NavBar = styled.div`
