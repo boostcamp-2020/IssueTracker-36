@@ -1,13 +1,13 @@
 import adders from './adders';
 // import deleters from './deleters';
-//import getters from './getters';
-// import updaters from './updaters';
+// import getters from './getters';
+import updaters from './updaters';
 
 const commentService = (apiRequest) => {
   return {
     ...adders(apiRequest),
     // ...getters(apiRequest),
-    // ...updaters(apiRequest),
+    ...updaters(apiRequest),
     // ...deleters(axios),
   };
 };

@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Avatar from '@components/common/Avatar';
 import WritingArea from '@components/common/WritingArea';
 import Button from '@components/common/Button';
-import { GoIssueClosed } from 'react-icons/go';
 
-const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickRightBtn, isClosed }) => {
+const CommentItem = ({ onClickLeftBtn, onClickRightBtn }) => {
   const clickButton = (content) => {
     onClickRightBtn(content);
   };
   return (
     <ItemWrapper>
-      <AvatarWrapper>
-        <Avatar alt={`${user.nickName} profile image`} />
-      </AvatarWrapper>
       <CommentWrapper>
         <WritingArea
           type='comment'
@@ -23,16 +18,18 @@ const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickR
               <>
                 <Button
                   size='large'
-                  text={leftBtnText}
+                  text='cancel'
                   type='secondary'
-                  icon={!isClosed ? <GoIssueClosed /> : undefined}
-                  onClick={() => onClickLeftBtn()}
-                  style={{ marginRight: '4px' }}
+                  onClick={() => {
+                    onClickLeftBtn();
+                  }}
                 />
                 <Button
                   size='large'
-                  text={rightBtnText}
-                  onClick={() => clickButton(text)}
+                  text='update comment'
+                  onClick={() => {
+                    clickButton(text);
+                  }}
                   disabled={!text.length}
                 />
               </>
@@ -45,23 +42,13 @@ const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickR
 };
 
 CommentItem.propTypes = {
-  user: PropTypes.object,
-  isClosed: PropTypes.bool.isRequired,
-  leftBtnText: PropTypes.string.isRequired,
-  rightBtnText: PropTypes.string.isRequired,
   onClickLeftBtn: PropTypes.func.isRequired,
   onClickRightBtn: PropTypes.func.isRequired,
 };
-CommentItem.defaultProps = {
-  user: {},
-};
+
 const ItemWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-const AvatarWrapper = styled.div`
-  margin-right: 20px;
 `;
 
 const CommentWrapper = styled.article`
