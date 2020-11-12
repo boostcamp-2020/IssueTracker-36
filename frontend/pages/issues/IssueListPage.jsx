@@ -58,6 +58,7 @@ const IssueListPage = ({ location }) => {
   const urlToInputText = () => {
     let text = '';
     Object.keys(urlObject).forEach((key) => {
+      if (key === 'page') return;
       if (typeof urlObject[key] === 'object') {
         urlObject[key].forEach((labelId) => {
           text += ` ${key}:${labelId}`;
@@ -78,7 +79,7 @@ const IssueListPage = ({ location }) => {
   const getIssues = async () => {
     const { data: issuesResponse } = await service.getIssues(location.pathname, location.search);
     setIssues(issuesResponse.rows);
-    setPageInfo({ ...pageInfo, totalNumber: issuesResponse.count });
+    setPageInfo({ ...pageInfo, totalNumber: issuesResponse.count, page: parseInt(urlObject.page, 10) });
   };
   const goNextPage = () => {
     const url = qs.stringifyUrl({
@@ -103,7 +104,6 @@ const IssueListPage = ({ location }) => {
     history.push(url);
   };
   const changePage = (newPage) => {
-    console.log(newPage);
     const url = qs.stringifyUrl({
       url: '/issues',
       query: {
@@ -120,6 +120,7 @@ const IssueListPage = ({ location }) => {
       url: '/issues',
       query: {
         ...filterData,
+        page: undefined,
         [`${key}`]: val,
       },
     });
@@ -184,7 +185,7 @@ const IssueListPage = ({ location }) => {
         <PageNation
           totalNumber={pageInfo.totalNumber || 0}
           numberPerPage={pageInfo.numberPerPage}
-          page={pageInfo.page}
+          page={pageInfo.page || 1}
           onClick={changePage}
           onNext={goNextPage}
           onPrev={goPrevPage}

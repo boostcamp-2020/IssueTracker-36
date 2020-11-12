@@ -36,6 +36,7 @@ const IssueSelectFilter = ({
       url: '/issues',
       query: {
         ...filterData,
+        page: undefined,
         author: Number(filterData.author) === authorId ? undefined : authorId,
       },
     });
@@ -47,6 +48,7 @@ const IssueSelectFilter = ({
       url: '/issues',
       query: {
         ...filterData,
+        page: undefined,
         milestone: Number(filterData.milestone) === milestoneId ? undefined : milestoneId,
       },
     });
@@ -59,6 +61,7 @@ const IssueSelectFilter = ({
       url: '/issues',
       query: {
         ...filterData,
+        page: undefined,
         assignee: Number(filterData.assignee) === assigneeId ? undefined : assigneeId,
       },
     });
@@ -73,6 +76,7 @@ const IssueSelectFilter = ({
       url: '/issues',
       query: {
         ...filterData,
+        page: undefined,
         label: toggleArray(filterData.label, String(labelId)),
       },
     });

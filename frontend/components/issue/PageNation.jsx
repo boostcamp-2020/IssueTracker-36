@@ -5,7 +5,7 @@ import Button from '@components/common/Button';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 
 const PageNation = ({ totalNumber, numberPerPage, page, onClick, onNext, onPrev }) => {
-  const pageNumber = Math.ceil(totalNumber / numberPerPage) || 0;
+  const pageNumber = Math.ceil(totalNumber / numberPerPage) || 1;
   const numbers = new Array(pageNumber).fill(0);
 
   return (
