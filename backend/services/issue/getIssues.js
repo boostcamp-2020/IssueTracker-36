@@ -95,14 +95,7 @@ const getIssues = async (req, res) => {
         ? { [Op.in]: where.id[Op.in].filter((id) => possibleIssues.includes(id)) }
         : { [Op.in]: possibleIssues };
     }
-    let commentInclude = {};
-    if (parsed.comment) {
-      commentInclude = {
-        model: Comment,
-        required: true,
-        where: { id: parsed.comment },
-      };
-    }
+
     const issues = await Issue.findAndCountAll({
       limit: parsed.count,
       offset,
