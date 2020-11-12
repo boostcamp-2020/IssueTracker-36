@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import ReactionButton from '@components/comment/ReactionButton';
 import ReactMarkdown from 'react-markdown';
 import Emoji from '@components/common/Emoji';
+import { UserContext } from '@store/UserProvider';
 
 const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user }, onAddReaction }) => {
+  const [auth] = useContext(UserContext);
   const onClickReaction = () => (type) => onAddReaction({ commentId: id, type });
 
   return (
@@ -26,11 +28,18 @@ const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user },
         </Markdown>
         {reactions && (
           <ReactionButtonWrapper>
-            {reactions.map((reaction) => (
-              <EmojiButton type='button' key={reaction.id}>
-                <Emoji hexCode={reaction.type} />
-              </EmojiButton>
-            ))}
+            {reactions.map((reaction) => {
+              const removable = auth.id === reaction.userId;
+              return removable ? (
+                <RemovableEmojiButton type='button' key={reaction.id}>
+                  <Emoji hexCode={reaction.type} />
+                </RemovableEmojiButton>
+              ) : (
+                <EmojiButton type='button' key={reaction.id}>
+                  <Emoji hexCode={reaction.type} />
+                </EmojiButton>
+              );
+            })}
           </ReactionButtonWrapper>
         )}
       </Body>
@@ -135,6 +144,12 @@ const ReactionButtonWrapper = styled.div`
 const EmojiButton = styled.button`
   padding: 8px 12px;
   border-right: 1px solid ${({ theme }) => theme.color.borderColor};
+`;
+
+const RemovableEmojiButton = styled.button`
+  padding: 8px 12px;
+  border-right: 1px solid ${({ theme }) => theme.color.borderColor};
+  background-color: ${({ theme }) => theme.color.blueColor};
 `;
 
 export default Comment;
