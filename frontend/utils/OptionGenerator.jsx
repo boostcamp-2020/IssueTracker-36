@@ -142,7 +142,6 @@ const MilestoneOption = ({ selected, dueDate, title, clickAction }) => {
 };
 
 const milestones = ({ data }, selectedMilestone = [], clickAction = () => {}) => {
-  console.log(data);
   return data.reduce((acc, milestone) => {
     acc.push({
       id: milestone.id,
