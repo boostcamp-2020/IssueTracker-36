@@ -39,7 +39,6 @@ const IssueSelectFilter = ({
         author: Number(filterData.author) === authorId ? undefined : authorId,
       },
     });
-    // console.log(url);
     history.push(url);
     toggleDropdown();
   };

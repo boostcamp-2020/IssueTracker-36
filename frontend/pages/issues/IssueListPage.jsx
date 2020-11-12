@@ -9,6 +9,7 @@ import IssueList from '@components/issue/IssueList';
 import service from '@services';
 import qs from 'query-string';
 import Dropdown from '@components/common/Dropdown';
+import PageNation from '@components/issue/PageNation';
 import optionGenerator from '@utils/OptionGenerator';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { UserContext } from '@store/UserProvider';
@@ -21,6 +22,7 @@ const IssueListPage = ({ location }) => {
   const urlObject = qs.parse(useloc.search);
   const [issues, setIssues] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
+  const [pageInfo, setPageInfo] = useState({ numberPerPage: 20, page: 1, totalNumber: undefined });
   const [LabelMilestoneNumer, setLabelMilestoneNumber] = useState({ labels: 0, milestones: 0 });
 
   const [filterData, setFilterData] = useState({});
@@ -76,6 +78,41 @@ const IssueListPage = ({ location }) => {
   const getIssues = async () => {
     const { data: issuesResponse } = await service.getIssues(location.pathname, location.search);
     setIssues(issuesResponse.rows);
+    setPageInfo({ ...pageInfo, totalNumber: issuesResponse.count });
+  };
+  const goNextPage = () => {
+    const url = qs.stringifyUrl({
+      url: '/issues',
+      query: {
+        ...filterData,
+        page: pageInfo.page + 1,
+      },
+    });
+    setPageInfo({ ...pageInfo, page: pageInfo.page + 1 });
+    history.push(url);
+  };
+  const goPrevPage = () => {
+    const url = qs.stringifyUrl({
+      url: '/issues',
+      query: {
+        ...filterData,
+        page: pageInfo.page - 1,
+      },
+    });
+    setPageInfo({ ...pageInfo, page: pageInfo.page - 1 });
+    history.push(url);
+  };
+  const changePage = (newPage) => {
+    console.log(newPage);
+    const url = qs.stringifyUrl({
+      url: '/issues',
+      query: {
+        ...filterData,
+        page: newPage,
+      },
+    });
+    setPageInfo({ ...pageInfo, page: newPage });
+    history.push(url);
   };
 
   const changeUrl = (key, val) => () => {
@@ -143,6 +180,16 @@ const IssueListPage = ({ location }) => {
         setFilterData={setFilterData}
         getIssues={getIssues}
       />
+      <PageNationWrapper>
+        <PageNation
+          totalNumber={pageInfo.totalNumber || 0}
+          numberPerPage={pageInfo.numberPerPage}
+          page={pageInfo.page}
+          onClick={changePage}
+          onNext={goNextPage}
+          onPrev={goPrevPage}
+        />
+      </PageNationWrapper>
     </MainPageLayout>
   );
 };
@@ -172,6 +219,13 @@ const IconWrapper = styled.div`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+`;
+
+const PageNationWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 30px;
 `;
 
 IssueListPage.propTypes = {
