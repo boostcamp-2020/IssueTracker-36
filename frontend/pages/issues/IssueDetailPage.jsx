@@ -1,4 +1,4 @@
-import React, { useReducer,useState, useEffect } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MainPageLayout from '@layouts/MainPageLayout';
 import service from '@services';
@@ -10,6 +10,8 @@ import NewCommentForm from '@components/comment/NewCommentForm';
 
 const selectReducer = (state, action) => {
   switch (action.type) {
+    case 'init':
+      return action.newSelection;
     case 'assignee':
       return { ...state, assignees: action.newSelection };
     case 'label':
@@ -32,21 +34,32 @@ const IssueDetailPage = () => {
   });
 
   const getIssue = async () => {
-    const issueInfo = await service.getIssue(params.id);
-    setissueInfo(issueInfo.data);
+    const { data } = await service.getIssue(params.id);
+    setissueInfo(data);
+
+    const assignees = data.user_issues.reduce((acc, userIssue) => {
+      if (!userIssue.is_owner) acc.push(userIssue.user.id);
+      return acc;
+    }, []);
+    const milestone = data.milestoneId ? [data.milestoneId] : [];
+    const labels = data.issue_labels.reduce((acc, issueLabel) => {
+      acc.push(issueLabel.label_id);
+      return acc;
+    }, []);
+    dispatch({ type: 'init', newSelection: { assignees, labels, milestone } });
   };
   const updateState = async () => {
     const updateIssue = await service.updateIssue(params.id, { title: issue.title, closed: !issue.isClosed });
     setissueInfo({ ...issue, isClosed: updateIssue.data.isClosed });
-  }
+  };
   const updateTitle = async (title) => {
     const updateIssue = await service.updateIssue(params.id, { title, closed: issue.isClosed });
     setissueInfo({ ...issue, title: updateIssue.data.title });
-  }
+  };
   const addComment = async (content) => {
     await service.addComment({ uid: user.id, content, issueId: issue.id });
     getIssue();
-  }
+  };
 
   useEffect(() => {
     getIssue();
@@ -101,5 +114,6 @@ const IssueSide = styled.div`
   flex-direction: column;
   flex: 3;
   padding: 10px;
+  margin-left: 15px;
 `;
 export default IssueDetailPage;
