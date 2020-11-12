@@ -93,7 +93,7 @@ const IssueListPage = ({ location }) => {
     { id: 1, type: 'Open issues', action: changeUrl('isClosed', false) },
     { id: 2, type: 'Your issues', action: changeUrl('author', user.id) },
     { id: 3, type: 'Everything assigned to you', action: changeUrl('assignee', user.id) },
-    { id: 4, type: 'Everything mentioning you', action: changeUrl('author', user.id) },
+    { id: 4, type: 'Everything mentioning you', action: changeUrl('comment', user.id) },
     { id: 5, type: 'Closed issues', action: changeUrl('isClosed', true) },
   ];
 

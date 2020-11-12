@@ -6,13 +6,14 @@ const {
   user: User,
   issue_label: IssueLabel,
   label: Label,
+  comment: Comment,
 } = require('../../sequelize/models');
 
 const { Op } = sequelize;
 
 const getIssues = async (req, res) => {
   try {
-    const { page, count, isClosed, milestone, author, assignee } = req.query;
+    const { page, count, isClosed, milestone, author, assignee, comment } = req.query;
     let { label } = req.query;
     const parsed = {
       page: (page && parseInt(page, 10)) || 1,
@@ -20,6 +21,7 @@ const getIssues = async (req, res) => {
       milestone: milestone && parseInt(milestone, 10),
       author: author && parseInt(author, 10),
       assignee: assignee && parseInt(assignee, 10),
+      comment: comment && parseInt(comment, 10),
     };
 
     if (
@@ -93,7 +95,14 @@ const getIssues = async (req, res) => {
         ? { [Op.in]: where.id[Op.in].filter((id) => possibleIssues.includes(id)) }
         : { [Op.in]: possibleIssues };
     }
-
+    let commentInclude = {};
+    if (parsed.comment) {
+      commentInclude = {
+        model: Comment,
+        required: true,
+        where: { id: parsed.comment },
+      };
+    }
     const issues = await Issue.findAndCountAll({
       limit: parsed.count,
       offset,
@@ -124,6 +133,11 @@ const getIssues = async (req, res) => {
         {
           model: Milestone,
           attributes: ['title'],
+        },
+        {
+          model: Comment,
+          required: true,
+          where: parsed.comment ? { user_id: parsed.comment } : null,
         },
       ],
       order: [['id', 'DESC']],
