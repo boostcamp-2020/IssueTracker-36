@@ -113,7 +113,7 @@ const IssueListPage = ({ location }) => {
   return (
     <MainPageLayout>
       <NavBar>
-        <Button text='filters' size='large' onClick={toggleDropdown} type='secondary'>
+        <Button className='btn' text='filters' size='large' onClick={toggleDropdown} type='secondary'>
           <IconWrapper> {!showDropDown ? <RiArrowDownSFill /> : <RiArrowUpSFill />}</IconWrapper>
         </Button>
         {showDropDown && (
@@ -161,13 +161,14 @@ const FilterInput = styled.input`
   font-size: 14px;
   outline: none;
   line-height: 20px;
-  margin-right: 10px;
   width: 100%;
   height: 100%;
 `;
 
 const FilterWrapper = styled.div`
   position: relative;
+  width: 100%;
+  margin-right: 10px;
   > .icon {
     position: absolute;
     height: 100%;
@@ -182,6 +183,11 @@ const NavBar = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+  > .lg-btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+  }
 `;
 const IconWrapper = styled.div`
   line-height: 20px;
