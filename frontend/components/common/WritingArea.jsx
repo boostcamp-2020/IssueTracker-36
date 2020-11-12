@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
-import Button from '@components/common/Button';
-import service from '@services';
 
 window.process = { cwd: () => '' };
 
-const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
+const WritingArea = ({ initValue, renderButton, type }) => {
   const [text, setText] = useState(initValue);
   const [isPreview, setIsPreview] = useState(false);
   const [showNumber, setShowNumber] = useState(false);
+  const typeClass = type === 'comment' ? 'comment' : 'other';
 
   const clickTab = (clickedPreview) => {
     if (isPreview !== clickedPreview) setIsPreview(!isPreview);
@@ -51,7 +50,7 @@ const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
 
   return (
     <Wrapper>
-      <Header>
+      <Header className={`${typeClass}`}>
         <Tab onClick={() => clickTab(false)} isSelected={!isPreview}>
           Write
         </Tab>
@@ -65,6 +64,7 @@ const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
         ) : (
           <TextAreaWrapper>
             <Textarea
+              className={`${typeClass}`}
               placeholder='Leave a comment or drop image'
               value={text}
               onChange={inputTextarea}
@@ -76,21 +76,12 @@ const WritingArea = ({ initValue, buttonText, onButtonClick }) => {
           </TextAreaWrapper>
         )}
       </Body>
-      <ButtonWrapper>
-        <Button
-          size='large'
-          text={buttonText}
-          onClick={() => {
-            onButtonClick(text);
-          }}
-          disabled={!text.length}
-        />
-      </ButtonWrapper>
+      <ButtonWrapper>{renderButton(text)}</ButtonWrapper>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -99,6 +90,10 @@ const Wrapper = styled.div`
 const Header = styled.ul`
   padding: 10px;
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
+  &.comment {
+    background-color: ${({ theme }) => theme.color.shadeBgColor};
+    border-radius: 6px;
+  }
 `;
 
 const Tab = styled.li`
@@ -127,11 +122,16 @@ const Textarea = styled.textarea`
   width: 100%;
   min-width: 100%;
   max-width: 100%;
-  min-height: 350px;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   border-radius: 5px;
   &:focus {
     box-shadow: 0 0 3px ${({ theme }) => theme.color.blueColor};
+  }
+  &.other {
+    min-height: 350px;
+  }
+  &.comment {
+    min-height: 50px;
   }
 `;
 
@@ -153,12 +153,13 @@ const ButtonWrapper = styled.div`
 
 WritingArea.propTypes = {
   initValue: PropTypes.string,
-  buttonText: PropTypes.string.isRequired,
-  onButtonClick: PropTypes.func.isRequired,
+  renderButton : PropTypes.func.isRequired,
+  type: PropTypes.string,
 };
 
 WritingArea.defaultProps = {
   initValue: '',
+  type: '',
 };
 
 export default WritingArea;

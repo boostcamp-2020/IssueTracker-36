@@ -41,6 +41,7 @@ const Wrapper = styled.div`
   border-radius: 6px;
   box-shadow: 0 0 4px ${({ theme }) => theme.color.borderColor};
   cursor: auto;
+  z-index: 1;
   animation: ${ScaleIn} 0.15s;
   animation-timing-function: cubic-bezier(0.2, 0, 0.13, 1.5);
 
