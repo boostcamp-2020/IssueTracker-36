@@ -68,7 +68,7 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
     } else if (tabName === 'label') {
       setOptions(optionGenerator.labels({ data: labels }, currentSelect.labels));
     } else if (tabName === 'milestone') {
-      setOptions(optionGenerator.milestones({ data: milestones }, currentSelect.milestone));
+      setOptions(optionGenerator.milestones({ data: milestones.open }, currentSelect.milestone));
     }
   };
 

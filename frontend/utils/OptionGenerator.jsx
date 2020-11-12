@@ -66,12 +66,13 @@ const LabelOption = ({ selected, label, clickAction }) => {
 };
 
 const labels = ({ data }, selectedLabels = [], clickAction = () => {}) => {
+  const selectedLabelsNumber = selectedLabels.map((labelId) => Number(labelId));
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
       div: (
         <LabelOption
-          selected={selectedLabels.includes(String(label.id))}
+          selected={selectedLabelsNumber.includes(Number(label.id))}
           label={label}
           clickAction={() => {
             clickAction(label.id);
@@ -141,6 +142,7 @@ const MilestoneOption = ({ selected, dueDate, title, clickAction }) => {
 };
 
 const milestones = ({ data }, selectedMilestone = [], clickAction = () => {}) => {
+  console.log(data);
   return data.reduce((acc, milestone) => {
     acc.push({
       id: milestone.id,

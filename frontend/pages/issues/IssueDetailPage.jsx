@@ -8,16 +8,48 @@ import IssueSidebar from '@components/issue/IssueSidebar';
 import CommentList from '@components/comment/CommentList';
 import NewCommentForm from '@components/comment/NewCommentForm';
 
+const getDifference = (before, after) => {
+  const difference = [];
+  before.forEach((element) => {
+    if (!after.includes(element)) difference.push({ isNew: false, id: element });
+  });
+  after.forEach((element) => {
+    if (!before.includes(element)) difference.push({ isNew: true, id: element });
+  });
+  return difference;
+};
+
 const selectReducer = (state, action) => {
-  switch (action.type) {
+  const { type, newSelection } = action;
+  switch (type) {
     case 'init':
-      return action.newSelection;
+      return {
+        issueId: action.issueId,
+        assignees: newSelection.assignees,
+        labels: newSelection.labels,
+        milestone: newSelection.milestone,
+      };
     case 'assignee':
-      return { ...state, assignees: action.newSelection };
+      const changedAssignee = getDifference(state.assignees, newSelection);
+      changedAssignee.forEach(async (difference) => {
+        if (difference.isNew) await service.addIssueUser(state.issueId, difference.id);
+        else await service.deleteIssueUser(state.issueId, difference.id);
+      });
+      return { ...state, assignees: newSelection };
     case 'label':
-      return { ...state, labels: action.newSelection };
+      const changedLabel = getDifference(state.labels, newSelection);
+      changedLabel.forEach(async (difference) => {
+        if (difference.isNew) await service.addIssueLabel(state.issueId, difference.id);
+        else await service.deleteIssueLabel(state.issueId, difference.id);
+      });
+      return { ...state, labels: newSelection };
     case 'milestone':
-      return { ...state, milestone: action.newSelection };
+      const changedMilestone = getDifference(state.milestone, newSelection);
+      changedMilestone.forEach(async (difference) => {
+        if (difference.isNew) await service.addIssueMilestone(state.issueId, difference.id);
+        else await service.deleteIssueMilestone(state.issueId, difference.id);
+      });
+      return { ...state, milestone: newSelection };
     default:
       return state;
   }
@@ -28,6 +60,7 @@ const IssueDetailPage = () => {
   const [issue, setissueInfo] = useState({ isClosed: true, comments: [] });
   const [user, setUser] = useState({});
   const [currentSelect, dispatch] = useReducer(selectReducer, {
+    id: 0,
     assignees: [],
     labels: [],
     milestone: [],
@@ -36,6 +69,7 @@ const IssueDetailPage = () => {
   const getIssue = async () => {
     const { data } = await service.getIssue(params.id);
     setissueInfo(data);
+    dispatch({ type: 'issue', id: data.id });
 
     const assignees = data.user_issues.reduce((acc, userIssue) => {
       if (!userIssue.is_owner) acc.push(userIssue.user.id);
@@ -46,7 +80,7 @@ const IssueDetailPage = () => {
       acc.push(issueLabel.label_id);
       return acc;
     }, []);
-    dispatch({ type: 'init', newSelection: { assignees, labels, milestone } });
+    dispatch({ type: 'init', issueId: data.id, newSelection: { assignees, labels, milestone } });
   };
   const updateState = async () => {
     const updateIssue = await service.updateIssue(params.id, { title: issue.title, closed: !issue.isClosed });
