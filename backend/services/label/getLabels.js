@@ -1,6 +1,6 @@
 const { label } = require('../../sequelize/models');
 
-const getLabels = async (req, res) => {
+const getLabel = async (req, res) => {
   try {
     const labels = await label.findAll({});
     res.json(labels);
@@ -9,4 +9,4 @@ const getLabels = async (req, res) => {
   }
 };
 
-module.exports = getLabels;
+module.exports = getLabel;

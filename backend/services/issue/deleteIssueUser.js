@@ -1,6 +1,6 @@
 const { user_issue: userIssue } = require('../../sequelize/models');
 
-const getIssue = async (req, res) => {
+const deleteIssueUser = async (req, res) => {
   try {
     const { issueId, userId } = req.params;
     const result = await userIssue.destroy({
@@ -15,4 +15,4 @@ const getIssue = async (req, res) => {
   }
 };
 
-module.exports = getIssue;
+module.exports = deleteIssueUser;
