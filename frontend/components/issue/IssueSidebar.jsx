@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { MilestoneContext } from '@store/MilestoneProvider';
+import { LabelContext } from '@store/LabelProvider';
 import Dropdown from '@components/common/Dropdown';
 import Label from '@components/common/Label';
 import ProgressBar from '@components/common/ProgressBar';
@@ -48,13 +50,12 @@ const SidebarTab = ({
 };
 
 const IssueSidebar = ({ currentSelect, chageSelect }) => {
+  const [milestones] = useContext(MilestoneContext);
+  const [labels] = useContext(LabelContext);
+  const [users, setUsers] = useState([]);
   const [dropdown, setDropdown] = useState('');
   const [options, setOptions] = useState([]);
-  const [data, setData] = useState({
-    users: [],
-    labels: [],
-    milestones: [],
-  });
+
   const toggleDropdown = () => {
     setDropdown('');
     setOptions([]);
@@ -63,19 +64,18 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
   const onClick = async (tabName) => {
     setDropdown(tabName);
     if (tabName === 'assignee') {
-      const users = await service.getUsers();
-      setData({ ...data, users });
-      setOptions(optionGenerator.users(users, currentSelect.assignees));
+      setOptions(optionGenerator.users({ data: users }, currentSelect.assignees));
     } else if (tabName === 'label') {
-      const labels = await service.getLabels();
-      setData({ ...data, labels });
-      setOptions(optionGenerator.labels(labels, currentSelect.labels));
+      setOptions(optionGenerator.labels({ data: labels }, currentSelect.labels));
     } else if (tabName === 'milestone') {
-      const milestones = await service.getMilestones({});
-      setData({ ...data, milestones });
-      setOptions(optionGenerator.milestones(milestones, currentSelect.milestone));
+      setOptions(optionGenerator.milestones({ data: milestones }, currentSelect.milestone));
     }
   };
+
+  useEffect(async () => {
+    const { data } = await service.getUsers();
+    setUsers(data);
+  }, []);
 
   return (
     <>
@@ -94,13 +94,16 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
         allowMultiple
         selectedItems={() => {
           if (!currentSelect.assignees.length) return <div>No one</div>;
-          return currentSelect.assignees.map((assignee) => {
-            return (
-              <SelectedUser key={assignee}>
-                {data.users.data.find((user) => user.id === assignee).nickName}
-              </SelectedUser>
-            );
-          });
+          return (
+            users.length &&
+            currentSelect.assignees.map((assignee) => {
+              return (
+                <SelectedUser key={assignee}>
+                  {users.find((user) => user.id === assignee).nickName}
+                </SelectedUser>
+              );
+            })
+          );
         }}
       />
       <SidebarTab
@@ -118,10 +121,13 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
         allowMultiple
         selectedItems={() => {
           if (!currentSelect.labels.length) return <div>None yet</div>;
-          return currentSelect.labels.map((labelId) => {
-            const currentLabel = data.labels.data.find((label) => label.id === labelId);
-            return <Label key={labelId} text={currentLabel.title} bg={currentLabel.color} />;
-          });
+          return (
+            labels.length &&
+            currentSelect.labels.map((labelId) => {
+              const currentLabel = labels.find((label) => label.id === labelId);
+              return <Label key={labelId} text={currentLabel.title} bg={currentLabel.color} />;
+            })
+          );
         }}
       />
       <SidebarTab
@@ -142,19 +148,21 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
         allowMultiple={false}
         selectedItems={() => {
           if (!currentSelect.milestone.length) return <div>No milestone</div>;
-          const selectedMilestone = data.milestones.data.find(
-            (milestone) => milestone.id === currentSelect.milestone[0],
-          );
+          const selectedMilestone =
+            milestones.open.find((milestone) => milestone.id === currentSelect.milestone[0]) ||
+            milestones.close.find((milestone) => milestone.id === currentSelect.milestone[0]);
           return (
-            <div>
-              <ProgressBar
-                progress={
-                  ((selectedMilestone?.closedIssueNumber || 0) * 100) /
-                  (selectedMilestone?.closedIssueNumber + selectedMilestone?.openedIssueNumber)
-                }
-              />
-              {selectedMilestone?.title}
-            </div>
+            selectedMilestone && (
+              <div>
+                <ProgressBar
+                  progress={
+                    ((selectedMilestone?.closedIssueNumber || 0) * 100) /
+                    (selectedMilestone?.closedIssueNumber + selectedMilestone?.openedIssueNumber)
+                  }
+                />
+                {selectedMilestone?.title}
+              </div>
+            )
           );
         }}
       />
