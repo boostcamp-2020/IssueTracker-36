@@ -18,7 +18,7 @@ const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickR
       <CommentWrapper>
         <WritingArea
           type='comment'
-          renderButton={(text) => {
+          renderButton={(text, setText) => {
             return (
               <>
                 <Button
@@ -32,7 +32,10 @@ const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickR
                 <Button
                   size='large'
                   text={rightBtnText}
-                  onClick={() => clickButton(text)}
+                  onClick={() => {
+                    clickButton(text);
+                    setText('');
+                  }}
                   disabled={!text.length}
                 />
               </>
