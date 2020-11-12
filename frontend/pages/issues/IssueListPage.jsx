@@ -58,8 +58,10 @@ const IssueListPage = ({ location }) => {
       }
     });
     text.trim();
-    if (!urlObject.label || typeof urlObject.label === 'string') {
+    if (typeof urlObject.label === 'string') {
       urlObject.label = [urlObject.label];
+    } else if (!urlObject.label) {
+      urlObject.label = [];
     }
     inputRef.current.value = text;
   };
@@ -77,7 +79,7 @@ const IssueListPage = ({ location }) => {
       labels: labelsResponse.length,
       milestones: milestonesResponse.length,
     });
-  }, []);
+  }, [useloc.search]);
 
   return (
     <MainPageLayout>
