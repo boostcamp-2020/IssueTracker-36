@@ -20,7 +20,13 @@ const Comment = ({
   const getAddReactionHandler = () => (type) => onAddReaction({ commentId: id, type });
   const onClickEdit = () => (editContent) => onClickEditBtn(id, editContent);
   if (id === isCommentEdit) {
-    return <EditCommentForm onClickLeftBtn={setIsCommentEdit} onClickRightBtn={onClickEdit()} />;
+    return (
+      <EditCommentForm
+        onClickLeftBtn={setIsCommentEdit}
+        onClickRightBtn={onClickEdit()}
+        initValue={content}
+      />
+    );
   }
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import WritingArea from '@components/common/WritingArea';
 import Button from '@components/common/Button';
 
-const CommentItem = ({ onClickLeftBtn, onClickRightBtn }) => {
+const CommentItem = ({ onClickLeftBtn, onClickRightBtn, initValue }) => {
   const clickButton = (content) => {
     onClickRightBtn(content);
   };
@@ -12,6 +12,7 @@ const CommentItem = ({ onClickLeftBtn, onClickRightBtn }) => {
     <ItemWrapper>
       <CommentWrapper>
         <WritingArea
+          initValue={initValue}
           type='comment'
           renderButton={(text) => {
             return (
@@ -44,6 +45,7 @@ const CommentItem = ({ onClickLeftBtn, onClickRightBtn }) => {
 CommentItem.propTypes = {
   onClickLeftBtn: PropTypes.func.isRequired,
   onClickRightBtn: PropTypes.func.isRequired,
+  initValue: PropTypes.string.isRequired,
 };
 
 const ItemWrapper = styled.div`
