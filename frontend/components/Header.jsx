@@ -11,6 +11,7 @@ const Header = () => {
   const history = useHistory();
   const onClickLogout = () => {
     tokenStorage.clearToken();
+    tokenStorage.clearUser();
     dispatch({
       type: userActions.LOGOUT,
     });
