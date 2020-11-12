@@ -25,7 +25,7 @@ const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickR
                   size='large'
                   text={leftBtnText}
                   type='secondary'
-                  icon={!isClosed && <GoIssueClosed />}
+                  icon={!isClosed ? <GoIssueClosed /> : undefined}
                   onClick={() => onClickLeftBtn()}
                   style={{ marginRight: '4px' }}
                 />
