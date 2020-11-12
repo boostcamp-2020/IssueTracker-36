@@ -58,6 +58,7 @@ const selectReducer = (state, action) => {
 const IssueDetailPage = () => {
   const params = useParams();
   const [issue, setissueInfo] = useState({ isClosed: true, comments: [] });
+  const [isEdit, setIsEdit] = useState(false);
   const [user, setUser] = useState({});
   const [currentSelect, dispatch] = useReducer(selectReducer, {
     id: 0,
@@ -95,6 +96,52 @@ const IssueDetailPage = () => {
     getIssue();
   };
 
+  const onAddReaction = ({ commentId, type }) =>
+    service
+      .addReaction({ commentId, type })
+      .then(({ data: reaction }) => {
+        const index = issue.comments.findIndex((comment) => comment.id === commentId);
+        if (index === -1) return;
+
+        const { comments } = issue;
+        setIssueInfo({
+          ...issue,
+          comments: [
+            ...comments.slice(0, index),
+            {
+              ...comments[index],
+              reactions: [...comments[index].reactions, reaction],
+            },
+            ...comments.slice(index + 1),
+          ],
+        });
+      })
+      .catch(console.error);
+
+  const onDeleteReaction = ({ commentId, reactionId }) =>
+    service
+      .deleteReaction({ commentId, reactionId })
+      .then(({ data: deletedReaction }) => {
+        const index = issue.comments.findIndex((comment) => comment.id === commentId);
+        if (index === -1) return;
+
+        const { comments } = issue;
+        setIssueInfo({
+          ...issue,
+          comments: [
+            ...comments.slice(0, index),
+            {
+              ...comments[index],
+              reactions: [
+                ...comments[index].reactions.filter((reaction) => reaction.id !== deletedReaction.id),
+              ],
+            },
+            ...comments.slice(index + 1),
+          ],
+        });
+      })
+      .catch(console.error);
+
   useEffect(() => {
     getIssue();
     service.getUsers().then(({ data }) => {
@@ -104,11 +151,15 @@ const IssueDetailPage = () => {
 
   return (
     <MainPageLayout>
-      <IssueDetailHeader issue={issue} onClickBtn={updateTitle} />
+      <IssueDetailHeader issue={issue} onClickTitleBtn={updateTitle} isEdit={isEdit} setIsEdit={setIsEdit}/>
       <IssueDetail>
         <IssueComment>
           <Maincontents>
-            <CommentList comments={issue.comments} />
+            <CommentList
+              comments={issue.comments}
+              onAddReaction={onAddReaction}
+              onDeleteReaction={onDeleteReaction}
+            />
           </Maincontents>
           <NewCommentForm
             user={user}

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 /**
  * 기본 버튼 컴포넌트입니다.
  */
-const Button = ({ size, type, role, text, icon, count, disabled, onClick }) => {
+const Button = ({ size, type, role, text, icon, count, disabled, onClick, children }) => {
   const sizeClass = size === 'large' ? 'lg-btn' : 'sm-btn';
   const typeClass = `${type}-btn`;
 
@@ -13,6 +13,7 @@ const Button = ({ size, type, role, text, icon, count, disabled, onClick }) => {
     <ButtonWrapper type={role} className={`${sizeClass} ${typeClass}`} disabled={disabled} onClick={onClick}>
       {icon && <Icon>{icon}</Icon>}
       <Text>{text}</Text>
+      {children}
       {count && <Counter>{count}</Counter>}
     </ButtonWrapper>
   );
@@ -27,6 +28,7 @@ Button.propTypes = {
   count: PropTypes.number,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
+  children: PropTypes.element,
 };
 
 Button.defaultProps = {
@@ -38,6 +40,7 @@ Button.defaultProps = {
   count: null,
   disabled: false,
   onClick: undefined,
+  children: undefined,
 };
 
 const ButtonWrapper = styled.button`

@@ -15,11 +15,10 @@ const LoggingInPage = ({ history, location }) => {
 
   useEffect(async () => {
     try {
-      await oauthGithub(code);
-      const token = tokenStorage.getToken();
+      const { token, id, nickName } = await oauthGithub(code);
       dispatch({
         type: userActions.LOGIN,
-        payload: { token },
+        payload: { token, id, nickName },
       });
       history.push('/issues');
     } catch (err) {

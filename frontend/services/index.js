@@ -1,10 +1,10 @@
 import apiRequest from '@utils/api-request';
+import reactionService from '@services/reactions';
 import labelService from './label';
 import milestoneService from './milestones';
 import issueService from './issue';
 import userService from './users';
 import commentService from './comment/index';
-// import auth from './auth';
 import imageService from './image';
 
 const Service = () => {
@@ -14,8 +14,8 @@ const Service = () => {
     ...issueService(apiRequest),
     ...userService(apiRequest),
     ...commentService(apiRequest),
-    // ...auth(),
     ...imageService(apiRequest),
+    ...reactionService(apiRequest),
   };
 };
 

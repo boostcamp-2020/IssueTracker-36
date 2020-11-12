@@ -14,7 +14,7 @@ const LabelMilestonePage = ({ location }) => {
     <Layout>
       <LabelMilestonePageNavbar location={location} newButton={newButton} />
       <Switch>
-        <Route path='/labels' component={LabelListPage} />
+        <Route path='/labels' render={() => <LabelListPage setNewButton={setNewButton} />} />
         <Route
           exact
           path='/milestones'
