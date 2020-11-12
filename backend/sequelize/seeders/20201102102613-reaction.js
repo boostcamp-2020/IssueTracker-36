@@ -16,7 +16,7 @@ module.exports = {
           id: i,
           comment_id: Math.floor(Math.random() * 99) + 1,
           user_id: Math.floor(Math.random() * 99) + 1,
-          type: ':heart',
+          type: '0x1F44D',
           created_at: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
           updated_at: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         };
