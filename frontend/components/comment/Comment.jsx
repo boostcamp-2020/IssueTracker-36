@@ -6,7 +6,7 @@ import ReactionButton from '@components/comment/ReactionButton';
 import ReactMarkdown from 'react-markdown';
 import Emoji from '@components/common/Emoji';
 import { UserContext } from '@store/UserProvider';
-import EditCommentForm from '@components/comment/EditCommentForm';
+import EditCommentForm from '@components/comment/NewCommentForm';
 
 const Comment = ({
   comment: { id, isMain, content, updatedAt, reactions, user },
@@ -25,6 +25,9 @@ const Comment = ({
         onClickLeftBtn={setIsCommentEdit}
         onClickRightBtn={onClickEdit()}
         initValue={content}
+        leftBtnText='cancel'
+        rightBtnText='update comment'
+        isEdit
       />
     );
   }
