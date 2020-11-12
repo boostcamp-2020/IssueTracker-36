@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const Dropdown = ({ children, closeHandler }) => {
   useEffect(() => {
@@ -24,6 +24,11 @@ Dropdown.defaultProps = {
   children: '',
 };
 
+const ScaleIn = keyframes`
+  0% { transform: scale(0.7); }
+  100% { transform: scale(1); }
+`;
+
 const Wrapper = styled.div`
   position: absolute;
   width: 150px;
@@ -34,7 +39,11 @@ const Wrapper = styled.div`
   color: ${({ theme }) => theme.color.secondaryTextColor};
   background-color: ${({ theme }) => theme.color.whiteColor};
   border-radius: 6px;
+  box-shadow: 0 0 4px ${({ theme }) => theme.color.borderColor};
   cursor: auto;
+  z-index: 1;
+  animation: ${ScaleIn} 0.15s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0.13, 1.5);
 
   &:before {
     top: -16.5px;

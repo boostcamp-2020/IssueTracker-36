@@ -2,10 +2,10 @@ const { label } = require('../../sequelize/models');
 
 const deleteLabels = async (req, res) => {
   try {
-    await label.destroy({
+    const deletedLabel = await label.destroy({
       where: { id: req.params.id },
     });
-    res.json(200);
+    res.json(deletedLabel);
   } catch (e) {
     res.sendStatus(500);
   }

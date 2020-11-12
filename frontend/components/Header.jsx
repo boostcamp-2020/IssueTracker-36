@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import GithubIconImage from '@static/github-icon-48.png';
-import userInfo from '@utils/user-info';
+import tokenStorage from '@utils/tokenStorage';
 import { useHistory, Link } from 'react-router-dom';
+import { UserContext } from '@store/UserProvider';
+import { userActions } from '@store/actions';
 
 const Header = () => {
+  const [, dispatch] = useContext(UserContext);
   const history = useHistory();
   const onClickLogout = () => {
-    userInfo.logout();
+    tokenStorage.clearToken();
+    dispatch({
+      type: userActions.LOGOUT,
+    });
     history.push('/');
   };
 

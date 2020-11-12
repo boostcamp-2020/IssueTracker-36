@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import LabelMilestoneTab from '@components/LabelMilestoneTab';
 import LabelListPage from '@pages/labels/LabelListPage';
 import MilestoneListPage from '@pages/milestones/MilestoneListPage';
 import MilestoneEditPage from '@pages/milestones/MilestoneEditPage';
 import Layout from '@layouts/MainPageLayout';
+import LabelMilestonePageNavbar from './LabelMilestonePageNavbar';
 
 const LabelMilestonePage = ({ location }) => {
+  const [newButton, setNewButton] = useState('');
+
   return (
     <Layout>
-      <LabelMilestoneTab currentPage={location.pathname} />
+      <LabelMilestonePageNavbar location={location} newButton={newButton} />
       <Switch>
         <Route path='/labels' component={LabelListPage} />
-        <Route exact path='/milestones' component={MilestoneListPage} />
+        <Route
+          exact
+          path='/milestones'
+          render={({ match }) => <MilestoneListPage setNewButton={setNewButton} match={match} />}
+        />
         <Route path='/milestones/:id/edit' component={MilestoneEditPage} />
       </Switch>
     </Layout>

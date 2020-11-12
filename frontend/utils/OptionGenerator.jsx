@@ -21,7 +21,7 @@ const UserOption = ({ selected, nickName, clickAction }) => {
   );
 };
 
-const users = ({ data }, selectedUser = [], clickAction) => {
+const users = ({ data }, selectedUser = [], clickAction = () => {}) => {
   return data.reduce((acc, user) => {
     acc.push({
       id: user.id,

@@ -9,7 +9,7 @@ import styled from 'styled-components';
 const IssueDetailHeader = ({ issue }) => {
   const { title, id, isClosed, createdAt } = issue;
   const user = issue.user_issues ? issue.user_issues[0].user.nickName : '';
-  const commentNumber = issue.comment ? issue.comment.length : 0;
+  const commentNumber = issue.comments ? issue.comments.length : 0;
   return (
     <>
       <IssueHeader>
@@ -52,7 +52,7 @@ const IssueHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border: 1px solid ${({ theme }) => theme.color.borderColor};
+  border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
 `;
 const ButtonWrapper = styled.div`
   padding: 18px;

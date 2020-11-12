@@ -1,34 +1,67 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { GoCalendar } from 'react-icons/go';
 import Moment from 'react-moment';
+import { MilestoneContext } from '@store/MilestoneProvider';
+import { milestoneActions } from '@store/actions';
 import MilestoneGraph from '@components/milestone/MilestoneGraph';
+import service from '@services';
+import { GoCalendar } from 'react-icons/go';
 
 const Milestone = ({ milestone }) => {
-  const clickEditBtn = async (id) => {
-    // TODO:수정
-    console.log(id);
+  const history = useHistory();
+  const [, dispatch] = useContext(MilestoneContext);
+  const { id, title, isClosed, description, dueDate, closedIssueNumber, openedIssueNumber } = milestone;
+
+  const clickEditBtn = () => {
+    history.push(`/milestones/${id}/edit`);
   };
-  const clickCloseBtn = async (id) => {
-    // TODO: close
-    console.log(id);
+  const clickCloseBtn = async () => {
+    try {
+      await service.changeClosed(id, !isClosed);
+      dispatch({
+        type: milestoneActions.CHANGE_CLOSED,
+        payload: { id, isClosed },
+      });
+    } catch (e) {
+      alert('오류가 발생했습니다');
+    }
   };
-  const clickDeleteBtn = async (id) => {
-    // TODO:삭제
-    console.log(id);
+
+  const clickDeleteBtn = async () => {
+    try {
+      if (confirm('삭제하시겠습니까?')) {
+        await service.deleteMilestone(id, isClosed);
+        dispatch({
+          type: milestoneActions.DELETE_MILESTONE,
+          payload: id,
+        });
+      }
+    } catch (e) {
+      alert('오류가 발생했습니다');
+    }
   };
-  const { id, title, description, dueDate, closedIssueNumber, openedIssueNumber } = milestone;
+
   return (
     <TR>
-      <TD align='left' padding='10px'>
+      <Info>
         <Title>{title}</Title>
         <br />
-        <GoCalendar /> Due by
-        <Moment format='MM,DD,YYYY'>{dueDate}</Moment>
-        <br />
-        {description}
-      </TD>
+        <ContentWrapper>
+          <GoCalendar />
+          {dueDate ? (
+            <>
+              Due by
+              <Moment format='MM,DD,YYYY'>{dueDate}</Moment>
+            </>
+          ) : (
+            'No due date'
+          )}
+          <br />
+          {description && description}
+        </ContentWrapper>
+      </Info>
       <TD>
         <div>
           <MilestoneGraph
@@ -38,9 +71,9 @@ const Milestone = ({ milestone }) => {
           />
         </div>
         <br />
-        <BTN onClick={() => clickEditBtn(id)}>edit</BTN>
-        <BTN onClick={() => clickCloseBtn(id)}>close</BTN>
-        <DeleteBTN onClick={() => clickDeleteBtn(id)}>delete</DeleteBTN>
+        <BTN onClick={() => clickEditBtn()}>Edit</BTN>
+        <BTN onClick={() => clickCloseBtn()}>{isClosed ? 'Reopen' : 'Close'}</BTN>
+        <DeleteBTN onClick={() => clickDeleteBtn()}>Delete</DeleteBTN>
       </TD>
     </TR>
   );
@@ -51,28 +84,36 @@ Milestone.propTypes = {
 
 const TR = styled.tr`
   border: 1px solid ${({ theme }) => theme.color.borderColor};
+  padding: 10px;
   &:hover {
     background-color: ${({ theme }) => theme.color.hoverBgColor};
   }
 `;
+
 const TD = styled.td`
-  width: ${(props) => props.width || ''};
-  text-align: ${(props) => props.align || 'center'};
-  padding: ${(props) => props.padding || '5px'};
+  padding: 15px 20px;
 `;
+const Info = styled(TD)`
+  width: 470px;
+`;
+
 const Title = styled.h1`
   font-size: 1.5em;
   color: ${(props) => props.theme.color.blackColor};
 `;
+
+const ContentWrapper = styled.div`
+  color: ${({ theme }) => theme.color.secondaryTextColor};
+  > svg {
+    margin-right: 10px;
+  }
+`;
+
 const BTN = styled.button`
-  width: ${(props) => props.width || ''};
-  text-align: ${(props) => props.align || 'center'};
-  padding: ${(props) => props.padding || '5px'};
   color: ${(props) => props.theme.color.blueColor};
   font-size: ${(props) => props.theme.fontSize.md};
+  margin-right: 20px;
   cursor: pointer;
-  padding: 1px;
-  display: inline-block;
 `;
 const DeleteBTN = styled(BTN)`
   color: ${(props) => props.theme.color.redColor};

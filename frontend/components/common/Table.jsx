@@ -26,6 +26,7 @@ const Wrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   overflow: hidden;
   border-radius: 4px;
+  margin-bottom: 40px;
 `;
 const HeaderSlot = styled.thead`
   background-color: ${({ theme }) => theme.color.shadeBgColor};

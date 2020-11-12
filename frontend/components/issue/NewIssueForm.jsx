@@ -2,23 +2,35 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import WritingArea from '@components/common/WritingArea';
+import Button from '@components/common/Button';
 
 const NewIssueForm = ({ onSubmit }) => {
   const title = useRef(undefined);
   const clickButton = (content) => {
     onSubmit(title.current.value, content);
   };
-
   return (
     <Wrapper>
       <TitleWrapper>
         <Title placeholder='Title' ref={title} />
       </TitleWrapper>
-      <WritingArea buttonText='Submit new issue' onButtonClick={clickButton} />
+      <WritingArea
+        renderButton={(text) => {
+          return (
+            <Button
+              size='large'
+              text='Submit new issue'
+              onClick={() => {
+                clickButton(text);
+              }}
+              disabled={!text.length}
+            />
+          );
+        }}
+      />
     </Wrapper>
   );
 };
-
 const Wrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   border-radius: 3px;
