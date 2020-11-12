@@ -57,7 +57,7 @@ const selectReducer = (state, action) => {
 
 const IssueDetailPage = () => {
   const params = useParams();
-  const [issue, setissueInfo] = useState({ isClosed: true, comments: [] });
+  const [issue, setIssueInfo] = useState({ isClosed: true, comments: [] });
   const [isEdit, setIsEdit] = useState(false);
   const [user, setUser] = useState({});
   const [currentSelect, dispatch] = useReducer(selectReducer, {
@@ -69,7 +69,7 @@ const IssueDetailPage = () => {
 
   const getIssue = async () => {
     const { data } = await service.getIssue(params.id);
-    setissueInfo(data);
+    setIssueInfo(data);
     dispatch({ type: 'issue', id: data.id });
 
     const assignees = data.user_issues.reduce((acc, userIssue) => {
@@ -85,11 +85,11 @@ const IssueDetailPage = () => {
   };
   const updateState = async () => {
     const updateIssue = await service.updateIssue(params.id, { title: issue.title, closed: !issue.isClosed });
-    setissueInfo({ ...issue, isClosed: updateIssue.data.isClosed });
+    setIssueInfo({ ...issue, isClosed: updateIssue.data.isClosed });
   };
   const updateTitle = async (title) => {
     const updateIssue = await service.updateIssue(params.id, { title, closed: issue.isClosed });
-    setissueInfo({ ...issue, title: updateIssue.data.title });
+    setIssueInfo({ ...issue, title: updateIssue.data.title });
   };
   const addComment = async (content) => {
     await service.addComment({ uid: user.id, content, issueId: issue.id });
@@ -141,7 +141,7 @@ const IssueDetailPage = () => {
         });
       })
       .catch(console.error);
-  
+
   useEffect(() => {
     getIssue();
     service.getUsers().then(({ data }) => {
@@ -151,7 +151,7 @@ const IssueDetailPage = () => {
 
   return (
     <MainPageLayout>
-      <IssueDetailHeader issue={issue} onClickTitleBtn={updateTitle} isEdit={isEdit} setIsEdit={setIsEdit}/>
+      <IssueDetailHeader issue={issue} onClickTitleBtn={updateTitle} isEdit={isEdit} setIsEdit={setIsEdit} />
       <IssueDetail>
         <IssueComment>
           <Maincontents>
