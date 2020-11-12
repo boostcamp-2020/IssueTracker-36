@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import MainPageLayout from '@layouts/MainPageLayout';
 import LabelMilestoneTab from '@components/LabelMilestoneTab';
@@ -8,7 +8,9 @@ import Button from '@components/common/Button';
 import IssueList from '@components/issue/IssueList';
 import service from '@services';
 import qs from 'query-string';
-import { useLocation } from 'react-router-dom';
+import Dropdown from '@components/common/Dropdown';
+import optionGenerator from '@utils/OptionGenerator';
+import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 
 const IssueListPage = ({ location }) => {
   const history = useHistory();
@@ -16,6 +18,7 @@ const IssueListPage = ({ location }) => {
   const inputRef = useRef();
   const urlObject = qs.parse(useloc.search);
   const [issues, setIssues] = useState([]);
+  const [showDropDown, setShowDropDown] = useState(false);
   const [LabelMilestoneNumer, setLabelMilestoneNumber] = useState({ labels: 0, milestones: 0 });
 
   const [filterData, setFilterData] = useState({});
@@ -45,6 +48,9 @@ const IssueListPage = ({ location }) => {
       history.push(url);
     }
   };
+  const toggleDropdown = () => {
+    setShowDropDown(!showDropDown);
+  };
   const urlToInputText = () => {
     let text = '';
     Object.keys(urlObject).forEach((key) => {
@@ -69,6 +75,29 @@ const IssueListPage = ({ location }) => {
     const { data: issuesResponse } = await service.getIssues(location.pathname, location.search);
     setIssues(issuesResponse.rows);
   };
+
+  const changeUrl = (key) => (val) => {
+    const url = qs.stringifyUrl({
+      url: '/issues',
+      query: {
+        ...filterData,
+        key: val,
+      },
+    });
+    console.log(key);
+
+    console.log(val);
+    // history.push(url);
+    toggleDropdown();
+  };
+  const isClosedOptions = [
+    { id: 1, type: 'Open issues', action: changeUrl('isClosed') },
+    { id: 2, type: 'Your issues', action: changeUrl('author') },
+    { id: 3, type: 'Everything assigned to you', action: changeUrl('assignee') },
+    { id: 4, type: 'Everything mentioning you', action: changeUrl('author') },
+    { id: 5, type: 'Closed issues', action: changeUrl('isClosed') },
+  ];
+
   useEffect(async () => {
     urlToInputText();
     setFilterData(urlObject);
@@ -84,6 +113,18 @@ const IssueListPage = ({ location }) => {
   return (
     <MainPageLayout>
       <NavBar>
+        <Button text='filters' size='large' onClick={toggleDropdown} type='secondary'>
+          <IconWrapper> {!showDropDown ? <RiArrowDownSFill /> : <RiArrowUpSFill />}</IconWrapper>
+        </Button>
+        {showDropDown && (
+          <Dropdown
+            title='Filter Issues'
+            isInputExist={false}
+            marginTop='34px'
+            toggleDropdown={toggleDropdown}
+            options={optionGenerator.isClosed(isClosedOptions)}
+          />
+        )}
         <FilterInput ref={inputRef} onKeyPress={handleKeyPress} placeholder='Search all issues' />
         <LabelMilestoneTab
           labelsNumber={LabelMilestoneNumer.labels}
@@ -125,6 +166,13 @@ const NavBar = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+`;
+const IconWrapper = styled.div`
+  line-height: 20px;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 IssueListPage.propTypes = {

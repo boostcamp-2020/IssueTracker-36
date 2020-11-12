@@ -211,4 +211,22 @@ const markAs = (data, clickAction = () => {}) => {
     return acc;
   }, []);
 };
-export default { users, labels, milestones, markAs };
+
+const IsClosedOption = ({ type = '', clickAction = () => {} }) => {
+  return (
+    <OptionWrapper onClick={clickAction}>
+      <p>{type}</p>
+    </OptionWrapper>
+  );
+};
+
+const isClosed = (data) => {
+  return data.reduce((acc, opt) => {
+    acc.push({
+      id: opt.id,
+      div: <IsClosedOption type={opt.type} clickAction={() => opt.action()} />,
+    });
+    return acc;
+  }, []);
+};
+export default { users, labels, milestones, markAs, isClosed };
