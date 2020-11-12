@@ -23,7 +23,7 @@ const comments = [
     reactions: [
       {
         id: 24,
-        type: ':heart',
+        type: '0x1F44D',
         createdAt: '2020-11-09T07:10:40.000Z',
         updatedAt: '2020-11-09T07:10:40.000Z',
         commentId: 53,
@@ -42,8 +42,10 @@ const comments = [
     user: {
       nickName: 'user_37',
     },
-    reactions: '[]',
+    reactions: [],
   },
 ];
 
-export const example = () => <CommentList comments={comments} />;
+export const example = () => (
+  <CommentList comments={comments} onAddReaction={({ id, type }) => console.log(id, type)} />
+);
