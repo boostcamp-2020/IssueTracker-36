@@ -60,7 +60,9 @@ const WritingArea = ({ initValue, renderButton, type }) => {
       </Header>
       <Body>
         {isPreview ? (
-          <>{text.length ? <ReactMarkdown source={text} /> : 'Nothing to preview'}</>
+          <PreviewWrapper>
+            {text.length ? <ReactMarkdown className='markdown-body' source={text} /> : 'Nothing to preview'}
+          </PreviewWrapper>
         ) : (
           <TextAreaWrapper>
             <Textarea
@@ -69,6 +71,7 @@ const WritingArea = ({ initValue, renderButton, type }) => {
               value={text}
               onChange={inputTextarea}
               onDrop={dropImage}
+              rows='7'
             />
             <TypedLettersNumber
               showNumber={showNumber}
@@ -110,7 +113,7 @@ const Tab = styled.li`
 
 const Body = styled.div`
   list-style-position: inside;
-  margin: 25px;
+  margin: 15px;
 `;
 
 const TextAreaWrapper = styled.div`
@@ -120,10 +123,12 @@ const TextAreaWrapper = styled.div`
 const Textarea = styled.textarea`
   padding: 10px;
   width: 100%;
-  min-width: 100%;
-  max-width: 100%;
+  min-width: 300px;
+  max-height: 100%;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   border-radius: 5px;
+  resize: both;
+
   &:focus {
     box-shadow: 0 0 3px ${({ theme }) => theme.color.blueColor};
   }
@@ -149,6 +154,11 @@ const ButtonWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   margin: 10px;
+`;
+
+const PreviewWrapper = styled.div`
+  width: 100%;
+  min-height: 100px;
 `;
 
 WritingArea.propTypes = {
