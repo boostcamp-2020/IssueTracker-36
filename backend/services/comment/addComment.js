@@ -7,7 +7,7 @@ const addComment = async (req, res) => {
     if (content && typeof content !== 'string') throw new TypeError();
     if (issueId && typeof issueId !== 'number') throw new TypeError();
 
-    const newComment = await comment.create({ user_id: req.body.uid, isMain: false, content, issueId });
+    const newComment = await comment.create({ userId: req.body.uid, isMain: false, content, issueId });
 
     res.json(newComment);
   } catch (err) {
