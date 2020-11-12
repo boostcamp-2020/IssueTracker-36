@@ -24,6 +24,7 @@ const selectReducer = (state, action) => {
 const IssueDetailPage = () => {
   const params = useParams();
   const [issue, setissueInfo] = useState({ isClosed: true, comments: [] });
+  const [isEdit, setIsEdit] = useState(false);
   const [user, setUser] = useState({});
   const [currentSelect, dispatch] = useReducer(selectReducer, {
     assignees: [],
@@ -47,7 +48,10 @@ const IssueDetailPage = () => {
     await service.addComment({ uid: user.id, content, issueId: issue.id });
     getIssue();
   }
-
+  // const updateComment = async (content) => {
+  //   await service.updateComment({ content });
+  //   getIssue();
+  // }
   useEffect(() => {
     getIssue();
     service.getUsers().then(({ data }) => {
@@ -57,7 +61,7 @@ const IssueDetailPage = () => {
 
   return (
     <MainPageLayout>
-      <IssueDetailHeader issue={issue} onClickBtn={updateTitle} />
+      <IssueDetailHeader issue={issue} onClickTitleBtn={updateTitle} isEdit={isEdit} setIsEdit={setIsEdit}/>
       <IssueDetail>
         <IssueComment>
           <Maincontents>
