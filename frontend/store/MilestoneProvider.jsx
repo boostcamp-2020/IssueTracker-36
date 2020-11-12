@@ -42,7 +42,7 @@ const reducer = (state, action) => {
       return payload.isClosed
         ? {
             open: [...[...state.open, movingMilestone].sort((first, second) => first.id - second.id)],
-            close: [...state.close.filter((milestone) => milestone.id !== payload)],
+            close: [...state.close.filter((milestone) => milestone.id !== payload.id)],
           }
         : {
             open: [...state.open.filter((milestone) => milestone.id !== payload.id)],

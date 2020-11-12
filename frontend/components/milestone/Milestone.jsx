@@ -53,7 +53,7 @@ const Milestone = ({ milestone }) => {
           {dueDate ? (
             <>
               Due by
-              <Moment format='MM,DD,YYYY'>{dueDate}</Moment>
+              <Moment format=' MM/DD, YYYY'>{dueDate}</Moment>
             </>
           ) : (
             'No due date'
