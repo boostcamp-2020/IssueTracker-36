@@ -130,7 +130,7 @@ const IssueSelectFilter = ({
         case 'Milestones':
           setOptionData(
             optionGenerator.milestones(
-              { data: milestones },
+              { data: [...milestones.open, ...milestones.close] },
               [Number(filterData.milestone)],
               filterMilestone(filterData),
             ),
