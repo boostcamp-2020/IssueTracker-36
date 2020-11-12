@@ -10,7 +10,6 @@ import optionGenerator from '@utils/OptionGenerator';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
 const filterAuthor = (history, filterData, authorId) => {
-  console.log(filterData);
   const url = qs.stringifyUrl({
     url: '/issues',
     query: {
