@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import Emoji from '@components/common/Emoji';
 
 const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user }, onAddReaction }) => {
-  const onClickReaction = () => (type) => onAddReaction({ id, type });
+  const onClickReaction = () => (type) => onAddReaction({ commentId: id, type });
 
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>
