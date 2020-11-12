@@ -22,7 +22,7 @@ const LoggingInPage = ({ history, location }) => {
         type: userActions.LOGIN,
         payload: { token, id, nickName, img_url },
       });
-      history.push('/issues');
+      history.push('/issues?isClosed=false');
     } catch (err) {
       alert('로그인 중 오류가 발생했습니다.');
       history.push('/');
