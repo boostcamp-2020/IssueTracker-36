@@ -7,7 +7,11 @@ import ReactMarkdown from 'react-markdown';
 import Emoji from '@components/common/Emoji';
 import { UserContext } from '@store/UserProvider';
 
-const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user }, onAddReaction }) => {
+const Comment = ({
+  comment: { id, isMain, content, updatedAt, reactions, user },
+  onAddReaction,
+  onDeleteReaction,
+}) => {
   const [auth] = useContext(UserContext);
   const onClickReaction = () => (type) => onAddReaction({ commentId: id, type });
 
@@ -31,7 +35,11 @@ const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user },
             {reactions.map((reaction) => {
               const removable = auth.id === reaction.userId;
               return removable ? (
-                <RemovableEmojiButton type='button' key={reaction.id}>
+                <RemovableEmojiButton
+                  type='button'
+                  key={reaction.id}
+                  onClick={() => onDeleteReaction({ commentId: id, reactionId: reaction.id })}
+                >
                   <Emoji hexCode={reaction.type} />
                 </RemovableEmojiButton>
               ) : (
@@ -50,6 +58,7 @@ const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user },
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   onAddReaction: PropTypes.func.isRequired,
+  onDeleteReaction: PropTypes.func.isRequired,
 };
 
 const CommentWrapper = styled.article`
@@ -131,6 +140,7 @@ const EditButton = styled.button`
 
 const Body = styled.div`
   border-radius: 0 0 6px 6px;
+  overflow: hidden;
 `;
 
 const Markdown = styled.div`
@@ -144,12 +154,12 @@ const ReactionButtonWrapper = styled.div`
 const EmojiButton = styled.button`
   padding: 8px 12px;
   border-right: 1px solid ${({ theme }) => theme.color.borderColor};
+  cursor: auto;
 `;
 
-const RemovableEmojiButton = styled.button`
-  padding: 8px 12px;
-  border-right: 1px solid ${({ theme }) => theme.color.borderColor};
-  background-color: ${({ theme }) => theme.color.blueColor};
+const RemovableEmojiButton = styled(EmojiButton)`
+  background-color: ${({ theme }) => theme.color.lightBlueColor};
+  cursor: pointer;
 `;
 
 export default Comment;

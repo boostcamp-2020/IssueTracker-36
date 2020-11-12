@@ -48,7 +48,7 @@ const IssueDetailPage = () => {
     getIssue();
   };
 
-  const onAddReaction = ({ commentId, type }) => {
+  const onAddReaction = ({ commentId, type }) =>
     service
       .addReaction({ commentId, type })
       .then(({ data: reaction }) => {
@@ -69,7 +69,30 @@ const IssueDetailPage = () => {
         });
       })
       .catch(console.error);
-  };
+
+  const onDeleteReaction = ({ commentId, reactionId }) =>
+    service
+      .deleteReaction({ commentId, reactionId })
+      .then(({ data: deletedReaction }) => {
+        const index = issue.comments.findIndex((comment) => comment.id === commentId);
+        if (index === -1) return;
+
+        const { comments } = issue;
+        setIssueInfo({
+          ...issue,
+          comments: [
+            ...comments.slice(0, index),
+            {
+              ...comments[index],
+              reactions: [
+                ...comments[index].reactions.filter((reaction) => reaction.id !== deletedReaction.id),
+              ],
+            },
+            ...comments.slice(index + 1),
+          ],
+        });
+      })
+      .catch(console.error);
 
   useEffect(() => {
     getIssue();
@@ -84,7 +107,11 @@ const IssueDetailPage = () => {
       <IssueDetail>
         <IssueComment>
           <Maincontents>
-            <CommentList comments={issue.comments} onAddReaction={onAddReaction} />
+            <CommentList
+              comments={issue.comments}
+              onAddReaction={onAddReaction}
+              onDeleteReaction={onDeleteReaction}
+            />
           </Maincontents>
           <NewCommentForm
             user={user}
