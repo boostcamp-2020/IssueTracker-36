@@ -36,7 +36,6 @@ const Dropdown = ({
     else
       setSelected(
         selected.reduce((acc, prevId) => {
-          console.log(prevId, id);
           if (prevId !== id) acc.push(prevId);
           return acc;
         }, []),

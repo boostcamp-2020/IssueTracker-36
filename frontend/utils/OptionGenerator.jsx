@@ -69,7 +69,15 @@ const labels = ({ data }, selectedLabels = [], clickAction = () => {}) => {
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
-      div: <LabelOption selected={selectedLabels.includes(label.id)} label={label} />,
+      div: (
+        <LabelOption
+          selected={selectedLabels.includes(String(label.id))}
+          label={label}
+          clickAction={() => {
+            clickAction(label.id);
+          }}
+        />
+      ),
     });
     return acc;
   }, []);
@@ -179,4 +187,28 @@ const CheckedWrapper = styled.div`
   width: 20px;
 `;
 
-export default { users, labels, milestones };
+const MarkAsOption = ({ type = '', clickAction = () => {} }) => {
+  return (
+    <OptionWrapper onClick={clickAction}>
+      <p>{type}</p>
+    </OptionWrapper>
+  );
+};
+
+const markAs = (data, clickAction = () => {}) => {
+  return data.reduce((acc, action) => {
+    acc.push({
+      id: action.id,
+      div: (
+        <MarkAsOption
+          type={action.type}
+          clickAction={() => {
+            clickAction(action.type);
+          }}
+        />
+      ),
+    });
+    return acc;
+  }, []);
+};
+export default { users, labels, milestones, markAs };
