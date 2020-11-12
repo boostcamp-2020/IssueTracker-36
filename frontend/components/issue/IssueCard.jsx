@@ -6,13 +6,22 @@ import { VscMilestone } from 'react-icons/vsc';
 import { GoIssueOpened, GoIssueClosed } from 'react-icons/go';
 import { useHistory } from 'react-router-dom';
 
-
-const IssueCard = ({ title, labelList, issueId, created, userNickname, milestoneName, isClosed }) => {
+const IssueCard = ({
+  title,
+  labelList,
+  issueId,
+  created,
+  userNickname,
+  milestoneName,
+  isClosed,
+  isChecked,
+  onClickSelectOne,
+}) => {
   const history = useHistory();
   return (
     <Wrapper>
       <CardMain>
-        <InputCheckbox />
+        <InputCheckbox checked={isChecked} readOnly onClick={() => onClickSelectOne(issueId)} />
         <IssueClosedIcon>
           {isClosed ? (
             <GoIssueClosed style={{ color: 'red' }} />
@@ -115,11 +124,14 @@ IssueCard.propTypes = {
   userNickname: PropTypes.string.isRequired,
   milestoneName: PropTypes.string,
   isClosed: PropTypes.bool.isRequired,
+  isChecked: PropTypes.bool,
+  onClickSelectOne: PropTypes.func.isRequired,
 };
 
 IssueCard.defaultProps = {
   labelList: [],
   milestoneName: '',
+  isChecked: false,
 };
 
 export default IssueCard;

@@ -22,7 +22,7 @@ const comment = {
   reactions: [
     {
       id: 24,
-      type: ':heart',
+      type: '0x1F44D',
       createdAt: '2020-11-09T07:10:40.000Z',
       updatedAt: '2020-11-09T07:10:40.000Z',
       commentId: 53,
@@ -30,7 +30,7 @@ const comment = {
     },
     {
       id: 47,
-      type: ':heart',
+      type: '0x1F44D',
       createdAt: '2020-11-09T07:10:40.000Z',
       updatedAt: '2020-11-09T07:10:40.000Z',
       commentId: 53,
@@ -38,7 +38,7 @@ const comment = {
     },
     {
       id: 178,
-      type: ':heart',
+      type: '0x1F44D',
       createdAt: '2020-11-09T07:10:40.000Z',
       updatedAt: '2020-11-09T07:10:40.000Z',
       commentId: 53,

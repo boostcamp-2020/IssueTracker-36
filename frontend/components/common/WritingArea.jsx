@@ -17,6 +17,28 @@ const WritingArea = ({ initValue, renderButton, type }) => {
   const inputTextarea = (e) => {
     setText(e.target.value);
   };
+  const startUploadingPhoto = (pos, filename) => {
+    const uploadingString = `![${filename}](...uploading)`;
+    setText(`${text.slice(0, pos)}${uploadingString}${text.slice(pos)}\n\n`);
+  };
+  const finishUploadingPhoto = (pos, filename, url) => {
+    const imgMarkdown = `![${filename}](${url})`;
+    setText(`${text.slice(0, pos)}${imgMarkdown}${text.slice(pos)}\n\n`);
+  };
+
+  const dropImage = async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    const fileType = file.type.split('/');
+    if (file.size > 15 * 1024 * 1024) return alert('이미지는 최대 15mb까지 가능합니다.');
+    if (fileType[0] !== 'image') return alert('이미지 파일만 가능합니다.');
+
+    const pos = e.target.selectionStart;
+    startUploadingPhoto(pos, file.name);
+    const { data } = await service.addImage(file);
+    finishUploadingPhoto(pos, file.name, data);
+  };
 
   useEffect(() => {
     setShowNumber(true);
@@ -42,10 +64,11 @@ const WritingArea = ({ initValue, renderButton, type }) => {
         ) : (
           <TextAreaWrapper>
             <Textarea
-              placeholder='Leave a comment'
+              className={`${typeClass}`}
+              placeholder='Leave a comment or drop image'
               value={text}
               onChange={inputTextarea}
-              className={`${typeClass}`}
+              onDrop={dropImage}
             />
             <TypedLettersNumber
               showNumber={showNumber}

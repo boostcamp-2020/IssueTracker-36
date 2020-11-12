@@ -11,7 +11,12 @@ const updateMilestone = async (req, res) => {
     if (isClosed && typeof isClosed !== 'boolean') throw new TypeError();
     if (!milestone) throw new TypeError();
 
-    const updatedMilestone = await milestone.update({ title, dueDate, description, isClosed });
+    const updatedMilestone = await milestone.update({
+      title,
+      dueDate: dueDate || undefined,
+      description,
+      isClosed,
+    });
 
     res.json(updatedMilestone);
   } catch (e) {

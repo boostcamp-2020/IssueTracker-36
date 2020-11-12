@@ -1,22 +1,33 @@
-import React, { useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import MainPageLayout from '@layouts/MainPageLayout';
 import Button from '@components/common/Button';
-import NewMilestoneForm from '@components/milestone/NewMilestoneForm';
+import MilestoneForm from '@components/milestone/MilestoneForm';
 import service from '@services';
+import { MilestoneContext } from '@store/MilestoneProvider';
+import { milestoneActions } from '@store/actions';
 
 const MilestoneAddPage = () => {
   const history = useHistory();
-  const title = useRef(undefined);
+  const [, dispatch] = useContext(MilestoneContext);
+  const [isTitleEmpty, setIsTitleEmpty] = useState(true);
+  const title = useRef('');
   const dueDate = useRef(undefined);
-  const description = useRef(undefined);
+  const description = useRef('');
 
   const handleClickCreate = async () => {
     try {
-      //   await service.addMisestone(title, dueDate, description);
-      console.log(title.current.value, dueDate.current.value, description.current.value);
-      //   history.push('/milestones');
+      const { data } = await service.addMilestone(
+        title.current.value,
+        dueDate.current.value,
+        description.current.value,
+      );
+      dispatch({
+        type: milestoneActions.ADD_MILESTONE,
+        payload: data,
+      });
+      history.push('/milestones');
     } catch (e) {
       alert('오류가 발생했습니다');
     }
@@ -32,13 +43,18 @@ const MilestoneAddPage = () => {
         </SubHeader>
       </HeaderWrapper>
       <br />
-      <NewMilestoneForm title={title} dueDate={dueDate} description={description} />
+      <MilestoneForm
+        title={title}
+        dueDate={dueDate}
+        description={description}
+        setIsTitleEmpty={setIsTitleEmpty}
+      />
       <ButtonWrapper>
         <Button
           size='large'
           type='primary'
           text=' Create Milestone'
-          disabled={title === ''}
+          disabled={isTitleEmpty}
           onClick={handleClickCreate}
         />
       </ButtonWrapper>

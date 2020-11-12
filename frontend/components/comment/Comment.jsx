@@ -4,8 +4,11 @@ import styled from 'styled-components';
 import Moment from 'react-moment';
 import ReactionButton from '@components/comment/ReactionButton';
 import ReactMarkdown from 'react-markdown';
+import Emoji from '@components/common/Emoji';
 
-const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) => {
+const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user }, onAddReaction }) => {
+  const onClickReaction = () => (type) => onAddReaction({ id, type });
+
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>
       <Head>
@@ -13,12 +16,23 @@ const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) =
           <NickName>{user.nickName}</NickName> commented <Moment fromNow>{updatedAt}</Moment>
         </Title>
         <Buttons>
-          <ReactionButton onClickReaction={console.log} />
+          <ReactionButton onClickReaction={onClickReaction()} />
           <EditButton type='button'>Edit</EditButton>
         </Buttons>
       </Head>
       <Body>
-        <ReactMarkdown className='markdown-body'>{content}</ReactMarkdown>
+        <Markdown>
+          <ReactMarkdown className='markdown-body'>{content}</ReactMarkdown>
+        </Markdown>
+        {reactions && (
+          <ReactionButtonWrapper>
+            {reactions.map((reaction) => (
+              <EmojiButton type='button' key={reaction.id}>
+                <Emoji hexCode={reaction.type} />
+              </EmojiButton>
+            ))}
+          </ReactionButtonWrapper>
+        )}
       </Body>
     </CommentWrapper>
   );
@@ -26,6 +40,7 @@ const Comment = ({ comment: { isMain, content, updatedAt, reactions, user } }) =
 
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
+  onAddReaction: PropTypes.func.isRequired,
 };
 
 const CommentWrapper = styled.article`
@@ -106,8 +121,20 @@ const EditButton = styled.button`
 `;
 
 const Body = styled.div`
-  padding: 15px;
   border-radius: 0 0 6px 6px;
+`;
+
+const Markdown = styled.div`
+  padding: 15px;
+`;
+
+const ReactionButtonWrapper = styled.div`
+  border-top: 1px solid ${({ theme }) => theme.color.borderColor};
+`;
+
+const EmojiButton = styled.button`
+  padding: 8px 12px;
+  border-right: 1px solid ${({ theme }) => theme.color.borderColor};
 `;
 
 export default Comment;

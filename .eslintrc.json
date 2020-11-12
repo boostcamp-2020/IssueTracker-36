@@ -38,7 +38,8 @@
           ["@utils", "./frontend/utils"],
           ["@static", "./frontend/static"],
           ["@services", "./frontend/services"],
-          ["@plugins", "./frontend/plugins"]
+          ["@plugins", "./frontend/plugins"],
+          ["@store", "./frontend/store"]
         ]
       }
     }

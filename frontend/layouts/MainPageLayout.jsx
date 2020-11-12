@@ -23,7 +23,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.color.whiteColor};
-
   margin-right: auto;
   margin-left: auto;
 `;

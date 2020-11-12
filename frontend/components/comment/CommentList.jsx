@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import CommentItem from '@components/comment/CommentItem';
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comments, onAddReaction }) => {
   return (
     <ListWrapper>
       {comments.map((comment) => (
         <ItemWrapper key={comment.id}>
-          <CommentItem comment={comment} />
+          <CommentItem comment={comment} onAddReaction={onAddReaction} />
         </ItemWrapper>
       ))}
     </ListWrapper>
@@ -17,6 +17,7 @@ const CommentList = ({ comments }) => {
 
 CommentList.propTypes = {
   comments: PropTypes.array.isRequired,
+  onAddReaction: PropTypes.func.isRequired,
 };
 
 const ListWrapper = styled.div`

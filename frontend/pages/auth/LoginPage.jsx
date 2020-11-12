@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import userInfo from '@utils/user-info';
 import GithubIconImage from '@static/github-icon-48.png';
 import AuthPageLayout from '@layouts/AuthPageLayout';
+import { UserContext } from '@store/UserProvider';
 
 const LoginPage = () => {
+  const [user] = useContext(UserContext);
   const endpoint = 'https://github.com/login/oauth/authorize';
   const GITHUB_CLIENT_ID =
     process.env.NODE_ENV === 'development' ? 'f7b2106d984fcad19336' : 'eaced475daf07d8d24e7';
 
-  return userInfo.authorized ? (
+  return user.authorized ? (
     <Route
       render={({ location }) => (
         <Redirect
