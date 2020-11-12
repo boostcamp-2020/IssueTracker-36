@@ -144,14 +144,13 @@ const IssueDetailPage = () => {
       .catch(console.error);
 
   const updateComment = (id, content) => {
-    console.log(id);
     service.updateComment(id, { content }).then(() => setIsCommentEdit(0));
-    // const index = issue.comments.findIndex((comment) => comment.id === id);
-    // const { comments } = issue;
-    // setIssueInfo({
-    //   ...issue,
-    //   comments: [...comments.slice(0, index), { ...comments[index], content }, ...comments.slice(index + 1)],
-    // });
+    const index = issue.comments.findIndex((comment) => comment.id === id);
+    const { comments } = issue;
+    setIssueInfo({
+      ...issue,
+      comments: [...comments.slice(0, index), { ...comments[index], content }, ...comments.slice(index + 1)],
+    });
   };
   useEffect(() => {
     getIssue();

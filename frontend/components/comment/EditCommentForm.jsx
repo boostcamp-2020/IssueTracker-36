@@ -21,7 +21,7 @@ const CommentItem = ({ onClickLeftBtn, onClickRightBtn }) => {
                   text='cancel'
                   type='secondary'
                   onClick={() => {
-                    onClickLeftBtn();
+                    onClickLeftBtn(0);
                   }}
                 />
                 <Button

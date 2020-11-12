@@ -19,9 +19,8 @@ const Comment = ({
   const [auth] = useContext(UserContext);
   const getAddReactionHandler = () => (type) => onAddReaction({ commentId: id, type });
   const onClickEdit = () => (editContent) => onClickEditBtn(id, editContent);
-
   if (id === isCommentEdit) {
-    return <EditCommentForm onClickLeftBtn={onClickEditBtn(id)} onClickRightBtn={onClickEdit()} />;
+    return <EditCommentForm onClickLeftBtn={setIsCommentEdit} onClickRightBtn={onClickEdit()} />;
   }
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>
