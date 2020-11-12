@@ -23,7 +23,8 @@ const selectReducer = (state, action) => {
 
 const IssueDetailPage = () => {
   const params = useParams();
-  const [issue, setIssueInfo] = useState({ isClosed: true, comments: [] });
+  const [issue, setissueInfo] = useState({ isClosed: true, comments: [] });
+  const [isEdit, setIsEdit] = useState(false);
   const [user, setUser] = useState({});
   const [currentSelect, dispatch] = useReducer(selectReducer, {
     assignees: [],
@@ -103,7 +104,7 @@ const IssueDetailPage = () => {
 
   return (
     <MainPageLayout>
-      <IssueDetailHeader issue={issue} onClickBtn={updateTitle} />
+      <IssueDetailHeader issue={issue} onClickTitleBtn={updateTitle} isEdit={isEdit} setIsEdit={setIsEdit}/>
       <IssueDetail>
         <IssueComment>
           <Maincontents>
