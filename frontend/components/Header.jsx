@@ -20,7 +20,9 @@ const Header = () => {
 
   return (
     <Component>
-      <GithubLogo src={GithubIconImage} alt='github icon' />
+      <Link to='/issues'>
+        <GithubLogo src={GithubIconImage} alt='github icon' />
+      </Link>
       <IssueButton type='button'>
         <Link to='/issues'>Issue Tracker</Link>
       </IssueButton>
