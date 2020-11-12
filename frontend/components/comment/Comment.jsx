@@ -13,7 +13,7 @@ const Comment = ({
   onDeleteReaction,
 }) => {
   const [auth] = useContext(UserContext);
-  const onClickReaction = () => (type) => onAddReaction({ commentId: id, type });
+  const getAddReactionHandler = () => (type) => onAddReaction({ commentId: id, type });
 
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>
@@ -22,7 +22,7 @@ const Comment = ({
           <NickName>{user.nickName}</NickName> commented <Moment fromNow>{updatedAt}</Moment>
         </Title>
         <Buttons>
-          <ReactionButton onClickReaction={onClickReaction()} />
+          <ReactionButton onClickReaction={getAddReactionHandler()} />
           <EditButton type='button'>Edit</EditButton>
         </Buttons>
       </Head>
