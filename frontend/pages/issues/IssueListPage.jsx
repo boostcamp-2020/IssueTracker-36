@@ -13,16 +13,20 @@ import optionGenerator from '@utils/OptionGenerator';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { UserContext } from '@store/UserProvider';
+import { LabelContext } from '@store/LabelProvider';
+import { MilestoneContext } from '@store/MilestoneProvider';
 
 const IssueListPage = ({ location }) => {
   const history = useHistory();
   const useloc = useLocation();
   const inputRef = useRef();
   const [user] = useContext(UserContext);
+  const [labels] = useContext(LabelContext);
+  const [milestones] = useContext(MilestoneContext);
   const urlObject = qs.parse(useloc.search);
   const [issues, setIssues] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
-  const [LabelMilestoneNumer, setLabelMilestoneNumber] = useState({ labels: 0, milestones: 0 });
+  const [LabelMilestoneNumber, setLabelMilestoneNumber] = useState({ labels: 0, milestones: 0 });
 
   const [filterData, setFilterData] = useState({});
 
@@ -98,17 +102,17 @@ const IssueListPage = ({ location }) => {
     { id: 5, type: 'Closed issues', action: changeUrl('isClosed', true) },
   ];
 
-  useEffect(async () => {
+  useEffect(() => {
     urlToInputText();
     setFilterData(urlObject);
     getIssues();
-    const { data: labelsResponse } = await service.getLabels();
-    const { data: milestonesResponse } = await service.getMilestones({});
-    setLabelMilestoneNumber({
-      labels: labelsResponse.length,
-      milestones: milestonesResponse.length,
-    });
   }, [useloc.search]);
+  useEffect(() => {
+    setLabelMilestoneNumber({
+      labels: labels.length,
+      milestones: milestones.open.length + milestones.close.length,
+    });
+  }, [labels, milestones]);
 
   return (
     <MainPageLayout>
@@ -130,8 +134,8 @@ const IssueListPage = ({ location }) => {
           <FilterInput ref={inputRef} onKeyPress={handleKeyPress} placeholder='Search all issues' />
         </FilterWrapper>
         <LabelMilestoneTab
-          labelsNumber={LabelMilestoneNumer.labels}
-          milestonesNumber={LabelMilestoneNumer.milestones}
+          labelsNumber={LabelMilestoneNumber.labels}
+          milestonesNumber={LabelMilestoneNumber.milestones}
         />
         <Button
           text='New issue'
