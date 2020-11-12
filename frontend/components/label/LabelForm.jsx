@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import service from '@services';
 import Label from '@components/common/Label';
 import Button from '@components/common/Button';
 import fontColorContrast from 'font-color-contrast';
@@ -7,8 +6,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import debounceHook from '@utils/DebounceHook';
 
-const LabelAdder = ({ onAddLabel }) => {
-  const [preview, setPreview] = useState({ title: '', description: '', color: '#0366d6' });
+const LabelForm = ({ onSave, onCancel, saveButtonText, initialValue }) => {
+  const [preview, setPreview] = useState(initialValue);
   const debouncedPreview = debounceHook(preview, 1000);
   const resetForm = () => {
     setPreview({ title: '', description: '', color: '#0366d6' });
@@ -32,9 +31,8 @@ const LabelAdder = ({ onAddLabel }) => {
       color: e.target.value,
     });
   };
-  const handleClickCreate = async () => {
-    const { data } = await service.addLabel(debouncedPreview);
-    onAddLabel(data);
+  const handleClickSave = async () => {
+    onSave(debouncedPreview);
     resetForm();
   };
   return (
@@ -76,13 +74,13 @@ const LabelAdder = ({ onAddLabel }) => {
           </FormGroup>
           <FormGroup>
             <BtnBox>
-              <Button size='large' type='secondary' text='Cancel' />
+              <Button size='large' type='secondary' text='Cancel' onClick={onCancel} />
               <Button
                 size='large'
                 type='primary'
-                text=' Create Label'
+                text={saveButtonText}
                 disabled={debouncedPreview.title === ''}
-                onClick={(e) => handleClickCreate(e)}
+                onClick={handleClickSave}
               />
             </BtnBox>
           </FormGroup>
@@ -91,10 +89,16 @@ const LabelAdder = ({ onAddLabel }) => {
     </>
   );
 };
-LabelAdder.propTypes = {
-  onAddLabel: PropTypes.func.isRequired,
+LabelForm.propTypes = {
+  onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  saveButtonText: PropTypes.string.isRequired,
+  initialValue: PropTypes.object,
 };
-const AdderForm = styled.form`
+LabelForm.defaultProps = {
+  initialValue: { title: '', description: '', color: '#0366d6' },
+};
+const AdderForm = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.color.shadeBgColor};
   border: 1px solid ${({ theme }) => theme.color.borderColor};
@@ -155,4 +159,4 @@ const Input = styled.input`
   width: 100%;
 `;
 
-export default LabelAdder;
+export default LabelForm;

@@ -5,9 +5,9 @@ import Label from '@components/common/Label';
 import fontColorContrast from 'font-color-contrast';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import LabelForm from '@components/label/LabelForm';
 
-const LabelList = ({ labels, onDeleteLabel }) => {
-  const clickEditBtn = async () => {};
+const LabelList = ({ labels, onDeleteLabel, onEditStart, onEditEnd, onUpdate }) => {
   const clickDeleteBtn = async (id) => {
     const { data: effectedRow } = await service.deleteLabel(id);
     if (effectedRow === 1) onDeleteLabel(id);
@@ -28,19 +28,32 @@ const LabelList = ({ labels, onDeleteLabel }) => {
         }}
         renderBody={() => {
           return labels.map((label) => {
+            const { id, title, description, color, isEditing } = label;
             return (
-              <TR key={label.id}>
-                <TD width='200px;' align='left' padding='10px'>
-                  <Label text={label.title} bg={label.color} color={fontColorContrast(label.color)} />
-                </TD>
-                <TD align='left'>{label.description}</TD>
-
-                <TD>
-                  <BTN onClick={() => clickEditBtn(label)}>edit</BTN>
-                </TD>
-                <TD>
-                  <BTN onClick={() => clickDeleteBtn(label.id)}>delete</BTN>
-                </TD>
+              <TR key={id}>
+                {isEditing ? (
+                  <td colSpan={4}>
+                    <LabelForm
+                      onSave={onUpdate}
+                      onCancel={() => onEditEnd(id)}
+                      saveButtonText='Save changes'
+                      initialValue={label}
+                    />
+                  </td>
+                ) : (
+                  <>
+                    <TD width='200px;' align='left' padding='10px'>
+                      <Label text={title} bg={color} color={fontColorContrast(color)} />
+                    </TD>
+                    <TD align='left'>{description}</TD>
+                    <TD>
+                      <BTN onClick={() => onEditStart(id)}>edit</BTN>
+                    </TD>
+                    <TD>
+                      <BTN onClick={() => clickDeleteBtn(id)}>delete</BTN>
+                    </TD>
+                  </>
+                )}
               </TR>
             );
           });
@@ -49,9 +62,13 @@ const LabelList = ({ labels, onDeleteLabel }) => {
     </>
   );
 };
+
 LabelList.propTypes = {
   labels: PropTypes.array.isRequired,
   onDeleteLabel: PropTypes.func.isRequired,
+  onEditStart: PropTypes.func.isRequired,
+  onEditEnd: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 const LabelListHeader = styled.tr`
