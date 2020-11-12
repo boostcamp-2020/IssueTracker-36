@@ -66,12 +66,13 @@ const LabelOption = ({ selected, label, clickAction }) => {
 };
 
 const labels = ({ data }, selectedLabels = [], clickAction = () => {}) => {
+  const selectedLabelsNumber = selectedLabels.map((labelId) => Number(labelId));
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
       div: (
         <LabelOption
-          selected={selectedLabels.includes(String(label.id))}
+          selected={selectedLabelsNumber.includes(Number(label.id))}
           label={label}
           clickAction={() => {
             clickAction(label.id);
