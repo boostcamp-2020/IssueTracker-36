@@ -9,49 +9,6 @@ import toggleArray from '@utils/toggle-array';
 import optionGenerator from '@utils/OptionGenerator';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
-const filterAuthor = (history, filterData, authorId) => {
-  const url = qs.stringifyUrl({
-    url: '/issues',
-    query: {
-      ...filterData,
-      author: Number(filterData.author) === authorId ? undefined : authorId,
-    },
-  });
-  // console.log(url);
-  history.push(url);
-};
-const filterMilestone = (history, filterData, milestoneId) => {
-  const url = qs.stringifyUrl({
-    url: '/issues',
-    query: {
-      ...filterData,
-      milestone: Number(filterData.milestone) === milestoneId ? undefined : milestoneId,
-    },
-  });
-  history.push(url);
-};
-const filterAssignee = (history, filterData, assigneeId) => {
-  const url = qs.stringifyUrl({
-    url: '/issues',
-    query: {
-      ...filterData,
-      assignee: Number(filterData.assignee) === assigneeId ? undefined : assigneeId,
-    },
-  });
-  history.push(url);
-};
-
-const filterLabels = (history, filterData, labelId) => {
-  const url = qs.stringifyUrl({
-    url: '/issues',
-    query: {
-      ...filterData,
-      label: toggleArray(filterData.label, String(labelId)),
-    },
-  });
-  history.push(url);
-};
-
 const IssueSelectFilter = ({
   filterName,
   dropdownTitle,
@@ -73,6 +30,59 @@ const IssueSelectFilter = ({
     setShowDropdown(!showDropdown);
   };
   const [optionData, setOptionData] = useState([]);
+
+  const filterAuthor = () => (authorId) => {
+    const url = qs.stringifyUrl({
+      url: '/issues',
+      query: {
+        ...filterData,
+        author: Number(filterData.author) === authorId ? undefined : authorId,
+      },
+    });
+    // console.log(url);
+    history.push(url);
+    toggleDropdown();
+  };
+  const filterMilestone = () => (milestoneId) => {
+    const url = qs.stringifyUrl({
+      url: '/issues',
+      query: {
+        ...filterData,
+        milestone: Number(filterData.milestone) === milestoneId ? undefined : milestoneId,
+      },
+    });
+    history.push(url);
+
+    toggleDropdown();
+  };
+  const filterAssignee = () => (assigneeId) => {
+    const url = qs.stringifyUrl({
+      url: '/issues',
+      query: {
+        ...filterData,
+        assignee: Number(filterData.assignee) === assigneeId ? undefined : assigneeId,
+      },
+    });
+    toggleDropdown();
+    history.push(url);
+
+    toggleDropdown();
+  };
+
+  const filterLabels = () => (labelId) => {
+    const url = qs.stringifyUrl({
+      url: '/issues',
+      query: {
+        ...filterData,
+        label: toggleArray(filterData.label, String(labelId)),
+      },
+    });
+    history.push(url);
+    // history.go();
+
+    toggleDropdown();
+  };
+
   const filterMarkAs = async (type) => {
     switch (type) {
       case 'Open':
@@ -88,51 +98,50 @@ const IssueSelectFilter = ({
     setSelectedIssues([]);
   };
   useEffect(async () => {
-    if (!showDropdown) return;
-    switch (filterName) {
-      case 'Label':
-        setOptionData(
-          optionGenerator.labels(
-            await service.getLabels(),
-            filterData.label,
-            filterLabels.bind(undefined, history, filterData),
-          ),
-        );
-        break;
-      case 'Author':
-        setOptionData(
-          optionGenerator.users(
-            await service.getUsers(),
-            [Number(filterData.author)],
-            filterAuthor.bind(undefined, history, filterData),
-          ),
-        );
-        break;
-      case 'Assignee':
-        setOptionData(
-          optionGenerator.users(
-            await service.getUsers(),
-            [Number(filterData.assignee)],
-            filterAssignee.bind(undefined, history, filterData),
-          ),
-        );
-        break;
-      case 'Milestones':
-        setOptionData(
-          optionGenerator.milestones(
-            await service.getMilestones({}),
-            [Number(filterData.milestone)],
-            filterMilestone.bind(undefined, history, filterData),
-          ),
-        );
-        break;
-      case 'Mark As':
-        setOptionData(optionGenerator.markAs(markAsActons, filterMarkAs));
-        break;
-      default:
-        setOptionData([]);
+    if (!showDropdown) {
+      setOptionData([]);
+    } else {
+      switch (filterName) {
+        case 'Label':
+          setOptionData(
+            optionGenerator.labels(await service.getLabels(), filterData.label, filterLabels(filterData)),
+          );
+          break;
+        case 'Author':
+          setOptionData(
+            optionGenerator.users(
+              await service.getUsers(),
+              [Number(filterData.author)],
+              filterAuthor(filterData),
+            ),
+          );
+          break;
+        case 'Assignee':
+          setOptionData(
+            optionGenerator.users(
+              await service.getUsers(),
+              [Number(filterData.assignee)],
+              filterAssignee(filterData),
+            ),
+          );
+          break;
+        case 'Milestones':
+          setOptionData(
+            optionGenerator.milestones(
+              await service.getMilestones({}),
+              [Number(filterData.milestone)],
+              filterMilestone(filterData),
+            ),
+          );
+          break;
+        case 'Mark As':
+          setOptionData(optionGenerator.markAs(markAsActons, filterMarkAs));
+          break;
+        default:
+          setOptionData([]);
+      }
     }
-  }, [showDropdown]);
+  }, [showDropdown, filterData]);
 
   return (
     <SelectFilter>

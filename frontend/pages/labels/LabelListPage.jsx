@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types';
 import LabelList from '@components/label/LabelList';
 import LabelForm from '@components/label/LabelForm';
 import { LabelContext } from '@store/LabelProvider';
@@ -7,12 +7,16 @@ import { labelActions } from '@store/actions';
 import service from '@services';
 import Button from '@components/common/Button';
 
-const LabelListPage = () => {
+const isAddingReducer = (state) => {
+  return !state;
+};
+
+const LabelListPage = ({ setNewButton }) => {
   const [labels, dispatch] = useContext(LabelContext);
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAdding, isAddingDispatch] = useReducer(isAddingReducer, false);
 
   const onAddLabel = (label) => {
-    setIsAdding(false);
+    isAddingDispatch();
     service
       .addLabel(label)
       .then(({ data: createdLabel }) =>
@@ -48,15 +52,15 @@ const LabelListPage = () => {
       type: labelActions.END_EDIT_LABEL,
       payload: id,
     });
+
+  useEffect(() => {
+    setNewButton(<Button text='New label' size='large' onClick={isAddingDispatch} />);
+  }, []);
+
   return (
     <>
-      <ButtonRow>
-        <ButtonWrapper>
-          <Button text='New label' size='large' onClick={() => setIsAdding(true)} />
-        </ButtonWrapper>
-      </ButtonRow>
       {isAdding && (
-        <LabelForm onSave={onAddLabel} onCancel={() => setIsAdding(false)} saveButtonText='Create label' />
+        <LabelForm onSave={onAddLabel} onCancel={isAddingDispatch} saveButtonText='Create label' />
       )}
       <LabelList
         labels={labels}
@@ -70,16 +74,8 @@ const LabelListPage = () => {
   );
 };
 
-const ButtonRow = styled.div`
-  position: relative;
-  margin-bottom: 24px;
-`;
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  text-align: right;
-  position: absolute;
-  top: -32px;
-`;
+LabelListPage.propTypes = {
+  setNewButton: PropTypes.func.isRequired,
+};
 
 export default LabelListPage;

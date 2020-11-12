@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { userActions } from '@store/actions';
+import tokenStorage from '@utils/tokenStorage';
 
 const UserContext = React.createContext();
 
@@ -11,22 +12,29 @@ const reducer = (state, action) => {
       return {
         ...state,
         token: payload.token,
+        id: payload.id,
+        nickName: payload.nickName,
         authorized: !!payload.token,
       };
     case userActions.LOGOUT:
       return {
         ...state,
         token: '',
+        id: null,
+        nickName: null,
         authorized: false,
       };
     default:
       return state;
   }
 };
-const token = window.localStorage.getItem('userToken');
+const token = tokenStorage.getToken();
+const user = tokenStorage.getUser();
+
 const initialValue = {
   token: token || '',
-  nickName: '',
+  nickName: user?.nickName,
+  id: user?.id,
   authorized: !!token,
 };
 
