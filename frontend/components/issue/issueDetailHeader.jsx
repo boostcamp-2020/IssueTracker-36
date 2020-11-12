@@ -67,6 +67,7 @@ const IssueHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
+  margin-bottom: 40px;
 `;
 const ButtonWrapper = styled.div`
   padding: 18px;

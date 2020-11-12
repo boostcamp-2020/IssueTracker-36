@@ -88,11 +88,11 @@ const Wrapper = styled.article`
 `;
 
 const Header = styled.ul`
-  padding: 10px;
+  padding: 24px 16px 10px 16px;
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
   &.comment {
     background-color: ${({ theme }) => theme.color.shadeBgColor};
-    border-radius: 6px;
+    border-radius: 6px 6px 0 0;
   }
 `;
 
@@ -153,7 +153,7 @@ const ButtonWrapper = styled.div`
 
 WritingArea.propTypes = {
   initValue: PropTypes.string,
-  renderButton : PropTypes.func.isRequired,
+  renderButton: PropTypes.func.isRequired,
   type: PropTypes.string,
 };
 

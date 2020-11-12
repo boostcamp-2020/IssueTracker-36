@@ -26,16 +26,13 @@ const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickR
                   text={leftBtnText}
                   type='secondary'
                   icon={!isClosed && <GoIssueClosed />}
-                  onClick={() => {
-                    onClickLeftBtn();
-                  }}
+                  onClick={() => onClickLeftBtn()}
+                  style={{ marginRight: '4px' }}
                 />
                 <Button
                   size='large'
                   text={rightBtnText}
-                  onClick={() => {
-                    clickButton(text);
-                  }}
+                  onClick={() => clickButton(text)}
                   disabled={!text.length}
                 />
               </>
@@ -43,13 +40,14 @@ const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickR
           }}
         />
       </CommentWrapper>
-    </ItemWrapper>);
+    </ItemWrapper>
+  );
 };
 
 CommentItem.propTypes = {
   user: PropTypes.object.isRequired,
   isClosed: PropTypes.bool.isRequired,
-  leftBtnText : PropTypes.string.isRequired,
+  leftBtnText: PropTypes.string.isRequired,
   rightBtnText: PropTypes.string.isRequired,
   onClickLeftBtn: PropTypes.func.isRequired,
   onClickRightBtn: PropTypes.func.isRequired,

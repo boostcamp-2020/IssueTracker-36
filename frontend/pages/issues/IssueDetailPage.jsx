@@ -141,7 +141,7 @@ const IssueDetailPage = () => {
         });
       })
       .catch(console.error);
-
+  
   useEffect(() => {
     getIssue();
     service.getUsers().then(({ data }) => {
@@ -190,9 +190,10 @@ const IssueComment = styled.div`
   flex-direction: column;
   flex: 7;
   height: 100%;
+  margin-right: 28px;
 `;
 const Maincontents = styled.div`
-  padding: 40px;
+  margin-bottom: 32px;
 `;
 const IssueSide = styled.div`
   display: flex;
