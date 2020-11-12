@@ -17,7 +17,7 @@ const IssueListPage = ({ location }) => {
   const history = useHistory();
   const useloc = useLocation();
   const inputRef = useRef();
-  const [user, dispatch] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const urlObject = qs.parse(useloc.search);
   const [issues, setIssues] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
