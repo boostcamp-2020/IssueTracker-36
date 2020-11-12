@@ -117,33 +117,39 @@ const IssueListPage = ({ location }) => {
   return (
     <MainPageLayout>
       <NavBar>
-        <Button className='btn' text='filters' size='large' onClick={toggleDropdown} type='secondary'>
-          <IconWrapper> {!showDropDown ? <RiArrowDownSFill /> : <RiArrowUpSFill />}</IconWrapper>
-        </Button>
-        {showDropDown && (
-          <Dropdown
-            title='Filter Issues'
-            isInputExist={false}
-            marginTop='34px'
-            toggleDropdown={toggleDropdown}
-            options={optionGenerator.isClosed(isClosedOptions)}
-          />
-        )}
         <FilterWrapper>
-          <BiSearchAlt2 className='icon' />
-          <FilterInput ref={inputRef} onKeyPress={handleKeyPress} placeholder='Search all issues' />
+          <Button className='btn' text='filters' size='large' onClick={toggleDropdown} type='secondary'>
+            <IconWrapper> {!showDropDown ? <RiArrowDownSFill /> : <RiArrowUpSFill />}</IconWrapper>
+          </Button>
+
+          {showDropDown && (
+            <Dropdown
+              title='Filter Issues'
+              isInputExist={false}
+              marginTop='34px'
+              toggleDropdown={toggleDropdown}
+              options={optionGenerator.isClosed(isClosedOptions)}
+            />
+          )}
+          <InputWrapper>
+            <BiSearchAlt2 className='icon' />
+            <FilterInput ref={inputRef} onKeyPress={handleKeyPress} placeholder='Search all issues' />
+          </InputWrapper>
         </FilterWrapper>
-        <LabelMilestoneTab
-          labelsNumber={LabelMilestoneNumber.labels}
-          milestonesNumber={LabelMilestoneNumber.milestones}
-        />
-        <Button
-          text='New issue'
-          onClick={() => {
-            history.push('/issues/new');
-          }}
-          size='large'
-        />
+        <BtnWrapper>
+          <LabelMilestoneTab
+            labelsNumber={LabelMilestoneNumber.labels}
+            milestonesNumber={LabelMilestoneNumber.milestones}
+          />
+          <Button
+            style={{ marginLeft: '10px' }}
+            text='New issue'
+            onClick={() => {
+              history.push('/issues/new');
+            }}
+            size='large'
+          />
+        </BtnWrapper>
       </NavBar>
       <IssueList
         issues={issues}
@@ -168,11 +174,35 @@ const FilterInput = styled.input`
   width: 100%;
   height: 100%;
 `;
-
+const BtnWrapper = styled.div`
+  position: relative;
+  display: flex;
+  @media (max-width: 1012px) {
+    width: 100%;
+    margin-bottom: 10px;
+    justify-content: space-between !important;
+  }
+`;
 const FilterWrapper = styled.div`
   position: relative;
   width: 100%;
   margin-right: 10px;
+  display: flex;
+  > .lg-btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+  }
+
+  @media (max-width: 1012px) {
+    margin-right: 0px;
+    justify-content: space-between !important;
+  }
+`;
+const InputWrapper = styled.div`
+  display: inline-flex;
+  position: relative;
+  width: 100%;
   > .icon {
     position: absolute;
     height: 100%;
@@ -187,10 +217,10 @@ const NavBar = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
-  > .lg-btn {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-right: 0;
+  @media (max-width: 1012px) {
+    flex-direction: column-reverse !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
   }
 `;
 const IconWrapper = styled.div`
