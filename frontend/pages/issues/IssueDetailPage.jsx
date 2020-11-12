@@ -1,4 +1,4 @@
-import React, { useReducer,useState, useEffect } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MainPageLayout from '@layouts/MainPageLayout';
 import service from '@services';
@@ -38,15 +38,15 @@ const IssueDetailPage = () => {
   const updateState = async () => {
     const updateIssue = await service.updateIssue(params.id, { title: issue.title, closed: !issue.isClosed });
     setissueInfo({ ...issue, isClosed: updateIssue.data.isClosed });
-  }
+  };
   const updateTitle = async (title) => {
     const updateIssue = await service.updateIssue(params.id, { title, closed: issue.isClosed });
     setissueInfo({ ...issue, title: updateIssue.data.title });
-  }
+  };
   const addComment = async (content) => {
     await service.addComment({ uid: user.id, content, issueId: issue.id });
     getIssue();
-  }
+  };
 
   useEffect(() => {
     getIssue();
@@ -92,9 +92,10 @@ const IssueComment = styled.div`
   flex-direction: column;
   flex: 7;
   height: 100%;
+  margin-right: 28px;
 `;
 const Maincontents = styled.div`
-  padding: 40px;
+  margin-bottom: 32px;
 `;
 const IssueSide = styled.div`
   display: flex;

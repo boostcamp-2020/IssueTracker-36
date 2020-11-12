@@ -11,27 +11,25 @@ const IssueDetailHeader = ({ issue }) => {
   const user = issue.user_issues ? issue.user_issues[0].user.nickName : '';
   const commentNumber = issue.comments ? issue.comments.length : 0;
   return (
-    <>
-      <IssueHeader>
-        <IssueTitle>
-          {title}
-          <IssueNumber>{` #${id}`}</IssueNumber>
-          <IssueInfo>
-            {!isClosed ? (
-              <Label bg='green' text='Open' icon={<GoIssueOpened />} />
-            ) : (
-              <Label bg='red' text='Closed' icon={<GoIssueClosed />} />
-            )}
-            {`${user} opened this issue `}
-            <Moment fromNow>{createdAt}</Moment>
-            {` · ${commentNumber} comment`}
-          </IssueInfo>
-        </IssueTitle>
-        <ButtonWrapper>
-          <Button text='Edit' size='large' type='secondary' />
-        </ButtonWrapper>
-      </IssueHeader>
-    </>
+    <IssueHeader>
+      <IssueTitle>
+        {title}
+        <IssueNumber>{` #${id}`}</IssueNumber>
+        <IssueInfo>
+          {!isClosed ? (
+            <Label bg='green' text='Open' icon={<GoIssueOpened />} />
+          ) : (
+            <Label bg='red' text='Closed' icon={<GoIssueClosed />} />
+          )}
+          {`${user} opened this issue `}
+          <Moment fromNow>{createdAt}</Moment>
+          {` · ${commentNumber} comment`}
+        </IssueInfo>
+      </IssueTitle>
+      <ButtonWrapper>
+        <Button text='Edit' size='large' type='secondary' />
+      </ButtonWrapper>
+    </IssueHeader>
   );
 };
 IssueDetailHeader.propTypes = {
@@ -53,6 +51,7 @@ const IssueHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid ${({ theme }) => theme.color.borderColor};
+  margin-bottom: 40px;
 `;
 const ButtonWrapper = styled.div`
   padding: 18px;
