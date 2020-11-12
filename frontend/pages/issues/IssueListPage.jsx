@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -11,11 +11,13 @@ import qs from 'query-string';
 import Dropdown from '@components/common/Dropdown';
 import optionGenerator from '@utils/OptionGenerator';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
+import { UserContext } from '@store/UserProvider';
 
 const IssueListPage = ({ location }) => {
   const history = useHistory();
   const useloc = useLocation();
   const inputRef = useRef();
+  const [user, dispatch] = useContext(UserContext);
   const urlObject = qs.parse(useloc.search);
   const [issues, setIssues] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
@@ -76,26 +78,23 @@ const IssueListPage = ({ location }) => {
     setIssues(issuesResponse.rows);
   };
 
-  const changeUrl = (key) => (val) => {
+  const changeUrl = (key, val) => () => {
     const url = qs.stringifyUrl({
       url: '/issues',
       query: {
         ...filterData,
-        key: val,
+        [`${key}`]: val,
       },
     });
-    console.log(key);
-
-    console.log(val);
-    // history.push(url);
+    history.push(url);
     toggleDropdown();
   };
   const isClosedOptions = [
-    { id: 1, type: 'Open issues', action: changeUrl('isClosed') },
-    { id: 2, type: 'Your issues', action: changeUrl('author') },
-    { id: 3, type: 'Everything assigned to you', action: changeUrl('assignee') },
-    { id: 4, type: 'Everything mentioning you', action: changeUrl('author') },
-    { id: 5, type: 'Closed issues', action: changeUrl('isClosed') },
+    { id: 1, type: 'Open issues', action: changeUrl('isClosed', true) },
+    { id: 2, type: 'Your issues', action: changeUrl('author', user.id) },
+    { id: 3, type: 'Everything assigned to you', action: changeUrl('assignee', user.id) },
+    { id: 4, type: 'Everything mentioning you', action: changeUrl('author', user.id) },
+    { id: 5, type: 'Closed issues', action: changeUrl('isClosed', false) },
   ];
 
   useEffect(async () => {
