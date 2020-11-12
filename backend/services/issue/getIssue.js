@@ -1,4 +1,12 @@
-const { issue, comment, reaction, user, user_issue: userIssue } = require('../../sequelize/models');
+const {
+  issue,
+  comment,
+  reaction,
+  user,
+  user_issue: userIssue,
+  issue_label: issueLabel,
+  label,
+} = require('../../sequelize/models');
 
 const getIssue = async (req, res) => {
   try {
@@ -20,10 +28,15 @@ const getIssue = async (req, res) => {
         },
         {
           model: userIssue,
+          attributes: ['is_owner'],
           include: {
             model: user,
-            attributes: ['nickName'],
+            attributes: ['id', 'nickName'],
           },
+        },
+        {
+          model: issueLabel,
+          attributes: ['label_id'],
         },
       ],
     });

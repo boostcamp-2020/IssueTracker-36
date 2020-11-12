@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import ReactionButton from '@components/comment/ReactionButton';
 import ReactMarkdown from 'react-markdown';
 import Emoji from '@components/common/Emoji';
+import { UserContext } from '@store/UserProvider';
 
-const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user }, onAddReaction }) => {
-  const onClickReaction = () => (type) => onAddReaction({ id, type });
+const Comment = ({
+  comment: { id, isMain, content, updatedAt, reactions, user },
+  onAddReaction,
+  onDeleteReaction,
+}) => {
+  const [auth] = useContext(UserContext);
+  const getAddReactionHandler = () => (type) => onAddReaction({ commentId: id, type });
 
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>
@@ -16,7 +22,7 @@ const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user },
           <NickName>{user.nickName}</NickName> commented <Moment fromNow>{updatedAt}</Moment>
         </Title>
         <Buttons>
-          <ReactionButton onClickReaction={onClickReaction()} />
+          <ReactionButton onClickReaction={getAddReactionHandler()} />
           <EditButton type='button'>Edit</EditButton>
         </Buttons>
       </Head>
@@ -26,11 +32,22 @@ const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user },
         </Markdown>
         {reactions && (
           <ReactionButtonWrapper>
-            {reactions.map((reaction) => (
-              <EmojiButton type='button' key={reaction.id}>
-                <Emoji hexCode={reaction.type} />
-              </EmojiButton>
-            ))}
+            {reactions.map((reaction) => {
+              const removable = auth.id === reaction.userId;
+              return removable ? (
+                <RemovableEmojiButton
+                  type='button'
+                  key={reaction.id}
+                  onClick={() => onDeleteReaction({ commentId: id, reactionId: reaction.id })}
+                >
+                  <Emoji hexCode={reaction.type} />
+                </RemovableEmojiButton>
+              ) : (
+                <EmojiButton type='button' key={reaction.id}>
+                  <Emoji hexCode={reaction.type} />
+                </EmojiButton>
+              );
+            })}
           </ReactionButtonWrapper>
         )}
       </Body>
@@ -41,6 +58,7 @@ const Comment = ({ comment: { id, isMain, content, updatedAt, reactions, user },
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   onAddReaction: PropTypes.func.isRequired,
+  onDeleteReaction: PropTypes.func.isRequired,
 };
 
 const CommentWrapper = styled.article`
@@ -122,6 +140,7 @@ const EditButton = styled.button`
 
 const Body = styled.div`
   border-radius: 0 0 6px 6px;
+  overflow: hidden;
 `;
 
 const Markdown = styled.div`
@@ -135,6 +154,12 @@ const ReactionButtonWrapper = styled.div`
 const EmojiButton = styled.button`
   padding: 8px 12px;
   border-right: 1px solid ${({ theme }) => theme.color.borderColor};
+  cursor: auto;
+`;
+
+const RemovableEmojiButton = styled(EmojiButton)`
+  background-color: ${({ theme }) => theme.color.lightBlueColor};
+  cursor: pointer;
 `;
 
 export default Comment;

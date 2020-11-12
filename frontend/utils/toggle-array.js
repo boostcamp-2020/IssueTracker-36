@@ -1,7 +1,9 @@
 export default (arr, el) => {
-  const temp = [...arr];
+  let temp = [...arr];
   if (temp.includes(el)) {
-    temp.splice(temp.indexOf(el), 1);
-  } else temp.push(el);
+    temp = temp.filter((item) => item !== el);
+  } else {
+    temp = [...temp, el];
+  }
   return temp;
 };

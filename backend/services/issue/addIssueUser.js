@@ -1,6 +1,6 @@
 const { user_issue: userIssue } = require('../../sequelize/models');
 
-const addLabel = async (req, res) => {
+const addIssueUser = async (req, res) => {
   try {
     const { issueId, userId } = req.params;
     const result = await userIssue.create({ issueId, userId, is_owner: 0 });
@@ -11,4 +11,4 @@ const addLabel = async (req, res) => {
   }
 };
 
-module.exports = addLabel;
+module.exports = addIssueUser;

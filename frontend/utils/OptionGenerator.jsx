@@ -66,12 +66,13 @@ const LabelOption = ({ selected, label, clickAction }) => {
 };
 
 const labels = ({ data }, selectedLabels = [], clickAction = () => {}) => {
+  const selectedLabelsNumber = selectedLabels.map((labelId) => Number(labelId));
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
       div: (
         <LabelOption
-          selected={selectedLabels.includes(String(label.id))}
+          selected={selectedLabelsNumber.includes(Number(label.id))}
           label={label}
           clickAction={() => {
             clickAction(label.id);
@@ -211,4 +212,22 @@ const markAs = (data, clickAction = () => {}) => {
     return acc;
   }, []);
 };
-export default { users, labels, milestones, markAs };
+
+const IsClosedOption = ({ type = '', clickAction = () => {} }) => {
+  return (
+    <OptionWrapper onClick={() => clickAction()}>
+      <p>{type}</p>
+    </OptionWrapper>
+  );
+};
+
+const isClosed = (data) => {
+  return data.reduce((acc, opt) => {
+    acc.push({
+      id: opt.id,
+      div: <IsClosedOption type={opt.type} clickAction={opt.action} />,
+    });
+    return acc;
+  }, []);
+};
+export default { users, labels, milestones, markAs, isClosed };
