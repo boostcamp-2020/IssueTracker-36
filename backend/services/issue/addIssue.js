@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
       {
         title,
         isClosed: 0,
-        milestoneId,
+        milestoneId: milestoneId.length ? milestoneId : null,
       },
       { transaction },
     );
@@ -63,6 +63,7 @@ module.exports = async (req, res) => {
     await transaction.commit();
     res.json(createdIssue);
   } catch (err) {
+    console.log(err);
     if (transaction) await transaction.rollback();
     res.sendStatus(500);
   }
