@@ -20,7 +20,9 @@ const Header = () => {
 
   return (
     <Component>
-      <AiFillGithub size={42} />
+      <Link to='/issues'>
+        <AiFillGithub size={42} />
+      </Link>
       <IssueButton type='button'>
         <Link to='/issues?isClosed=false'>Issue Tracker</Link>
       </IssueButton>

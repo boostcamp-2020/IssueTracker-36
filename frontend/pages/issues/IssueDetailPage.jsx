@@ -59,6 +59,7 @@ const IssueDetailPage = () => {
   const params = useParams();
   const [issue, setIssueInfo] = useState({ isClosed: true, comments: [] });
   const [isEdit, setIsEdit] = useState(false);
+  const [isCommentEdit, setIsCommentEdit] = useState(0);
   const [user, setUser] = useState({});
   const [currentSelect, dispatch] = useReducer(selectReducer, {
     id: 0,
@@ -142,6 +143,15 @@ const IssueDetailPage = () => {
       })
       .catch(console.error);
 
+  const updateComment = (id, content) => {
+    service.updateComment(id, { content }).then(() => setIsCommentEdit(0));
+    const index = issue.comments.findIndex((comment) => comment.id === id);
+    const { comments } = issue;
+    setIssueInfo({
+      ...issue,
+      comments: [...comments.slice(0, index), { ...comments[index], content }, ...comments.slice(index + 1)],
+    });
+  };
   useEffect(() => {
     getIssue();
     service.getUsers().then(({ data }) => {
@@ -159,6 +169,9 @@ const IssueDetailPage = () => {
               comments={issue.comments}
               onAddReaction={onAddReaction}
               onDeleteReaction={onDeleteReaction}
+              isCommentEdit={isCommentEdit}
+              setIsCommentEdit={setIsCommentEdit}
+              onClickEditBtn={updateComment}
             />
           </Maincontents>
           <NewCommentForm

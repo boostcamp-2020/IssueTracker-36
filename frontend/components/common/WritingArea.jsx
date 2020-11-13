@@ -80,7 +80,7 @@ const WritingArea = ({ initValue, renderButton, type }) => {
           </TextAreaWrapper>
         )}
       </Body>
-      <ButtonWrapper>{renderButton(text)}</ButtonWrapper>
+      <ButtonWrapper>{renderButton(text, setText)}</ButtonWrapper>
     </Wrapper>
   );
 };

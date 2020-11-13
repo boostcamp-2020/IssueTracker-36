@@ -6,15 +6,31 @@ import ReactionButton from '@components/comment/ReactionButton';
 import ReactMarkdown from 'react-markdown';
 import Emoji from '@components/common/Emoji';
 import { UserContext } from '@store/UserProvider';
+import EditCommentForm from '@components/comment/NewCommentForm';
 
 const Comment = ({
   comment: { id, isMain, content, updatedAt, reactions, user },
   onAddReaction,
   onDeleteReaction,
+  isCommentEdit,
+  setIsCommentEdit,
+  onClickEditBtn,
 }) => {
   const [auth] = useContext(UserContext);
   const getAddReactionHandler = () => (type) => onAddReaction({ commentId: id, type });
-
+  const onClickEdit = () => (editContent) => onClickEditBtn(id, editContent);
+  if (id === isCommentEdit) {
+    return (
+      <EditCommentForm
+        onClickLeftBtn={setIsCommentEdit}
+        onClickRightBtn={onClickEdit()}
+        initValue={content}
+        leftBtnText='cancel'
+        rightBtnText='update comment'
+        isEdit
+      />
+    );
+  }
   return (
     <CommentWrapper className={isMain ? 'main-comment' : ''}>
       <Head>
@@ -23,7 +39,9 @@ const Comment = ({
         </Title>
         <Buttons>
           <ReactionButton onClickReaction={getAddReactionHandler()} />
-          <EditButton type='button'>Edit</EditButton>
+          <EditButton type='button' onClick={() => setIsCommentEdit(id)}>
+            Edit
+          </EditButton>
         </Buttons>
       </Head>
       <Body>
@@ -59,6 +77,9 @@ Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   onAddReaction: PropTypes.func.isRequired,
   onDeleteReaction: PropTypes.func.isRequired,
+  isCommentEdit: PropTypes.number.isRequired,
+  setIsCommentEdit: PropTypes.func.isRequired,
+  onClickEditBtn: PropTypes.func.isRequired,
 };
 
 const CommentWrapper = styled.article`
