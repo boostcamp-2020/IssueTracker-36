@@ -20,7 +20,7 @@ const getIssue = async (req, res) => {
           include: [
             {
               model: user,
-              attributes: ['nickName'],
+              attributes: ['nickName', 'img_url'],
             },
             reaction,
           ],

@@ -20,8 +20,8 @@ const Header = () => {
 
   return (
     <Component>
-      <Link to='/issues'>
-        <AiFillGithub size={42} />
+      <Link to='/issues?isClosed=false'>
+        <AiFillGithub size={42} style={{ color: 'white' }} />
       </Link>
       <IssueButton type='button'>
         <Link to='/issues?isClosed=false'>Issue Tracker</Link>
@@ -42,10 +42,6 @@ const Component = styled.header`
   align-items: center;
   justify-content: space-around;
   background-color: ${(props) => props.theme.color.headerBgColor};
-  > svg {
-    color: white;
-    size: 48px;
-  }
 `;
 
 const IssueButton = styled.button`

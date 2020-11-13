@@ -15,7 +15,7 @@ const CommentItem = ({
   return (
     <ItemWrapper>
       <AvatarWrapper>
-        <Avatar alt={`${comment.user.nickName} profile image`} />
+        <Avatar src={comment.user.img_url} alt={`${comment.user.nickName} profile image`} />
       </AvatarWrapper>
       <CommentWrapper>
         <Comment

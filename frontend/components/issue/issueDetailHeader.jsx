@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Label from '@components/common/Label';
 import Moment from 'react-moment';
 import { GoIssueOpened, GoIssueClosed } from 'react-icons/go';
@@ -10,6 +10,8 @@ const IssueDetailHeader = ({ issue, onClickTitleBtn, isEdit, setIsEdit }) => {
   const { title, id, isClosed, createdAt } = issue;
   const user = issue.user_issues ? issue.user_issues[0].user.nickName : '';
   const commentNumber = issue.comments ? issue.comments.length : 0;
+  const titleInput = useRef(undefined);
+
   return (
     <>
       <IssueHeader>
@@ -20,18 +22,21 @@ const IssueDetailHeader = ({ issue, onClickTitleBtn, isEdit, setIsEdit }) => {
               <IssueNumber> {` #${id}`} </IssueNumber>
             </div>
           ) : (
-            <Input value={title} onChange={(e) => onClickTitleBtn(e.target.value)} />
+            <Input defaultValue={title} ref={titleInput} />
           )}
           <ButtonWrapper>
             <Button
               text={!isEdit ? 'Edit' : 'Save'}
               size='large'
               type={isEdit ? 'primary' : 'secondary'}
-              onClick={() => setIsEdit(!isEdit)}
+              onClick={() => {
+                if (isEdit) onClickTitleBtn(titleInput.current.value);
+                setIsEdit(!isEdit);
+              }}
             />
             {isEdit && (
               <Button
-                text='cacel'
+                text='Cancel'
                 size='large'
                 type='secondary'
                 style={{ marginLeft: '10px' }}

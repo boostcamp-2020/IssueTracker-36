@@ -16,8 +16,10 @@ const Dropdown = ({
 }) => {
   const wrapper = useRef(undefined);
   const [selected, setSelected] = useState(defaultSelect);
+  const [showingOptions, setShowingOptions] = useState([]);
 
   useEffect(() => {
+    setShowingOptions(options);
     const clickOutside = (e) => {
       if (!wrapper.current?.contains(e.target) && !e.target.closest('svg')) toggleDropdown();
     };
@@ -26,7 +28,7 @@ const Dropdown = ({
     return () => {
       document.removeEventListener('click', clickOutside);
     };
-  }, [selected]);
+  }, [selected, options]);
 
   const onClick = (id) => {
     if (!allowMultiple) {
@@ -42,6 +44,12 @@ const Dropdown = ({
       );
   };
 
+  const filterOptions = (e) => {
+    const { value } = e.target;
+    const filteredOptions = options.filter((option) => option.value.toLowerCase().match(value));
+    if (filterOptions.length) setShowingOptions(filteredOptions);
+  };
+
   return (
     <DropdownWrapper ref={wrapper} width={width} marginTop={marginTop}>
       <Header>
@@ -50,11 +58,11 @@ const Dropdown = ({
       </Header>
       {isInputExist && (
         <SearchWrapper>
-          <Search />
+          <Search onChange={filterOptions} />
         </SearchWrapper>
       )}
       <OptionsWrapper>
-        {options.map(({ id, div }) => (
+        {showingOptions.map(({ id, div }) => (
           <Option
             key={id}
             onClick={() => {

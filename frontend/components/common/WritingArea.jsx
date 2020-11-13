@@ -72,7 +72,7 @@ const WritingArea = ({ initValue, renderButton, type }) => {
               value={text}
               onChange={inputTextarea}
               onDrop={dropImage}
-              rows='7'
+              rows='10'
             />
             <TypedLettersNumber
               showNumber={showNumber}
@@ -124,11 +124,11 @@ const TextAreaWrapper = styled.div`
 const Textarea = styled.textarea`
   padding: 10px;
   width: 100%;
-  min-width: 300px;
+  min-width: 740px;
   max-height: 100%;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
   border-radius: 5px;
-  resize: both;
+  resize: vertical;
 
   &:focus {
     box-shadow: 0 0 3px ${({ theme }) => theme.color.blueColor};

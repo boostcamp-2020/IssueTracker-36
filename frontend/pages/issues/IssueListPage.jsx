@@ -28,7 +28,7 @@ const IssueListPage = ({ location }) => {
   const [issues, setIssues] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
   const [pageInfo, setPageInfo] = useState({ numberPerPage: 20, page: 1, totalNumber: undefined });
-  const [LabelMilestoneNumer, setLabelMilestoneNumber] = useState({ labels: 0, milestones: 0 });
+  const [LabelMilestoneNumber, setLabelMilestoneNumber] = useState({ labels: 0, milestones: 0 });
   const [filterData, setFilterData] = useState({});
 
   const inputTextToUrl = (inputText) => {
@@ -86,14 +86,15 @@ const IssueListPage = ({ location }) => {
     setPageInfo({ ...pageInfo, totalNumber: issuesResponse.count, page: parseInt(urlObject.page, 10) });
   };
   const goNextPage = () => {
+    const nextPage = pageInfo.page || 1;
     const url = qs.stringifyUrl({
       url: '/issues',
       query: {
         ...filterData,
-        page: pageInfo.page + 1,
+        page: nextPage + 1,
       },
     });
-    setPageInfo({ ...pageInfo, page: pageInfo.page + 1 });
+    setPageInfo({ ...pageInfo, page: nextPage + 1 });
     history.push(url);
   };
   const goPrevPage = () => {
@@ -158,7 +159,6 @@ const IssueListPage = ({ location }) => {
           <Button className='btn' text='filters' size='large' onClick={toggleDropdown} type='secondary'>
             <IconWrapper> {!showDropDown ? <RiArrowDownSFill /> : <RiArrowUpSFill />}</IconWrapper>
           </Button>
-
           {showDropDown && (
             <Dropdown
               title='Filter Issues'
@@ -178,7 +178,6 @@ const IssueListPage = ({ location }) => {
             labelsNumber={LabelMilestoneNumber.labels}
             milestonesNumber={LabelMilestoneNumber.milestones}
           />
-          <FilterInput ref={inputRef} onKeyPress={handleKeyPress} placeholder='Search all issues' />
           <Button
             style={{ marginLeft: '10px' }}
             text='New issue'
