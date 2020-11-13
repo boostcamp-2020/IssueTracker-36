@@ -13,7 +13,7 @@ const CommentItem = ({ user, leftBtnText, rightBtnText, onClickLeftBtn, onClickR
   return (
     <ItemWrapper>
       <AvatarWrapper>
-        <Avatar alt={`${user.nickName} profile image`} />
+        <Avatar alt={`${user.nickName} profile image`} src={user.img_url} />
       </AvatarWrapper>
       <CommentWrapper>
         <WritingArea

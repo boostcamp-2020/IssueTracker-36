@@ -1,6 +1,6 @@
 const { label } = require('../../sequelize/models');
 
-const deleteLabels = async (req, res) => {
+const deleteLabel = async (req, res) => {
   try {
     const deletedLabel = await label.destroy({
       where: { id: req.params.id },
@@ -11,4 +11,4 @@ const deleteLabels = async (req, res) => {
   }
 };
 
-module.exports = deleteLabels;
+module.exports = deleteLabel;

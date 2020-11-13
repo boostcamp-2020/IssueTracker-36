@@ -15,12 +15,14 @@ const LoggingInPage = ({ history, location }) => {
 
   useEffect(async () => {
     try {
-      const { token, id, nickName } = await oauthGithub(code);
+      const data = await oauthGithub(code);
+      const { token, id, nickName, img_url } = data;
+      console.log(data);
       dispatch({
         type: userActions.LOGIN,
-        payload: { token, id, nickName },
+        payload: { token, id, nickName, img_url },
       });
-      history.push('/issues');
+      history.push('/issues?isClosed=false');
     } catch (err) {
       alert('로그인 중 오류가 발생했습니다.');
       history.push('/');

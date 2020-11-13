@@ -1,6 +1,6 @@
 const { issue_label: issueLabel } = require('../../sequelize/models');
 
-const addLabel = async (req, res) => {
+const addIssueLabel = async (req, res) => {
   try {
     const { issueId, labelId } = req.params;
     const result = await issueLabel.create({ issueId, labelId });
@@ -10,4 +10,4 @@ const addLabel = async (req, res) => {
   }
 };
 
-module.exports = addLabel;
+module.exports = addIssueLabel;

@@ -15,6 +15,7 @@ const reducer = (state, action) => {
         id: payload.id,
         nickName: payload.nickName,
         authorized: !!payload.token,
+        img_url: payload.img_url,
       };
     case userActions.LOGOUT:
       return {
@@ -36,6 +37,7 @@ const initialValue = {
   nickName: user?.nickName,
   id: user?.id,
   authorized: !!token,
+  img_url: user?.img_url,
 };
 
 const UserProvider = ({ children }) => {
