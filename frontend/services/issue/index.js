@@ -1,14 +1,14 @@
-// import adders from './adders';
-// import deleters from './deleters';
+import adders from './adders';
+import deleters from './deleters';
 import getters from './getters';
-// import updaters from './updaters'
+import updaters from './updaters';
 
 const issueService = (apiRequest) => {
   return {
-    // ...adders(),
+    ...adders(apiRequest),
     ...getters(apiRequest),
-    // ...updaters(axios),
-    // ...deleters(axios),
+    ...updaters(apiRequest),
+    ...deleters(apiRequest),
   };
 };
 

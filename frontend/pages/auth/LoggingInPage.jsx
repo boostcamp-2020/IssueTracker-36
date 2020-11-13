@@ -1,20 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import oauthGithub from '@services/auth/oauth-github';
-import userInfo from '@utils/user-info';
+import tokenStorage from '@utils/tokenStorage';
 import AuthPageLayout from '@layouts/AuthPageLayout';
+import { UserContext } from '@store/UserProvider';
+import { userActions } from '@store/actions';
 
 const LoggingInPage = ({ history, location }) => {
+  const [, dispatch] = useContext(UserContext);
   const { code } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
 
   useEffect(async () => {
     try {
-      await oauthGithub(code);
-      userInfo.login();
-      history.push('/issues');
+      const data = await oauthGithub(code);
+      const { token, id, nickName, img_url } = data;
+      console.log(data);
+      dispatch({
+        type: userActions.LOGIN,
+        payload: { token, id, nickName, img_url },
+      });
+      history.push('/issues?isClosed=false');
     } catch (err) {
       alert('로그인 중 오류가 발생했습니다.');
       history.push('/');

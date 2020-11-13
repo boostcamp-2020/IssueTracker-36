@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import GithubIconImage from '@static/github-icon-48.png';
-import userInfo from '@utils/user-info';
+import tokenStorage from '@utils/tokenStorage';
 import { useHistory, Link } from 'react-router-dom';
+import { UserContext } from '@store/UserProvider';
+import { userActions } from '@store/actions';
+import { AiFillGithub } from 'react-icons/ai';
 
 const Header = () => {
+  const [, dispatch] = useContext(UserContext);
   const history = useHistory();
   const onClickLogout = () => {
-    userInfo.logout();
+    tokenStorage.clearToken();
+    tokenStorage.clearUser();
+    dispatch({
+      type: userActions.LOGOUT,
+    });
     history.push('/');
   };
 
   return (
     <Component>
-      <GithubLogo src={GithubIconImage} alt='github icon' />
+      <Link to='/issues?isClosed=false'>
+        <AiFillGithub size={42} style={{ color: 'white' }} />
+      </Link>
       <IssueButton type='button'>
-        <Link to='/issues'>Issue Tracker</Link>
+        <Link to='/issues?isClosed=false'>Issue Tracker</Link>
       </IssueButton>
       <LogoutButton type='button' onClick={onClickLogout}>
         로그아웃
@@ -33,11 +42,6 @@ const Component = styled.header`
   align-items: center;
   justify-content: space-around;
   background-color: ${(props) => props.theme.color.headerBgColor};
-`;
-const GithubLogo = styled.img`
-  width: 3rem;
-  margin: 0 0.5rem;
-  filter: invert(100%);
 `;
 
 const IssueButton = styled.button`

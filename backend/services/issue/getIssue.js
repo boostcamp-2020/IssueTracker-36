@@ -1,13 +1,47 @@
-const { issue } = require('../../sequelize/models');
+const {
+  issue,
+  comment,
+  reaction,
+  user,
+  user_issue: userIssue,
+  issue_label: issueLabel,
+} = require('../../sequelize/models');
 
-/**
- * @todo 하나의 issue 데이터 받아오는 로직 구현
- */
 const getIssue = async (req, res) => {
   try {
-    const issues = await issue.findAll();
-    res.json({ issues });
+    const { id } = req.params;
+    const result = await issue.findOne({
+      where: {
+        id,
+      },
+      include: [
+        {
+          model: comment,
+          include: [
+            {
+              model: user,
+              attributes: ['nickName', 'img_url'],
+            },
+            reaction,
+          ],
+        },
+        {
+          model: userIssue,
+          attributes: ['is_owner'],
+          include: {
+            model: user,
+            attributes: ['id', 'nickName'],
+          },
+        },
+        {
+          model: issueLabel,
+          attributes: ['label_id'],
+        },
+      ],
+    });
+    res.json(result);
   } catch (e) {
+    console.log(e);
     res.sendStatus(500);
   }
 };

@@ -9,7 +9,8 @@
       "@static/*": ["./static/*"],
       "@services/*": ["./services/*"],
       "@utils/*": ["./utils/*"],
-      "@pages/*": ["./pages/*"]
+      "@pages/*": ["./pages/*"],
+      "@store/*": ["./store/*"]
     }
   }
 }

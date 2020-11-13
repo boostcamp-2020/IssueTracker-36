@@ -8,7 +8,12 @@ router.get('/milestones', service.getMilestones);
 router.get('/milestone/:id', service.getMilestone);
 
 // post
-// put
+router.post('/milestone', service.addMilestone);
+
+// patch
+router.patch('/milestone/:id', service.updateMilestone);
+
 // delete
+router.delete('/milestone/:id', service.deleteMilestone);
 
 module.exports = router;

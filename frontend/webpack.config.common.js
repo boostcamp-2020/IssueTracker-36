@@ -12,8 +12,12 @@ module.exports = {
       '@static': path.resolve(__dirname, './static'),
       '@services': path.resolve(__dirname, './services'),
       '@plugins': path.resolve(__dirname, './plugins'),
+      '@store': path.resolve(__dirname, './store'),
     },
     extensions: ['.js', '.jsx'],
+    fallback: {
+      path: require.resolve('path-browserify'),
+    },
   },
   entry: {
     app: ['./index.jsx'],
@@ -21,6 +25,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].[contenthash].js',
+    publicPath: '/',
   },
   // set loaders
   module: {

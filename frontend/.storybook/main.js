@@ -10,6 +10,7 @@ module.exports = {
   ],
   webpackFinal: async (config) => {
     config.resolve.alias = {
+      ...config.resolve.alias,
       '@layouts': path.resolve(__dirname, '../layouts'),
       '@components': path.resolve(__dirname, '../components'),
       '@pages': path.resolve(__dirname, '../pages'),
@@ -17,7 +18,9 @@ module.exports = {
       '@static': path.resolve(__dirname, '../static'),
       '@services': path.resolve(__dirname, '../services'),
       '@plugins': path.resolve(__dirname, '../plugins'),
+      '@store': path.resolve(__dirname, '../store'),
     };
+    config.resolve.extensions.push('.js', '.jsx');
     return config;
   },
 };

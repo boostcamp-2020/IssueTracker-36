@@ -1,14 +1,14 @@
 const { label } = require('../../sequelize/models');
 
-const getLabels = async (req, res) => {
+const deleteLabel = async (req, res) => {
   try {
-    await label.destroy({
+    const deletedLabel = await label.destroy({
       where: { id: req.params.id },
     });
-    res.json(200);
+    res.json(deletedLabel);
   } catch (e) {
     res.sendStatus(500);
   }
 };
 
-module.exports = getLabels;
+module.exports = deleteLabel;

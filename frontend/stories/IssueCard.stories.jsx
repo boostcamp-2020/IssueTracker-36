@@ -1,6 +1,6 @@
 import React from 'react';
-import IssueCard from '@components/IssueCard';
-import Label from '@components/common/label';
+import IssueCard from '@components/issue/IssueCard';
+import Label from '@components/common/Label';
 import { text, number, boolean } from '@storybook/addon-knobs';
 
 export default {

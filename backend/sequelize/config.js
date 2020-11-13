@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   development: {
     username: process.env.SQL_USER,
@@ -16,7 +18,7 @@ module.exports = {
     username: process.env.SQL_USER,
     password: process.env.SQL_PASSWORD,
     database: process.env.SQL_DATABASE,
-    host: '/',
+    host: 'localhost',
     dialect: 'mysql',
     pool: {
       max: 20,

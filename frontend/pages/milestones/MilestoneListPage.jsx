@@ -1,38 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import service from '@services';
+import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { MilestoneContext } from '@store/MilestoneProvider';
 import MilestoneList from '@components/milestone/MilestoneList';
+import Button from '@components/common/Button';
 
-const MilestoneListPage = () => {
-  const [open, setOpenMilestone] = useState([]);
-  const [close, setClosedMilestone] = useState([]);
-  const [milestoneList, setMilestoneList] = useState([]);
-  const TRUE = 1;
-  const FALSE = 0;
-  const getOpen = async () => {
-    const milestones = await service.getMilestones({ isClosed: FALSE });
-    setOpenMilestone(milestones.data);
-  };
-  const getClosed = async () => {
-    const milestones = await service.getMilestones({ isClosed: TRUE });
-    setClosedMilestone(milestones.data);
-  };
-  const getMilestones = async (status) => {
-    const milestones =
-      status === 'close'
-        ? await service.getMilestones({ isClosed: TRUE })
-        : await service.getMilestones({ isClosed: FALSE });
-    setMilestoneList(milestones.data);
-  };
+const MilestoneListPage = ({ setNewButton }) => {
+  const history = useHistory();
+  const [milestones] = useContext(MilestoneContext);
+  const [isOpen, setIsOpen] = useState(true);
+
   useEffect(() => {
-    getOpen();
-    getClosed();
-    getMilestones('open');
+    const newMilestoneButton = (
+      <Button
+        text='New milestone'
+        size='large'
+        onClick={() => {
+          history.push('/milestones/new');
+        }}
+      />
+    );
+    setNewButton(newMilestoneButton);
   }, []);
   return (
     <>
-      <MilestoneList milestoneList={milestoneList} open={open} close={close} getMilestones={getMilestones} />
+      <MilestoneList
+        milestoneList={isOpen ? milestones.open : milestones.close}
+        state={isOpen}
+        onChangeOpenState={setIsOpen}
+      />
     </>
   );
+};
+
+MilestoneListPage.propTypes = {
+  setNewButton: PropTypes.func.isRequired,
 };
 
 export default MilestoneListPage;

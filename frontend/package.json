@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --config ./webpack.config.dev.js",
+    "build": "webpack --config ./webpack.config.prod.js",
     "storybook": "start-storybook -p 6006 --no-dll",
     "build-storybook": "build-storybook --no-dll"
   },
@@ -14,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "axios": "^0.21.0",
@@ -24,11 +26,15 @@
     "font-color-contrast": "^1.0.3",
     "html-webpack-plugin": "^4.2.0",
     "moment": "^2.29.1",
+    "path-browserify": "^1.0.1",
     "prop-types": "^15.7.2",
     "qs": "^6.9.4",
+    "query-string": "^6.13.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^3.11.0",
+    "react-is": "^17.0.1",
+    "react-markdown": "^5.0.2",
     "react-moment": "^1.0.0",
     "react-router-dom": "^5.2.0",
     "styled-components": "^5.2.1",
@@ -43,7 +49,6 @@
     "@storybook/addon-knobs": "^6.0.28",
     "@storybook/addon-links": "^6.0.28",
     "@storybook/react": "^6.0.28",
-    "react-is": "^17.0.1",
     "webpack-dev-server": "^3.11.0"
   }
 }

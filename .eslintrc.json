@@ -11,7 +11,7 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "rules": {
@@ -38,7 +38,8 @@
           ["@utils", "./frontend/utils"],
           ["@static", "./frontend/static"],
           ["@services", "./frontend/services"],
-          ["@plugins", "./frontend/plugins"]
+          ["@plugins", "./frontend/plugins"],
+          ["@store", "./frontend/store"]
         ]
       }
     }
