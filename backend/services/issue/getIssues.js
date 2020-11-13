@@ -100,6 +100,7 @@ const getIssues = async (req, res) => {
       limit: parsed.count,
       offset,
       where,
+      distinct: true,
       include: [
         {
           model: UserIssue,
