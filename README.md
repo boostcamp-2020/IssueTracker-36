@@ -18,8 +18,10 @@
 
 <div align="center" style="margin-top : 10px"> 
 
-![Javascript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
+![Javascript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript) 
+
 ![NodeJS](https://img.shields.io/badge/node.js-v14.5.0-green?logo=node.js) ![express](https://img.shields.io/badge/Express-4.16.1-skyblue?logo=Node.js) ![MySQL](https://img.shields.io/badge/MySQL-v5.7.32-blue?logo=mysql)
+
 ![react](https://img.shields.io/badge/React-17.0.1-1cf?logo=react) ![Babel](https://img.shields.io/badge/@babel/core-7.12.3-yellow?logo=babel) ![Webpack](https://img.shields.io/badge/Webpack-5.3.1-blue?logo=Webpack)
 
 </div>
@@ -116,5 +118,5 @@
 </details>
 
 ## 📌 Wiki
-진행과정과 프로젝트에 대한 자세한 내용은 wiki에 있습니다.
+진행과정과 프로젝트에 대한 자세한 내용은 wiki에 있습니다.  
 [🏠 Wiki 바로가기🏠](https://github.com/boostcamp-2020/IssueTracker-36/wiki)
