@@ -81,6 +81,7 @@ const LabelForm = ({ onSave, onCancel, saveButtonText, initialValue }) => {
                 text={saveButtonText}
                 disabled={debouncedPreview.title === ''}
                 onClick={handleClickSave}
+                style={{ marginLeft: '10px' }}
               />
             </BtnBox>
           </FormGroup>

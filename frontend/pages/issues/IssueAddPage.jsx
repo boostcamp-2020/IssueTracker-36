@@ -67,7 +67,7 @@ const FormWrapper = styled.div`
 
 const SidebarWrapper = styled.div`
   flex: 1;
-  margin-left: 15px;
+  margin-left: 25px;
 `;
 
 export default IssueAddPage;

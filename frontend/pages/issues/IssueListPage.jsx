@@ -178,6 +178,7 @@ const IssueListPage = ({ location }) => {
             labelsNumber={LabelMilestoneNumber.labels}
             milestonesNumber={LabelMilestoneNumber.milestones}
           />
+          <FilterInput ref={inputRef} onKeyPress={handleKeyPress} placeholder='Search all issues' />
           <Button
             style={{ marginLeft: '10px' }}
             text='New issue'
