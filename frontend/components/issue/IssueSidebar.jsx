@@ -160,7 +160,7 @@ const IssueSidebar = ({ currentSelect, chageSelect }) => {
                     (selectedMilestone?.closedIssueNumber + selectedMilestone?.openedIssueNumber)
                   }
                 />
-                {selectedMilestone?.title}
+                <div style={{ marginTop: '5px' }}>{selectedMilestone?.title}</div>
               </div>
             )
           );
@@ -182,6 +182,7 @@ const Title = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10px;
+  font-weight: bold;
   cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.color.blueColor};
@@ -191,6 +192,7 @@ const Title = styled.div`
 const SelectedUser = styled.div`
   padding: 5px;
   font-size: ${({ theme }) => theme.fontSize.xs};
+  font-weight: bold;
 `;
 
 IssueSidebar.propTypes = {

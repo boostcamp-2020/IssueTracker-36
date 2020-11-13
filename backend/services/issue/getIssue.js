@@ -5,7 +5,6 @@ const {
   user,
   user_issue: userIssue,
   issue_label: issueLabel,
-  label,
 } = require('../../sequelize/models');
 
 const getIssue = async (req, res) => {

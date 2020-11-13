@@ -212,7 +212,6 @@ const IssueSide = styled.div`
   display: flex;
   flex-direction: column;
   flex: 3;
-  padding: 10px;
-  margin-left: 15px;
+  margin-left: 20px;
 `;
 export default IssueDetailPage;

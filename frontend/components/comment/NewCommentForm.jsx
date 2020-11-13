@@ -23,8 +23,9 @@ const CommentItem = ({
     <ItemWrapper>
       {!isEdit && (
       <AvatarWrapper>
-          <Avatar alt={`${user.nickName} profile image`} />
-      </AvatarWrapper>)}
+        <Avatar alt={`${user.nickName} profile image`} src={user.img_url} />
+      </AvatarWrapper>
+        )}
       <CommentWrapper>
         <WritingArea
           initValue={initValue}

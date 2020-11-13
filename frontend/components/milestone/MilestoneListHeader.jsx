@@ -48,6 +48,6 @@ const HeaderText = styled.div`
   height: 50px;
   padding-left: 40px;
   color: ${(props) => props.theme.color.grayColor};
-  font-size: ${(props) => props.theme.fontSize.md};
+  font-size: ${(props) => props.theme.fontSize.sm};
 `;
 export default MilestoneHeader;

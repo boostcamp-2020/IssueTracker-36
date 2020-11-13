@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import GithubIconImage from '@static/github-icon-48.png';
 import AuthPageLayout from '@layouts/AuthPageLayout';
 import { UserContext } from '@store/UserProvider';
+import { AiFillGithub } from 'react-icons/ai';
 
 const LoginPage = () => {
   const [user] = useContext(UserContext);
@@ -16,7 +16,7 @@ const LoginPage = () => {
       render={({ location }) => (
         <Redirect
           to={{
-            pathname: '/issues',
+            pathname: '/issues?isClosed=false',
             state: { from: location },
           }}
         />
@@ -28,7 +28,7 @@ const LoginPage = () => {
       <LoginWrapper>
         <GithubLoginButton href={`${endpoint}?client_id=${GITHUB_CLIENT_ID}`}>
           <div>Github로 로그인하기</div>
-          <GithubIcon src={GithubIconImage} alt='github icon' />
+          <AiFillGithub size={28} />
         </GithubLoginButton>
       </LoginWrapper>
     </AuthPageLayout>
@@ -71,11 +71,9 @@ const GithubLoginButton = styled.a`
   div {
     color: white;
   }
-`;
-
-const GithubIcon = styled.img`
-  width: 1.8rem;
-  margin: 0 0 0 0.5rem;
+  > svg {
+    margin-left: 0.5rem;
+  }
 `;
 
 export default LoginPage;

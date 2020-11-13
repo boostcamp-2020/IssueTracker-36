@@ -9,8 +9,10 @@ ButtonGroup.propTypes = {
 };
 
 const Wrapper = styled.div`
-  display: inline-block;
-  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
   border-radius: 6px;
   border: 1px solid ${({ theme }) => theme.color.borderColor};
 

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import GithubIconImage from '@static/github-icon-48.png';
 import tokenStorage from '@utils/tokenStorage';
 import { useHistory, Link } from 'react-router-dom';
 import { UserContext } from '@store/UserProvider';
 import { userActions } from '@store/actions';
+import { AiFillGithub } from 'react-icons/ai';
 
 const Header = () => {
   const [, dispatch] = useContext(UserContext);
@@ -21,10 +21,10 @@ const Header = () => {
   return (
     <Component>
       <Link to='/issues'>
-        <GithubLogo src={GithubIconImage} alt='github icon' />
+        <AiFillGithub size={42} />
       </Link>
       <IssueButton type='button'>
-        <Link to='/issues'>Issue Tracker</Link>
+        <Link to='/issues?isClosed=false'>Issue Tracker</Link>
       </IssueButton>
       <LogoutButton type='button' onClick={onClickLogout}>
         로그아웃
@@ -42,11 +42,10 @@ const Component = styled.header`
   align-items: center;
   justify-content: space-around;
   background-color: ${(props) => props.theme.color.headerBgColor};
-`;
-const GithubLogo = styled.img`
-  width: 3rem;
-  margin: 0 0.5rem;
-  filter: invert(100%);
+  > svg {
+    color: white;
+    size: 48px;
+  }
 `;
 
 const IssueButton = styled.button`

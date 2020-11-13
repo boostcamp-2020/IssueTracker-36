@@ -36,7 +36,7 @@ const IssueAddPage = () => {
         currentSelect.labels,
         currentSelect.milestone,
       );
-      history.push('/issues');
+      history.push('/issues?isClosed=false');
     } catch (e) {
       alert('오류가 발생했습니다');
     }
@@ -67,7 +67,7 @@ const FormWrapper = styled.div`
 
 const SidebarWrapper = styled.div`
   flex: 1;
-  margin-left: 15px;
+  margin-left: 25px;
 `;
 
 export default IssueAddPage;
