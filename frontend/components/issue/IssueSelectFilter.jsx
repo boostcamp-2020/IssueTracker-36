@@ -85,8 +85,6 @@ const IssueSelectFilter = ({
       },
     });
     history.push(url);
-    // history.go();
-
     toggleDropdown();
   };
 

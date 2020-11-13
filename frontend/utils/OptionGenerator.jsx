@@ -25,6 +25,7 @@ const users = ({ data }, selectedUser = [], clickAction = () => {}) => {
   return data.reduce((acc, user) => {
     acc.push({
       id: user.id,
+      value: user.nickName,
       div: (
         <UserOption
           selected={selectedUser.includes(user.id)}
@@ -70,6 +71,7 @@ const labels = ({ data }, selectedLabels = [], clickAction = () => {}) => {
   return data.reduce((acc, label) => {
     acc.push({
       id: label.id,
+      value: label.title,
       div: (
         <LabelOption
           selected={selectedLabelsNumber.includes(Number(label.id))}
@@ -145,6 +147,7 @@ const milestones = ({ data }, selectedMilestone = [], clickAction = () => {}) =>
   return data.reduce((acc, milestone) => {
     acc.push({
       id: milestone.id,
+      value: milestone.title,
       div: (
         <MilestoneOption
           selected={selectedMilestone[0] === milestone.id}
