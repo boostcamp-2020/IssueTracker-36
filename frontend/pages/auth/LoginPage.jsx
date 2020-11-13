@@ -16,7 +16,7 @@ const LoginPage = () => {
       render={({ location }) => (
         <Redirect
           to={{
-            pathname: '/issues',
+            pathname: '/issues?isClosed=false',
             state: { from: location },
           }}
         />

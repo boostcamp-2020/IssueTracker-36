@@ -22,7 +22,7 @@ const Header = () => {
     <Component>
       <GithubLogo src={GithubIconImage} alt='github icon' />
       <IssueButton type='button'>
-        <Link to='/issues'>Issue Tracker</Link>
+        <Link to='/issues?isClosed=false'>Issue Tracker</Link>
       </IssueButton>
       <LogoutButton type='button' onClick={onClickLogout}>
         로그아웃

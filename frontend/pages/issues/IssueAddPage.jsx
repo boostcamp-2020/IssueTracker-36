@@ -36,7 +36,7 @@ const IssueAddPage = () => {
         currentSelect.labels,
         currentSelect.milestone,
       );
-      history.push('/issues');
+      history.push('/issues?isClosed=false');
     } catch (e) {
       alert('오류가 발생했습니다');
     }

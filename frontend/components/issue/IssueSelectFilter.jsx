@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { LabelContext } from '@store/LabelProvider';
+import { MilestoneContext } from '@store/MilestoneProvider';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -26,6 +28,8 @@ const IssueSelectFilter = ({
   const [showDropdown, setShowDropdown] = useState(false);
   const history = useHistory();
 
+  const [labels] = useContext(LabelContext);
+  const [milestones] = useContext(MilestoneContext);
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
@@ -100,15 +104,14 @@ const IssueSelectFilter = ({
     setShowDropdown(!showDropdown);
     setSelectedIssues([]);
   };
+
   useEffect(async () => {
     if (!showDropdown) {
       setOptionData([]);
     } else {
       switch (filterName) {
         case 'Label':
-          setOptionData(
-            optionGenerator.labels(await service.getLabels(), filterData.label, filterLabels(filterData)),
-          );
+          setOptionData(optionGenerator.labels({ data: labels }, filterData.label, filterLabels(filterData)));
           break;
         case 'Author':
           setOptionData(
@@ -131,7 +134,7 @@ const IssueSelectFilter = ({
         case 'Milestones':
           setOptionData(
             optionGenerator.milestones(
-              await service.getMilestones({}),
+              { data: [...milestones.open, ...milestones.close] },
               [Number(filterData.milestone)],
               filterMilestone(filterData),
             ),
@@ -144,7 +147,7 @@ const IssueSelectFilter = ({
           setOptionData([]);
       }
     }
-  }, [showDropdown, filterData]);
+  }, [showDropdown]);
 
   return (
     <SelectFilter>
