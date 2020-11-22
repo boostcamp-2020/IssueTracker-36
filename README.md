@@ -28,6 +28,12 @@
 
 <br>
 
+### 📌 시스템 구성
+
+![image](https://user-images.githubusercontent.com/40662323/99897791-df437000-2cdf-11eb-97da-7ea76f9d618f.png)
+
+<br>
+
 ### 📌 진행사항
 
 [![GitHub Open Issues](https://img.shields.io/github/issues-raw/boostcamp-2020/IssueTracker-36?color=green)](https://github.com/boostcamp-2020/IssueTracker-36/issues) [![GitHub Closed Issues](https://img.shields.io/github/issues-closed-raw/boostcamp-2020/IssueTracker-36?color=red)](https://github.com/boostcamp-2020/IssueTracker-36/issues) [![GitHub Open PR](https://img.shields.io/github/issues-pr-raw/boostcamp-2020/IssueTracker-36?color=green)](https://github.com/boostcamp-2020/IssueTracker-36/issues) [![GitHub Closed PR](https://img.shields.io/github/issues-pr-closed-raw/boostcamp-2020/IssueTracker-36?color=red)](https://github.com/boostcamp-2020/IssueTracker-36/issues)
